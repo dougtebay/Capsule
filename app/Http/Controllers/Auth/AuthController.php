@@ -3,9 +3,18 @@
 namespace App\Http\Controllers\Auth;
 
 use Socialite;
+use App\Repositories\UserRepository;
+use App\Http\Controllers\Controller;
 
 class AuthController extends Controller
 {
+    protected $UserRepository;
+
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
     /**
      * Redirect the user to the Twitter authentication page.
      *
@@ -23,8 +32,12 @@ class AuthController extends Controller
      */
     public function handleProviderCallback()
     {
-        $user = Socialite::driver('twitter')->user();
+        $twitterUser = Socialite::driver('twitter')->user();
 
-        // $user->token;
+        $user = $this->userRepository->findOrCreate($twitterUser);
+
+        auth()->login($user);
+
+        return view('home');
     }
 }
