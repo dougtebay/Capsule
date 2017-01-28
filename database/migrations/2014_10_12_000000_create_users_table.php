@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->bigInteger('twitter_id')->unsigned()->unique();
             $table->string('name');
             $table->string('nickname');
+            $table->rememberToken();
             $table->timestamps();
         });
     }
