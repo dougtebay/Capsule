@@ -12,7 +12,12 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
+});
+
+Route::post('/logout', function () {
+    auth()->logout();
+    return view('home');
 });
 
 Route::get('auth/twitter', 'Auth\AuthController@redirectToProvider');
