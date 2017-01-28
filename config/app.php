@@ -178,6 +178,11 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /*
+         * Other Service Providers...
+         */
+        Clockwork\Support\Laravel\ClockworkServiceProvider::class,
+
     ],
 
     /*
