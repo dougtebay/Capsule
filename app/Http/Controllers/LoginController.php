@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers;
 
 use Socialite;
 use App\Repositories\UserRepository;
 use App\Http\Controllers\Controller;
 
-class AuthController extends Controller
+class LoginController extends Controller
 {
     protected $UserRepository;
 
@@ -20,7 +20,7 @@ class AuthController extends Controller
      *
      * @return Response
      */
-    public function redirectToProvider()
+    public function create()
     {
         return Socialite::driver('twitter')->redirect();
     }
@@ -30,7 +30,7 @@ class AuthController extends Controller
      *
      * @return Response
      */
-    public function handleProviderCallback()
+    public function callback()
     {
         $twitterUser = Socialite::driver('twitter')->user();
 

@@ -20,5 +20,5 @@ Route::post('/logout', function () {
     return view('home');
 });
 
-Route::get('auth/twitter', 'Auth\AuthController@redirectToProvider');
-Route::get('auth/twitter/callback', 'Auth\AuthController@handleProviderCallback');
+Route::get('login', 'LoginController@create');
+Route::get('login/callback', 'LoginController@callback');
