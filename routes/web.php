@@ -22,3 +22,4 @@ Route::post('/logout', function () {
 
 Route::get('login', 'LoginController@create');
 Route::get('login/callback', 'LoginController@callback');
+Route::get('home', 'LoginController@show');
