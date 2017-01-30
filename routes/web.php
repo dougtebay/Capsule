@@ -11,15 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
-
-Route::post('/logout', function () {
-    auth()->logout();
-    return view('home');
-});
-
-Route::get('login', 'LoginController@create');
-Route::get('login/callback', 'LoginController@callback');
-Route::get('home', 'LoginController@show');
+Route::get('/', 'SessionController@show');
+Route::get('login', 'SessionController@create');
+Route::get('login/callback', 'SessionController@callback');
+Route::post('logout', 'SessionController@destroy');

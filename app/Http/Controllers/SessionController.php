@@ -6,13 +6,23 @@ use Socialite;
 use App\Repositories\UserRepository;
 use App\Http\Controllers\Controller;
 
-class LoginController extends Controller
+class SessionController extends Controller
 {
     protected $UserRepository;
 
     public function __construct(UserRepository $userRepository)
     {
         $this->userRepository = $userRepository;
+    }
+
+    /**
+     * Show the home page.
+     *
+     * @return View
+     */
+    public function show()
+    {
+        return view('home');
     }
 
     /**
@@ -26,7 +36,7 @@ class LoginController extends Controller
     }
 
     /**
-     * Obtain the user information from Twitter.
+     * Obtain the user information from Twitter and log the user in.
      *
      * @return Response
      */
@@ -36,11 +46,18 @@ class LoginController extends Controller
         $user = $this->userRepository->findOrCreate($twitterUser);
         auth()->login($user);
 
-        return redirect()->action('LoginController@show');
+        return redirect()->action('SessionController@show');
     }
 
-    public function show()
+    /**
+     * Log the user out.
+     *
+     * @return Response
+     */
+    public function destroy()
     {
-        return view('home');
+        auth()->logout();
+
+        return redirect()->action('SessionController@show');
     }
 }
