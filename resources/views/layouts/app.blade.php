@@ -49,7 +49,7 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
-                        @if (Auth::guest())
+                        @if (auth()->guest())
                             <li><a href="{{ url('login') }}">Login</a></li>
                         @else
                             <li class="dropdown">
@@ -76,8 +76,9 @@
                 </div>
             </div>
         </nav>
-
-        @yield('content')
+        @if (auth()->user())
+            @yield('content')
+        @endif
     </div>
 
     <!-- Scripts -->
