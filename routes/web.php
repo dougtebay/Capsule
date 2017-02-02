@@ -15,3 +15,5 @@ Route::get('/', 'SessionController@show');
 Route::get('login', 'SessionController@create');
 Route::get('login/callback', 'SessionController@callback');
 Route::post('logout', 'SessionController@destroy');
+
+Route::post('search', 'SearchController@store');

@@ -8,7 +8,11 @@
                 <div class="panel-heading">Dashboard</div>
 
                 <div class="panel-body">
-                    You are logged in!
+                    <form action="search" method="POST">
+                        {{ csrf_field() }}
+                        <input type="text" name="search">
+                        <input type="submit" value="Search">
+                    </form>
                 </div>
             </div>
         </div>
