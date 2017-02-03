@@ -43,6 +43,8 @@ class SessionController extends Controller
     public function callback()
     {
         $twitterUser = Socialite::driver('twitter')->user();
+        session()->put('token', $twitterUser->token);
+        session()->put('tokenSecret', $twitterUser->tokenSecret);
         $user = $this->userRepository->findOrCreate($twitterUser);
         auth()->login($user);
 
