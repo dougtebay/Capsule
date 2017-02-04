@@ -6,11 +6,10 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">Dashboard</div>
-
                 <div class="panel-body">
-                    <form action="search" method="POST">
+                    <form action="search" method="GET">
                         {{ csrf_field() }}
-                        <input type="text" name="search">
+                        <input type="text" name="query">
                         <input type="submit" value="Search">
                     </form>
                 </div>

@@ -17,5 +17,5 @@ Route::get('login/callback', 'SessionController@callback');
 
 Route::group(['middleware' => 'auth'], function() {
     Route::post('logout', 'SessionController@destroy');
-    Route::post('search', 'SearchController@store');
+    Route::get('search', 'SearchController@index');
 });
