@@ -17,7 +17,9 @@ class SearchController extends Controller
     public function index()
     {
         $query = request()->get('query');
-        $results = $this->twitter->search($query)->statuses;
+        $maxId = request()->get('max_id');
+
+        $results = $this->twitter->search($query, $maxId);
 
         return view('search.index', compact('results'));
     }

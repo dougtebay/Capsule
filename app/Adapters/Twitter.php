@@ -30,10 +30,10 @@ class Twitter
         ]);
     }
 
-    public function search($query)
+    public function search($query, $maxId)
     {
         $response = $this->client->get('search/tweets.json', [
-            'query' => ['q' => $query]
+            'query' => ['q' => $query, 'max_id' => $maxId]
         ]);
 
         return json_decode($response->getBody());
