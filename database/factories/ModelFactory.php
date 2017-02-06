@@ -15,7 +15,7 @@
 $factory->define(App\User::class, function (Faker\Generator $faker) {
 
     return [
-        'twitter_id' => $faker->unique()->randomNumber,
+        'twitter_id' => (string) $faker->unique()->randomNumber,
         'name' => $faker->name,
         'nickname' => $faker->userName,
         'remember_token' => str_random(10),
