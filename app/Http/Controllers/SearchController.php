@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 class SearchController extends Controller
 {
     /**
-     * The twitter instance.
+     * The twitter adapter instance.
      *
      * @var \App\Adapters\Twitter
      */
@@ -28,7 +28,7 @@ class SearchController extends Controller
     /**
      * Show the search results.
      *
-     * @return View
+     * @return \Illuminate\View\View
      */
     public function index()
     {

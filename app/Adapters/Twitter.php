@@ -8,8 +8,18 @@ use GuzzleHttp\Subscriber\Oauth\Oauth1;
 
 class Twitter
 {
+    /**
+     * The client instance.
+     *
+     * @var \GuzzleHttp\Client
+     */
     protected $client;
 
+    /**
+     * Create a new twitter adapter.
+     *
+     * @return void
+     */
     public function __construct()
     {
         $stack = HandlerStack::create();
@@ -30,7 +40,14 @@ class Twitter
         ]);
     }
 
-    public function search($query, $maxId)
+    /**
+     * Submit the search request and return the response.
+     *
+     * @param  string  $query
+     * @param  string  $maxId
+     * @return \stdClass
+     */
+    public function search(string $query, string $maxId = null)
     {
         $response = $this->client->get('search/tweets.json', [
             'query' => ['q' => $query, 'max_id' => $maxId]

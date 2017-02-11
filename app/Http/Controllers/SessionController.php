@@ -29,7 +29,7 @@ class SessionController extends Controller
     /**
      * Show the home page.
      *
-     * @return View
+     * @return \Illuminate\View\View
      */
     public function show()
     {
@@ -39,7 +39,7 @@ class SessionController extends Controller
     /**
      * Redirect the user to the Twitter authentication page.
      *
-     * @return RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function create()
     {
@@ -49,7 +49,7 @@ class SessionController extends Controller
     /**
      * Obtain the user information from Twitter and log the user in.
      *
-     * @return RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function callback()
     {
@@ -68,7 +68,7 @@ class SessionController extends Controller
     /**
      * Log the user out.
      *
-     * @return RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function destroy()
     {
