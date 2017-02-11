@@ -7,13 +7,29 @@ use App\Http\Controllers\Controller;
 
 class SearchController extends Controller
 {
+    /**
+     * The twitter instance.
+     *
+     * @var \App\Adapters\Twitter
+     */
     protected $twitter;
 
+    /**
+     * Create a new search controller.
+     *
+     * @param  \App\Adapters\Twitter  $twitter
+     * @return void
+     */
     public function __construct(Twitter $twitter)
     {
         $this->twitter = $twitter;
     }
 
+    /**
+     * Show the search results.
+     *
+     * @return View
+     */
     public function index()
     {
         $query = request()->get('query');

@@ -8,8 +8,19 @@ use App\Http\Controllers\Controller;
 
 class SessionController extends Controller
 {
+    /**
+     * The user repository instance.
+     *
+     * @var \App\Repositories\UserRepository
+     */
     protected $UserRepository;
 
+    /**
+     * Create a new session controller.
+     *
+     * @param  \App\Repositories\userRepository  $userRepository
+     * @return void
+     */
     public function __construct(UserRepository $userRepository)
     {
         $this->userRepository = $userRepository;
@@ -28,7 +39,7 @@ class SessionController extends Controller
     /**
      * Redirect the user to the Twitter authentication page.
      *
-     * @return Response
+     * @return RedirectResponse
      */
     public function create()
     {
@@ -38,7 +49,7 @@ class SessionController extends Controller
     /**
      * Obtain the user information from Twitter and log the user in.
      *
-     * @return Response
+     * @return RedirectResponse
      */
     public function callback()
     {
@@ -57,7 +68,7 @@ class SessionController extends Controller
     /**
      * Log the user out.
      *
-     * @return Response
+     * @return RedirectResponse
      */
     public function destroy()
     {
