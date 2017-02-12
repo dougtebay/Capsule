@@ -37,6 +37,6 @@ class SearchController extends Controller
 
         $results = $this->twitter->search($query, $maxId);
 
-        return view('search.index', compact('results'));
+        return view('search.index', compact('query', 'results'));
     }
 }
