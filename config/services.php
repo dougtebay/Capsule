@@ -38,6 +38,8 @@ return [
     'twitter' => [
         'client_id' => env('TWITTER_CLIENT_ID'),
         'client_secret' => env('TWITTER_CLIENT_SECRET'),
+        'token' => env('TWITTER_TOKEN'),
+        'token_secret' => env('TWITTER_TOKEN_SECRET'),
         'redirect' => env('TWITTER_REDIRECT'),
         'base_uri' => 'https://api.twitter.com/1.1/',
     ],
