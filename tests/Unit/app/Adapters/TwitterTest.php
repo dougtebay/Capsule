@@ -8,33 +8,31 @@ use App\Repositories\TweetRepository;
 
 class TwitterTest extends TestCase
 {
-    protected $tweetRepository;
+    protected $twitter;
 
-    protected function getTwitter()
+    protected function setUp()
     {
+        parent::setUp();
+
         session()->put('token', config('services.twitter.token'));
         session()->put('tokenSecret', config('services.twitter.token_secret'));
 
-        return new Twitter(new TweetRepository);
+        $this->twitter = new Twitter(new TweetRepository);
     }
 
     public function testItCanReturnSearchResults()
     {
-        $twitter = $this->getTwitter();
+        $results = $this->twitter->search('test');
 
-        $results = $twitter->search('test');
-
-        $this->assertEquals(15, $results->count());
+        $this->assertFalse(empty($results));
     }
 
     public function testItCanReturnMoreSearchResultsByMaxId()
     {
-        $twitter = $this->getTwitter();
-
-        $results1 = $twitter->search('test');
+        $results1 = $this->twitter->search('test');
         $maxId = $results1->last()->twitter_tweet_id;
 
-        $results2 = $twitter->search('test', $maxId);
+        $results2 = $this->twitter->search('test', $maxId);
         $id = $results2->first()->twitter_tweet_id;
 
         $this->assertEquals($maxId, $id);
