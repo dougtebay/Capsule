@@ -15,11 +15,11 @@ class UserRepository
      */
     public function findOrCreate(TwitterUser $twitterUser)
     {
-        $user = User::where('twitter_id', $twitterUser->user['id_str'])->first();
+        $user = User::where('twitter_user_id', $twitterUser->user['id_str'])->first();
 
         if (! $user) {
             return User::create([
-                'twitter_id' => $twitterUser->user['id_str'],
+                'twitter_user_id' => $twitterUser->user['id_str'],
                 'name' => $twitterUser->name,
                 'nickname' => $twitterUser->nickname,
             ]);
