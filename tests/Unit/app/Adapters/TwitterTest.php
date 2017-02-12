@@ -4,37 +4,38 @@ namespace Tests\Unit\App\Adapters;
 
 use Tests\TestCase;
 use App\Adapters\Twitter;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Repositories\TweetRepository;
 
 class TwitterTest extends TestCase
 {
-    protected function setUpTwitter()
+    protected $tweetRepository;
+
+    protected function getTwitter()
     {
         session()->put('token', config('services.twitter.token'));
         session()->put('tokenSecret', config('services.twitter.token_secret'));
 
-        return new Twitter();
+        return new Twitter(new TweetRepository);
     }
 
     public function testItCanReturnSearchResults()
     {
-        $twitter = $this->setUpTwitter();
+        $twitter = $this->getTwitter();
 
         $results = $twitter->search('test');
 
-        $this->assertEquals(15, count($results->statuses));
+        $this->assertEquals(15, $results->count());
     }
 
     public function testItCanReturnMoreSearchResultsByMaxId()
     {
-        $twitter = $this->setUpTwitter();
+        $twitter = $this->getTwitter();
 
         $results1 = $twitter->search('test');
-        $maxId = collect($results1->statuses)->last()->id_str;
+        $maxId = $results1->last()->twitter_tweet_id;
 
         $results2 = $twitter->search('test', $maxId);
-        $id = collect($results2->statuses)->first()->id_str;
+        $id = $results2->first()->twitter_tweet_id;
 
         $this->assertEquals($maxId, $id);
     }

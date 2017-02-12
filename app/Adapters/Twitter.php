@@ -4,6 +4,7 @@ namespace App\Adapters;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\HandlerStack;
+use App\Repositories\TweetRepository;
 use GuzzleHttp\Subscriber\Oauth\Oauth1;
 
 class Twitter
@@ -16,24 +17,50 @@ class Twitter
     protected $client;
 
     /**
+     * The tweet repository instance.
+     *
+     * @var \App\Repositories\TweetRepository
+     */
+    protected $tweetRepository;
+
+    /**
      * Create a new twitter adapter.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(TweetRepository $tweetRepository)
     {
+        $this->tweetRepository = $tweetRepository;
         $stack = HandlerStack::create();
+        $middleware = $this->getMiddleware();
+        $stack->push($middleware);
+        $this->client = $this->getClient($stack);
+    }
 
-        $middleware = new Oauth1([
+    /**
+     * Create a middleware instance.
+     *
+     * @return \GuzzleHttp\Subscriber\Oauth\Oauth1
+     */
+    public function getMiddleware()
+    {
+        return new Oauth1([
             'consumer_key'    => config('services.twitter.client_id'),
             'consumer_secret' => config('services.twitter.client_secret'),
             'token'           => session()->get('token'),
             'token_secret'    => session()->get('tokenSecret')
         ]);
+    }
 
-        $stack->push($middleware);
-
-        $this->client = new Client([
+    /**
+     * Create a client instance.
+     *
+     * @param  \GuzzleHttp\HandlerStack  $stack
+     * @return \GuzzleHttp\Client
+     */
+    public function getClient(HandlerStack $stack)
+    {
+        return new Client([
             'base_uri' => config('services.twitter.base_uri'),
             'handler'  => $stack,
             'auth' => 'oauth'
@@ -45,7 +72,7 @@ class Twitter
      *
      * @param  string  $query
      * @param  string  $maxId
-     * @return \stdClass
+     * @return \Illuminate\Support\Collection
      */
     public function search(string $query, string $maxId = null)
     {
@@ -53,6 +80,8 @@ class Twitter
             'query' => ['q' => $query, 'max_id' => $maxId]
         ]);
 
-        return json_decode($response->getBody());
+        $tweets = collect(json_decode($response->getBody())->statuses);
+
+        return $this->tweetRepository->make($tweets);
     }
 }
