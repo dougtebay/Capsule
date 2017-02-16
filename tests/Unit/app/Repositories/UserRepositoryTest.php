@@ -48,5 +48,8 @@ class UserRepositoryTest extends TestCase
         $user = $this->userRepository->findOrCreate($this->twitterUser);
 
         $this->assertGreaterThan($this->user->id, User::all()->last()->id);
+        $this->assertEquals($this->twitterUser->user['id_str'], $user->twitter_user_id);
+        $this->assertEquals($this->twitterUser->name, $user->name);
+        $this->assertEquals($this->twitterUser->nickname, $user->nickname);
     }
 }
