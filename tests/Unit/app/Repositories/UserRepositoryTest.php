@@ -29,7 +29,7 @@ class UserRepositoryTest extends TestCase
         $this->twitterUser->name = $this->faker->name;
         $this->twitterUser->nickname = $this->faker->userName;
 
-        $this->userRepository = new userRepository();
+        $this->userRepository = new UserRepository();
     }
 
     public function testItCanFindExistingUser()

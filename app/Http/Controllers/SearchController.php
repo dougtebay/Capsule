@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Adapters\Twitter;
+use App\Adapters\TwitterAdapter;
 use App\Http\Controllers\Controller;
 
 class SearchController extends Controller
@@ -12,7 +12,7 @@ class SearchController extends Controller
      *
      * @var \App\Adapters\Twitter
      */
-    protected $twitter;
+    protected $twitterAdapter;
 
     /**
      * Create a new search controller.
@@ -20,9 +20,9 @@ class SearchController extends Controller
      * @param  \App\Adapters\Twitter  $twitter
      * @return void
      */
-    public function __construct(Twitter $twitter)
+    public function __construct(TwitterAdapter $twitterAdapter)
     {
-        $this->twitter = $twitter;
+        $this->twitterAdapter = $twitterAdapter;
     }
 
     /**
@@ -35,7 +35,7 @@ class SearchController extends Controller
         $query = request()->get('query');
         $maxId = request()->get('max_id');
 
-        $results = $this->twitter->search($query, $maxId);
+        $results = $this->twitterAdapter->search($query, $maxId);
 
         return view('search.index', compact('query', 'results'));
     }

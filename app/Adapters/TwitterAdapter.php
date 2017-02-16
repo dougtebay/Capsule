@@ -7,7 +7,7 @@ use GuzzleHttp\HandlerStack;
 use App\Repositories\TweetRepository;
 use GuzzleHttp\Subscriber\Oauth\Oauth1;
 
-class Twitter
+class TwitterAdapter
 {
     /**
      * The client instance.
