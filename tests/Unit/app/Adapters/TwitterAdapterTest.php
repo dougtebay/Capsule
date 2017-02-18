@@ -17,7 +17,7 @@ class TwitterAdapterTest extends TestCase
         session()->put('token', config('services.twitter.token'));
         session()->put('tokenSecret', config('services.twitter.token_secret'));
 
-        $this->twitterAdapter = new TwitterAdapter(new TweetRepository);
+        $this->twitterAdapter = new TwitterAdapter(new TweetRepository, session());
     }
 
     public function testItCanReturnSearchResults()

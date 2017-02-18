@@ -4,27 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Adapters\TwitterAdapter;
 use App\Http\Controllers\Controller;
+use App\Repositories\TweetRepository;
 
 class SearchController extends Controller
 {
-    /**
-     * The twitter adapter instance.
-     *
-     * @var \App\Adapters\Twitter
-     */
-    protected $twitterAdapter;
-
-    /**
-     * Create a new search controller.
-     *
-     * @param  \App\Adapters\Twitter  $twitter
-     * @return void
-     */
-    public function __construct(TwitterAdapter $twitterAdapter)
-    {
-        $this->twitterAdapter = $twitterAdapter;
-    }
-
     /**
      * Show the search results.
      *
@@ -34,8 +17,9 @@ class SearchController extends Controller
     {
         $query = request()->get('query');
         $maxId = request()->get('max_id');
+        $twitterAdapter = new TwitterAdapter(new TweetRepository, session());
 
-        $results = $this->twitterAdapter->search($query, $maxId);
+        $results = $twitterAdapter->search($query, $maxId);
 
         return view('search.index', compact('query', 'results'));
     }

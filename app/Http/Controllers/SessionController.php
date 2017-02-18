@@ -18,7 +18,7 @@ class SessionController extends Controller
     /**
      * Create a new session controller.
      *
-     * @param  \App\Repositories\userRepository  $userRepository
+     * @param  \App\Repositories\UserRepository  $userRepository
      * @return void
      */
     public function __construct(UserRepository $userRepository)

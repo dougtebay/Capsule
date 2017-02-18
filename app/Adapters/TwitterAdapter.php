@@ -5,17 +5,11 @@ namespace App\Adapters;
 use GuzzleHttp\Client;
 use GuzzleHttp\HandlerStack;
 use App\Repositories\TweetRepository;
+use Illuminate\Session\SessionManager;
 use GuzzleHttp\Subscriber\Oauth\Oauth1;
 
 class TwitterAdapter
 {
-    /**
-     * The client instance.
-     *
-     * @var \GuzzleHttp\Client
-     */
-    protected $client;
-
     /**
      * The tweet repository instance.
      *
@@ -24,15 +18,22 @@ class TwitterAdapter
     protected $tweetRepository;
 
     /**
+     * The client instance.
+     *
+     * @var \GuzzleHttp\Client
+     */
+    protected $client;
+
+    /**
      * Create a new twitter adapter.
      *
      * @return void
      */
-    public function __construct(TweetRepository $tweetRepository)
+    public function __construct(TweetRepository $tweetRepository, SessionManager $session)
     {
         $this->tweetRepository = $tweetRepository;
         $stack = HandlerStack::create();
-        $middleware = $this->getMiddleware();
+        $middleware = $this->getMiddleware($session);
         $stack->push($middleware);
         $this->client = $this->getClient($stack);
     }
@@ -42,13 +43,13 @@ class TwitterAdapter
      *
      * @return \GuzzleHttp\Subscriber\Oauth\Oauth1
      */
-    public function getMiddleware()
+    public function getMiddleware(SessionManager $session)
     {
         return new Oauth1([
             'consumer_key'    => config('services.twitter.client_id'),
             'consumer_secret' => config('services.twitter.client_secret'),
-            'token'           => session()->get('token'),
-            'token_secret'    => session()->get('tokenSecret')
+            'token'           => $session->get('token'),
+            'token_secret'    => $session->get('tokenSecret')
         ]);
     }
 
