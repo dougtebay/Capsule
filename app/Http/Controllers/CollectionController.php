@@ -4,18 +4,25 @@ namespace App\Http\Controllers;
 
 use App\Collection;
 use Illuminate\Http\Request;
+use App\Repositories\CollectionRepository;
 
 class CollectionController extends Controller
 {
+    protected $collectionRepository;
+
+    public function __construct(CollectionRepository $collectionRepository)
+    {
+        $this->collectionRepository = $collectionRepository;
+    }
+
     /**
-     * Display a listing of the collection.
+     * Display a listing of collections.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $userId = auth()->user() ? auth()->user()->id : null;
-        $collections = Collection::where('user_id', $userId)->get();
+        $collections = Collection::currentUser()->get();
 
         return view('collection.index', compact('collections'));
     }
@@ -38,12 +45,10 @@ class CollectionController extends Controller
      */
     public function store(Request $request)
     {
-        Collection::create([
-            'user_id' => auth()->user()->id,
-            'title' => $request->title,
-            'description' => $request->description,
-            'private' => true
-        ]);
+        $collectionData = (object) $request->all();
+        $collection = $this->collectionRepository->create($collectionData);
+
+        return redirect()->action('CollectionController@show', ['id' => $collection->id]);
     }
 
     /**
@@ -54,7 +59,9 @@ class CollectionController extends Controller
      */
     public function show($id)
     {
-        //
+        $collection = Collection::find($id);
+
+        return view('collection.show', compact('collection'));
     }
 
     /**
@@ -65,7 +72,9 @@ class CollectionController extends Controller
      */
     public function edit($id)
     {
-        //
+        $collection = Collection::find($id);
+
+        return view('collection.edit', compact('collection'));
     }
 
     /**

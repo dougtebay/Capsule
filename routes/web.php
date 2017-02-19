@@ -18,6 +18,9 @@ Route::get('/', 'CollectionController@index');
 Route::group(['middleware' => 'auth'], function() {
     Route::post('/logout', 'LoginController@destroy');
     Route::get('/search', 'SearchController@index');
+
     Route::get('/collections/create', 'CollectionController@create');
     Route::post('/collections', 'CollectionController@store');
+    Route::get('/collections/{collection}', 'CollectionController@show');
+    Route::get('/collections/{collection}/edit', 'CollectionController@edit');
 });
