@@ -45,10 +45,11 @@ class CollectionController extends Controller
      */
     public function store(Request $request)
     {
-        $collectionData = (object) $request->all();
-        $collection = $this->collectionRepository->create($collectionData);
+        $formData = (object) $request->all();
 
-        return redirect()->action('CollectionController@show', ['id' => $collection->id]);
+        $collection = $this->collectionRepository->create($formData);
+
+        return redirect()->action('CollectionController@show', compact('collection'));
     }
 
     /**
@@ -57,10 +58,8 @@ class CollectionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Collection $collection)
     {
-        $collection = Collection::find($id);
-
         return view('collection.show', compact('collection'));
     }
 
@@ -70,10 +69,8 @@ class CollectionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Collection $collection)
     {
-        $collection = Collection::find($id);
-
         return view('collection.edit', compact('collection'));
     }
 
@@ -84,9 +81,13 @@ class CollectionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Collection $collection)
     {
-        //
+        $formData = $request->all();
+
+        $collection->update($formData);
+
+        return redirect()->action('CollectionController@show', compact('collection'));
     }
 
     /**
@@ -97,6 +98,8 @@ class CollectionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Collection::destroy($id);
+
+        return redirect()->action('CollectionController@index');
     }
 }

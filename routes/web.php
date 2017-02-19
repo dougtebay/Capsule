@@ -23,4 +23,6 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('/collections', 'CollectionController@store');
     Route::get('/collections/{collection}', 'CollectionController@show');
     Route::get('/collections/{collection}/edit', 'CollectionController@edit');
+    Route::patch('/collections/{collection}', 'CollectionController@update');
+    Route::delete('/collections/{collection}', 'CollectionController@destroy');
 });

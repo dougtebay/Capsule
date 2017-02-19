@@ -13,12 +13,12 @@ class CollectionRepository
      * @param  stdClass  $collection
      * @return \App\Collection
      */
-    public function create(stdClass $collectionData)
+    public function create(stdClass $formData)
     {
         return Collection::create([
-            'user_id' => $collectionData->user_id,
-            'title' => $collectionData->title,
-            'description' => $collectionData->description,
+            'user_id' => $formData->user_id,
+            'title' => $formData->title,
+            'description' => $formData->description,
             'private' => true
         ]);
     }
