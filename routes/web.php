@@ -11,9 +11,9 @@
 |
 */
 
-Route::get('/', 'LoginController@show');
 Route::get('/login', 'LoginController@create');
 Route::get('/login/callback', 'LoginController@callback');
+Route::get('/', 'CollectionController@index');
 
 Route::group(['middleware' => 'auth'], function() {
     Route::post('/logout', 'LoginController@destroy');

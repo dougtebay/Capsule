@@ -36,7 +36,7 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
+                        {{ config('app.name') }}
                     </a>
                 </div>
 
@@ -48,6 +48,17 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
+                        @if (auth()->user())
+                            <li>
+                                <form method="GET" action="/search" class="navbar-form navbar-left">
+                                    {{ csrf_field() }}
+                                    <div class="form-group">
+                                        <input type="text" name="query" class="form-control" placeholder="Search">
+                                    </div>
+                                    <button type="submit" class="btn btn-default">Search</button>
+                                </form>
+                            </li>
+                        @endif
                         <!-- Authentication Links -->
                         @if (auth()->guest())
                             <li><a href="{{ url('/login') }}">Login</a></li>

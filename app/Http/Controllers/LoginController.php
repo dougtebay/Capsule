@@ -26,16 +26,6 @@ class LoginController extends Controller
     }
 
     /**
-     * Show the home page.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function show()
-    {
-        return view('home');
-    }
-
-    /**
      * Redirect the user to the Twitter authentication page.
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
@@ -61,7 +51,7 @@ class LoginController extends Controller
 
         auth()->login($user);
 
-        return redirect()->action('LoginController@show');
+        return redirect()->action('CollectionController@index');
     }
 
     /**
@@ -73,6 +63,6 @@ class LoginController extends Controller
     {
         auth()->logout();
 
-        return redirect()->action('LoginController@show');
+        return redirect()->action('CollectionController@index');
     }
 }

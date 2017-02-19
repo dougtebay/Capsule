@@ -8,13 +8,16 @@ use Illuminate\Http\Request;
 class CollectionController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the collection.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        //
+        $userId = auth()->user() ? auth()->user()->id : null;
+        $collections = Collection::where('user_id', $userId)->get();
+
+        return view('collection.index', compact('collections'));
     }
 
     /**
@@ -44,7 +47,7 @@ class CollectionController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified collection.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -55,7 +58,7 @@ class CollectionController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified collection.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -66,7 +69,7 @@ class CollectionController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified collection in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -78,7 +81,7 @@ class CollectionController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified collection from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
