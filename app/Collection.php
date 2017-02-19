@@ -23,8 +23,6 @@ class Collection extends Model
      */
     public function scopeCurrentUser($query)
     {
-        $userId = auth()->user() ? auth()->user()->id : null;
-
-        return $query->where('user_id', $userId);
+        return $query->where('user_id', auth()->user()->id);
     }
 }

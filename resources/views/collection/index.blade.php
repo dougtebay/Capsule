@@ -2,7 +2,8 @@
 
 @section('content')
 <div class="container">
-@foreach ($collections as $collection)
+@if ($collections)
+    @foreach ($collections as $collection)
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
@@ -30,6 +31,7 @@
             </div>
         </div>
     </div>
-@endforeach
+    @endforeach
+@endif
 </div>
 @endsection
