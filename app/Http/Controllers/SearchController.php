@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Adapters\TwitterAdapter;
-use App\Http\Controllers\Controller;
 use App\Repositories\TweetRepository;
 
 class SearchController extends Controller

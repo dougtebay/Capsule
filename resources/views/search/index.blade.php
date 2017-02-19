@@ -14,7 +14,7 @@
     @endforeach
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <form action="search" method="GET">
+            <form action="/search" method="GET">
                 {{ csrf_field() }}
                 <input type="hidden" name="query" value="{{ $query }}">
                 <input type="hidden" name="max_id" value="{{ $results->last()->twitter_tweet_id }}">

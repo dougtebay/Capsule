@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Tweet extends Model
+class Collection extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -12,6 +12,6 @@ class Tweet extends Model
      * @var array
      */
     protected $fillable = [
-        'twitter_tweet_id', 'twitter_user_id', 'user_name', 'user_nickname', 'text', 'twitter_created_at'
+        'user_id', 'title', 'description', 'private'
     ];
 }

@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use Socialite;
 use App\Repositories\UserRepository;
-use App\Http\Controllers\Controller;
 
-class SessionController extends Controller
+class LoginController extends Controller
 {
     /**
      * The user repository instance.
@@ -62,7 +61,7 @@ class SessionController extends Controller
 
         auth()->login($user);
 
-        return redirect()->action('SessionController@show');
+        return redirect()->action('LoginController@show');
     }
 
     /**
@@ -74,6 +73,6 @@ class SessionController extends Controller
     {
         auth()->logout();
 
-        return redirect()->action('SessionController@show');
+        return redirect()->action('LoginController@show');
     }
 }

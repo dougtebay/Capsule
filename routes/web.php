@@ -11,11 +11,13 @@
 |
 */
 
-Route::get('/', 'SessionController@show');
-Route::get('login', 'SessionController@create');
-Route::get('login/callback', 'SessionController@callback');
+Route::get('/', 'LoginController@show');
+Route::get('/login', 'LoginController@create');
+Route::get('/login/callback', 'LoginController@callback');
 
 Route::group(['middleware' => 'auth'], function() {
-    Route::post('logout', 'SessionController@destroy');
-    Route::get('search', 'SearchController@index');
+    Route::post('/logout', 'LoginController@destroy');
+    Route::get('/search', 'SearchController@index');
+    Route::get('/collections/create', 'CollectionController@create');
+    Route::post('/collections', 'CollectionController@store');
 });
