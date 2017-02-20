@@ -16,10 +16,10 @@ class CollectionRepository
     public function create(stdClass $formData)
     {
         return Collection::create([
-            'user_id' => $formData->user_id,
+            'user_id' => auth()->user()->id,
             'title' => $formData->title,
             'description' => $formData->description,
-            'private' => true
+            'public' => isset($formData->public)
         ]);
     }
 }

@@ -2,18 +2,17 @@
 
 namespace App;
 
+use stdClass;
 use Illuminate\Database\Eloquent\Model;
 
 class Collection extends Model
 {
     /**
-     * The attributes that are mass assignable.
+     * The attributes that are not mass assignable.
      *
      * @var array
      */
-    protected $fillable = [
-        'user_id', 'title', 'description', 'private'
-    ];
+    protected $guarded = [];
 
     /**
      * Scope a query to only include the current user's collections.

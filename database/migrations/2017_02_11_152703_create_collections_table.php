@@ -17,8 +17,8 @@ class CreateCollectionsTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->string('title');
-            $table->string('description');
-            $table->boolean('private');
+            $table->string('description')->nullable();
+            $table->boolean('public');
             $table->timestamps();
         });
     }

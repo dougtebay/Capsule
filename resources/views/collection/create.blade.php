@@ -14,7 +14,6 @@
                     <form action="/collections" method="POST">
                 @endif
                         {{ csrf_field() }}
-                        <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
                         <div class="form-group">
                             <label for="title">Title</label>
                             <input type="text"
@@ -25,7 +24,12 @@
                         </div>
                         <div class="form-group">
                             <label for="description">Description</label>
-                            <textarea id="description" class="form-control" name="description" rows="2" cols="40">@if (isset($collection->description)){{ $collection->description }}@endif</textarea>
+                            <textarea id="description" class="form-control" name="description" rows="2" cols="40">{{ isset($collection->description) ? $collection->description : '' }}</textarea>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="public" {{ isset($collection->public) && $collection->public ? 'checked' : 'unchecked' }}> Public
+                            </label>
                         </div>
                         @if (isset($collection))
                             <button type="submit" class="btn btn-default">Update</button>
