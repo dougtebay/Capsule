@@ -2,7 +2,6 @@
 
 namespace App;
 
-use App\Collection;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -30,6 +29,6 @@ class User extends Authenticatable
      */
     public function collections()
     {
-        return $this->hasMany('Collection');
+        return $this->hasMany(Collection::class);
     }
 }
