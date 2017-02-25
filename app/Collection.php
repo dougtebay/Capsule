@@ -3,6 +3,7 @@
 namespace App;
 
 use stdClass;
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Collection extends Model
@@ -13,6 +14,14 @@ class Collection extends Model
      * @var array
      */
     protected $guarded = [];
+
+    /**
+     * Get the user that owns the collection.
+     */
+    public function user()
+    {
+        return $this->belongsTo('User');
+    }
 
     /**
      * Scope a query to only include the current user's collections.
