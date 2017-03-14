@@ -27,13 +27,15 @@ class TwitterAdapter
     /**
      * Create a new twitter adapter.
      *
+     * @param  \App\Repositories\TweetRepository  $tweetRepository
      * @return void
      */
-    public function __construct(TweetRepository $tweetRepository, SessionManager $session)
+    public function __construct(TweetRepository $tweetRepository)
     {
         $this->tweetRepository = $tweetRepository;
         $stack = HandlerStack::create();
-        $middleware = $this->getMiddleware($session);
+        $middleware = $this->getMiddleware();
+        dd($middleware);
         $stack->push($middleware);
         $this->client = $this->getClient($stack);
     }
@@ -43,13 +45,13 @@ class TwitterAdapter
      *
      * @return \GuzzleHttp\Subscriber\Oauth\Oauth1
      */
-    public function getMiddleware(SessionManager $session)
+    public function getMiddleware()
     {
         return new Oauth1([
             'consumer_key'    => config('services.twitter.client_id'),
             'consumer_secret' => config('services.twitter.client_secret'),
-            'token'           => $session->get('token'),
-            'token_secret'    => $session->get('tokenSecret')
+            'token'           => session()->get('token'),
+            'token_secret'    => session()->get('tokenSecret')
         ]);
     }
 

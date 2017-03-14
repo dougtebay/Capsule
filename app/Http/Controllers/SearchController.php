@@ -12,11 +12,10 @@ class SearchController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(TwitterAdapter $twitterAdapter)
     {
         $query = request()->get('query');
         $maxId = request()->get('max_id');
-        $twitterAdapter = new TwitterAdapter(new TweetRepository, session());
 
         $results = $twitterAdapter->search($query, $maxId);
 
