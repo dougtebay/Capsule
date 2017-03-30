@@ -35,7 +35,6 @@ class TwitterAdapter
         $this->tweetRepository = $tweetRepository;
         $stack = HandlerStack::create();
         $middleware = $this->getMiddleware();
-        dd($middleware);
         $stack->push($middleware);
         $this->client = $this->getClient($stack);
     }

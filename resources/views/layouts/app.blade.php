@@ -22,11 +22,14 @@
 </head>
 <body>
     <div id="app">
-    @include('layouts.header')
-
-    @if (auth()->user())
-        @yield('content')
-    @endif
+        <app app_name="{{ config('app.name') }}"
+             app_url="{{ url('/') }}"
+             csrf_token="{{ csrf_token() }}"
+             user_json="{{ auth()->user() }}">
+        </app>
+        @if (auth()->user())
+            @yield('content')
+        @endif
     </div>
 
     <!-- Scripts -->
