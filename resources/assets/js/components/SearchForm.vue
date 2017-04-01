@@ -11,8 +11,7 @@
     export default {
         data() {
             return {
-                query: '',
-                results: []
+                query: ''
             }
         },
 
@@ -20,7 +19,7 @@
             submit() {
                 axios.get('/search', { params: { query: this.query }
                 }).then(function (response) {
-                    eventHub.$emit('search-results', response.data)
+                    eventHub.$emit('results-found', response.data)
                 }.bind(this))
             }
         }

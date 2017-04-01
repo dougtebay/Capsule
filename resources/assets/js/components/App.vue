@@ -5,6 +5,7 @@
 			    :csrfToken="csrf_token"
 			    :user="user">
 		</navbar>
+		<search-results></search-results>
 	</div>
 </template>
 
