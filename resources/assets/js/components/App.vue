@@ -9,7 +9,7 @@
 </template>
 
 <script>
-	import Navbar from './Navbar.vue';
+	import Navbar from './Navbar.vue'
 
 	export default {
 		props: ['app_name', 'app_url', 'csrf_token', 'user_json'],

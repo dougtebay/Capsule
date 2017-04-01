@@ -5,7 +5,7 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
+require('./bootstrap')
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -13,10 +13,13 @@ require('./bootstrap');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('app', require('./components/App.vue'));
-Vue.component('navbar', require('./components/Navbar.vue'));
-Vue.component('search-form', require('./components/SearchForm.vue'));
+Vue.component('app', require('./components/App.vue'))
+Vue.component('navbar', require('./components/Navbar.vue'))
+Vue.component('search-form', require('./components/SearchForm.vue'))
+
+const eventHub = new Vue()
+export default eventHub
 
 const app = new Vue({
     el: '#app'
-});
+})

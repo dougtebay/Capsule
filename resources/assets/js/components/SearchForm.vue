@@ -6,6 +6,8 @@
 </template>
 
 <script>
+    import eventHub from './../app.js'
+
     export default {
         data() {
             return {
@@ -18,7 +20,7 @@
             submit() {
                 axios.get('/search', { params: { query: this.query }
                 }).then(function (response) {
-                    console.log(response)
+                    eventHub.$emit('search-results', response.data)
                 }.bind(this))
             }
         }
