@@ -1,7 +1,7 @@
 <template>
     <form class="navbar-search-form">
         <input type="text" name="query" v-model="query">
-        <button @click.prevent="submit()">Search</button>
+        <button @click.prevent="search()">Search</button>
     </form>
 </template>
 
@@ -16,10 +16,13 @@
         },
 
         methods: {
-            submit() {
+            search() {
                 axios.get('/search', { params: { query: this.query }
                 }).then(function (response) {
-                    eventHub.$emit('results-found', response.data)
+                    eventHub.$emit('results-found', {
+                        query: this.query,
+                        results: response.data
+                    })
                 }.bind(this))
             }
         }
