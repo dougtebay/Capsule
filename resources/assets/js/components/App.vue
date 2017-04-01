@@ -11,12 +11,14 @@
 
 <script>
 	import Navbar from './Navbar.vue'
+	import SearchResults from './SearchResults.vue'
 
 	export default {
 		props: ['app_name', 'app_url', 'csrf_token', 'user_json'],
 
 		components: {
-			Navbar
+			Navbar,
+			SearchResults
 		},
 
 		data() {

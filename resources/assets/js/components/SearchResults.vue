@@ -1,18 +1,20 @@
 <template>
     <div>
-        <section class="search-result" v-for="result in results">
-            <div>@{{ result.user_nickname }}</div>
-            <div>{{ result.text }}</div>
-        </section>
+        <search-result v-for="result in results" :result="result"></search-result>
         <button v-if="hasResults" @click="getMoreResults">More</button>
     </div>
 </template>
 
 <script>
     import eventHub from './../app.js'
+    import SearchResult from './SearchResult.vue'
     import Helpers from './../mixins/Helpers.vue'
 
     export default {
+        components: {
+            SearchResult
+        },
+
         mixins: [Helpers],
 
         data() {

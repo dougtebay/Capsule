@@ -1,22 +1,15 @@
 <template>
 	<nav class="navbar">
 		<section>
-	        <a class="navbar-text" :href="appUrl">{{ appName }}</a>
+	        <a class="navbar-text" href="/">{{ appName }}</a>
 	    </section>
     	<section v-if="guest">
-        	<a class="navbar-text" :href="loginUrl">Login</a>
+        	<a class="navbar-text" href="/login">Login</a>
     	</section>
     	<section v-if="user">
     		<search-form></search-form>
 	        <span class="navbar-text">{{ user.name }}</span>
-	        <a class="navbar-text"
-	           :href="logoutUrl"
-	           @click.prevent="logout">
-	            Logout
-	        </a>
-	        <form id="logout-form" class="hidden" method="POST" :action="logoutUrl">
-	            <input type="hidden" name="_token" :value="csrfToken">
-	        </form>
+	        <a class="navbar-text" href="/logout" @click.prevent="logout">Logout</a>
     	</section>
 	</nav>
 </template>
@@ -34,18 +27,16 @@
 		computed: {
 			guest: function() {
 				return !this.user
-			},
-			loginUrl: function() {
-				return `${this.appUrl}/login`
-			},
-			logoutUrl: function() {
-				return `${this.appUrl}/logout`
 			}
 		},
 
         methods: {
             logout() {
-                document.getElementById('logout-form').submit()
+                axios.post('/logout', {
+                	_token: this.csrfToken
+                }).then(function (response) {
+                	location.replace('/')
+                })
             }
         }
 	}

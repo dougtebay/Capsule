@@ -63,6 +63,6 @@ class LoginController extends Controller
     {
         auth()->logout();
 
-        return redirect()->action('CollectionController@index');
+        return response()->json(['success' => true]);
     }
 }

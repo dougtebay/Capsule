@@ -27,9 +27,6 @@
              csrf_token="{{ csrf_token() }}"
              user_json="{{ auth()->user() }}">
         </app>
-        @if (auth()->user())
-            @yield('content')
-        @endif
     </div>
 
     <!-- Scripts -->

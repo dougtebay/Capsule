@@ -14,9 +14,6 @@ require('./bootstrap')
  */
 
 Vue.component('app', require('./components/App.vue'))
-Vue.component('navbar', require('./components/Navbar.vue'))
-Vue.component('search-form', require('./components/SearchForm.vue'))
-Vue.component('search-results', require('./components/SearchResults.vue'))
 
 const eventHub = new Vue()
 export default eventHub
