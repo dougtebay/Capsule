@@ -1,8 +1,8 @@
 <template>
-    <div>
+    <section class="search-results">
         <search-result v-for="result in results" :result="result"></search-result>
         <button v-if="hasResults" @click="getMoreResults">More</button>
-    </div>
+    </section>
 </template>
 
 <script>
