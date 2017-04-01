@@ -15,6 +15,7 @@ require('./bootstrap');
 
 Vue.component('app', require('./components/App.vue'));
 Vue.component('navbar', require('./components/Navbar.vue'));
+Vue.component('search-form', require('./components/SearchForm.vue'));
 
 const app = new Vue({
     el: '#app'

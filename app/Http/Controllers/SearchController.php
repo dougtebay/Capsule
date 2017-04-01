@@ -19,6 +19,6 @@ class SearchController extends Controller
 
         $results = $twitterAdapter->search($query, $maxId);
 
-        return view('search.index', compact('query', 'results'));
+        return response()->json($results);
     }
 }

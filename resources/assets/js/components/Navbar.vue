@@ -1,22 +1,17 @@
 <template>
-	<nav class="header">
+	<nav class="navbar">
 		<section>
-	        <a class="header-text" :href="appUrl">{{ appName }}</a>
+	        <a class="navbar-text" :href="appUrl">{{ appName }}</a>
 	    </section>
     	<section v-if="guest">
-        	<a class="header-text" :href="loginUrl">Login</a>
+        	<a class="navbar-text" :href="loginUrl">Login</a>
     	</section>
     	<section v-if="user">
-    		<form method="GET" action="/search">
-            	<input type="text" name="query">
-            	<button type="submit">Search</button>
-        	</form>
-    	</section>
-    	<section>
-	        <span class="header-text">{{ user.name }}</span>
-	        <a class="header-text"
+    		<search-form></search-form>
+	        <span class="navbar-text">{{ user.name }}</span>
+	        <a class="navbar-text"
 	           :href="logoutUrl"
-	           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+	           @click.prevent="logout">
 	            Logout
 	        </a>
 	        <form id="logout-form" class="hidden" method="POST" :action="logoutUrl">
@@ -27,8 +22,14 @@
 </template>
 
 <script>
+    import SearchForm from './SearchForm.vue';
+
 	export default {
 		props: ['appName', 'appUrl', 'csrfToken', 'user'],
+
+        components: {
+            SearchForm
+        },
 
 		computed: {
 			guest: function() {
@@ -40,6 +41,12 @@
 			logoutUrl: function() {
 				return `${this.appUrl}/logout`
 			}
-		}
+		},
+
+        methods: {
+            logout() {
+                document.getElementById('logout-form').submit()
+            }
+        }
 	}
 </script>
