@@ -22,7 +22,7 @@ class CollectionController extends Controller
      */
     public function index()
     {
-        $collections = auth()->user() ? auth()->user()->collections : null;
+        $collections = Collection::where('user_id', auth()->user()->id)->get();
 
         return view('collection.index', compact('collections'));
     }

@@ -181,7 +181,7 @@ return [
         /*
          * Other Service Providers...
          */
-        // Clockwork\Support\Laravel\ClockworkServiceProvider::class,
+        Clockwork\Support\Laravel\ClockworkServiceProvider::class,
 
     ],
 
