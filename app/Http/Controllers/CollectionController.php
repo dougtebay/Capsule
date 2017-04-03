@@ -30,7 +30,7 @@ class CollectionController extends Controller
 
     public function store(Request $request)
     {
-        $formData = (object) $request->all();
+        $formData = $request->all();
 
         $collection = $this->collectionRepository->create($formData);
 

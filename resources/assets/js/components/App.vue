@@ -10,6 +10,8 @@
 			<search-results :query="search.query"
 							:searchResults="search.results">
 			</search-results>
+			<collections :collections="collections">
+			</collections>
 		</main>
 	</div>
 </template>
@@ -17,13 +19,15 @@
 <script>
 	import Navbar from './Navbar.vue'
 	import SearchResults from './SearchResults.vue'
+	import Collections from './Collections.vue'
 
 	export default {
 		props: ['app_name', 'csrf_token', 'user_json'],
 
 		components: {
 			Navbar,
-			SearchResults
+			SearchResults,
+			Collections
 		},
 
 		data () {
