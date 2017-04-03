@@ -8,9 +8,10 @@
             	<a class="navbar-text" href="/login">Login</a>
         	</section>
         	<section v-if="user">
-        		<search-form></search-form>
+        		<search-form @search="search"></search-form>
     	        <span class="navbar-text">{{ user.name }}</span>
-    	        <a class="navbar-text" href="/logout" @click.prevent="logout">Logout</a>
+    	        <a class="navbar-text" href="" @click.prevent="$emit('get-collections')">Collections</a>
+                <a class="navbar-text" href="" @click.prevent="$emit('logout')">Logout</a>
         	</section>
     	</nav>
     </div>
@@ -20,25 +21,21 @@
     import SearchForm from './SearchForm.vue';
 
 	export default {
-		props: ['appName', 'appUrl', 'csrfToken', 'user'],
+		props: ['appName', 'user'],
 
         components: {
             SearchForm
         },
 
 		computed: {
-			guest: function() {
+			guest: function () {
 				return !this.user
 			}
 		},
 
         methods: {
-            logout() {
-                axios.post('/logout', {
-                	_token: this.csrfToken
-                }).then(function (response) {
-                	location.replace('/')
-                })
+            search (query) {
+                this.$emit('search', query)
             }
         }
 	}

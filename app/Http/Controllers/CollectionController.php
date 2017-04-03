@@ -18,13 +18,14 @@ class CollectionController extends Controller
     /**
      * Display a listing of collections.
      *
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
-        $collections = Collection::where('user_id', auth()->user()->id)->get();
+        $userId = auth()->user() ? auth()->user()->id : null;
+        $collections = Collection::where('user_id', $userId)->get();
 
-        return view('collection.index', compact('collections'));
+        return response()->json($collections);
     }
 
     /**

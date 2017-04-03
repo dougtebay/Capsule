@@ -1,12 +1,15 @@
 <template>
 	<div>
 		<navbar :appName="app_name"
-			    :appUrl="app_url"
-			    :csrfToken="csrf_token"
-			    :user="user">
+				:user="user"
+			    @search="doSearch"
+			    @get-collections="getCollections"
+			    @logout="logout">
 		</navbar>
 		<main>
-			<search-results></search-results>
+			<search-results :query="search.query"
+							:searchResults="search.results">
+			</search-results>
 		</main>
 	</div>
 </template>
@@ -16,20 +19,51 @@
 	import SearchResults from './SearchResults.vue'
 
 	export default {
-		props: ['app_name', 'app_url', 'csrf_token', 'user_json'],
+		props: ['app_name', 'csrf_token', 'user_json'],
 
 		components: {
 			Navbar,
 			SearchResults
 		},
 
-		data() {
+		data () {
 			return {
-				user: ''
+				user: '',
+				search: {
+					query: '',
+					results: []
+				},
+				collections: []
 			}
 		},
 
-		mounted() {
+		methods: {
+			doSearch (query) {
+				this.search.query = query
+                axios.get('/search', { params: {
+                	query: query
+                }
+                }).then(function (response) {
+                	this.search.results = response.data
+                }.bind(this))
+            },
+
+			getCollections () {
+                axios.get('/collections').then(function (response) {
+                    this.collections = response.data
+                }.bind(this))
+            },
+
+            logout () {
+                axios.post('/logout', {
+                	_token: this.csrfToken
+                }).then(function (response) {
+                	location.replace('/')
+                })
+            }
+		},
+
+		mounted () {
 			if (this.user_json) {
 				this.user = JSON.parse(this.user_json)
 			}

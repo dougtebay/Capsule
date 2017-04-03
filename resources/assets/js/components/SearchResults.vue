@@ -17,15 +17,16 @@
 
         mixins: [Helpers],
 
+        props: ['query', 'searchResults'],
+
         data() {
             return {
-                query: '',
                 results: []
             }
         },
 
         computed: {
-            maxId: function() {
+            maxId: function () {
                 if (this.results.length) {
                     return this.lastItem(this.results).twitter_tweet_id
                 }
@@ -33,13 +34,19 @@
                 return ''
             },
 
-            hasResults: function() {
+            hasResults: function () {
                 return !!this.results.length
             }
         },
 
+        watch: {
+            searchResults: function () {
+                this.results = this.searchResults
+            }
+        },
+
         methods: {
-            getMoreResults() {
+            getMoreResults () {
                 axios.get('/search', { params: {
                         query: this.query,
                         max_id: this.maxId
@@ -49,17 +56,10 @@
                 }.bind(this))
             },
 
-            setNewResults(results) {
+            setNewResults (results) {
                 var newResults = results.splice(1);
                 this.results = this.results.concat(newResults)
             }
-        },
-
-        created() {
-            eventHub.$on('results-found', response => {
-                this.query = response.query
-                this.results = response.results
-            })
         }
     }
 </script>

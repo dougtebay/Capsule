@@ -5,9 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
     <title>{{ config('app.name') }}</title>
 
     <!-- Styles -->
@@ -23,7 +20,6 @@
 <body>
     <div id="app">
         <app app_name="{{ config('app.name') }}"
-             app_url="{{ url('/') }}"
              csrf_token="{{ csrf_token() }}"
              user_json="{{ auth()->user() }}">
         </app>

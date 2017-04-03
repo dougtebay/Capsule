@@ -11,14 +11,17 @@
 |
 */
 
+Route::get('/', function () {
+	return view('app');
+});
 Route::get('/login', 'LoginController@create');
 Route::get('/login/callback', 'LoginController@callback');
-Route::get('/', 'CollectionController@index');
 
 Route::group(['middleware' => 'auth'], function() {
     Route::post('/logout', 'LoginController@destroy');
     Route::get('/search', 'SearchController@index');
 
+	Route::get('/collections', 'CollectionController@index');
     Route::get('/collections/create', 'CollectionController@create');
     Route::post('/collections', 'CollectionController@store');
     Route::get('/collections/{collection}', 'CollectionController@show');

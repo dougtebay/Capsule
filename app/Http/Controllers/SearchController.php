@@ -8,9 +8,9 @@ use App\Repositories\TweetRepository;
 class SearchController extends Controller
 {
     /**
-     * Show the search results.
+     * Return the search results.
      *
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index(TwitterAdapter $twitterAdapter)
     {

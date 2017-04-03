@@ -51,13 +51,13 @@ class LoginController extends Controller
 
         auth()->login($user);
 
-        return redirect()->action('CollectionController@index');
+        return redirect('/');
     }
 
     /**
      * Log the user out.
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy()
     {
