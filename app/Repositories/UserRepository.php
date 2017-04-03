@@ -7,12 +7,6 @@ use Laravel\Socialite\One\User as TwitterUser;
 
 class UserRepository
 {
-    /**
-     * Find or create the user.
-     *
-     * @param  \Laravel\Socialite\One\User  $twitterUser
-     * @return \App\User
-     */
     public function findOrCreate(TwitterUser $twitterUser)
     {
         if (! $user = User::where('twitter_user_id', $twitterUser->user['id_str'])->first()) {

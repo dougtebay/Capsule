@@ -7,12 +7,6 @@ use Illuminate\Support\Collection;
 
 class TweetRepository
 {
-    /**
-     * Make tweets.
-     *
-     * @param  \Illuminate\Support\Collection  $twitterTweets
-     * @return \Illuminate\Support\Collection
-     */
     public function make(Collection $twitterTweets)
     {
         return $twitterTweets->map(function ($twitterTweet) {

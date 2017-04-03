@@ -7,11 +7,6 @@ use App\Repositories\TweetRepository;
 
 class SearchController extends Controller
 {
-    /**
-     * Return the search results.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function index(TwitterAdapter $twitterAdapter)
     {
         $query = request()->get('query');

@@ -15,11 +15,6 @@ class CollectionController extends Controller
         $this->collectionRepository = $collectionRepository;
     }
 
-    /**
-     * Display a listing of collections.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function index()
     {
         $userId = auth()->user() ? auth()->user()->id : null;
@@ -28,22 +23,11 @@ class CollectionController extends Controller
         return response()->json($collections);
     }
 
-    /**
-     * Show the form for creating a new collection.
-     *
-     * @return \Illuminate\View\View
-     */
     public function create()
     {
         return view('collection.create');
     }
 
-    /**
-     * Store a newly created collection in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
     public function store(Request $request)
     {
         $formData = (object) $request->all();
@@ -53,35 +37,16 @@ class CollectionController extends Controller
         return redirect()->action('CollectionController@show', compact('collection'));
     }
 
-    /**
-     * Display the specified collection.
-     *
-     * @param  \App\Collection  $collection
-     * @return \Illuminate\View\View
-     */
     public function show(Collection $collection)
     {
         return view('collection.show', compact('collection'));
     }
 
-    /**
-     * Show the form for editing the specified collection.
-     *
-     * @param  \App\Collection  $collection
-     * @return \Illuminate\View\View
-     */
     public function edit(Collection $collection)
     {
         return view('collection.edit', compact('collection'));
     }
 
-    /**
-     * Update the specified collection in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Collection  $collection
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
     public function update(Request $request, Collection $collection)
     {
         $collection->update([
@@ -93,12 +58,6 @@ class CollectionController extends Controller
         return redirect()->action('CollectionController@show', compact('collection'));
     }
 
-    /**
-     * Remove the specified collection from storage.
-     *
-     * @param  int  $id
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
     public function destroy($id)
     {
         Collection::destroy($id);

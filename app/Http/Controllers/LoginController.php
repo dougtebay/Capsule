@@ -7,39 +7,18 @@ use App\Repositories\UserRepository;
 
 class LoginController extends Controller
 {
-    /**
-     * The user repository instance.
-     *
-     * @var \App\Repositories\UserRepository
-     */
     protected $UserRepository;
 
-    /**
-     * Create a new session controller.
-     *
-     * @param  \App\Repositories\UserRepository  $userRepository
-     * @return void
-     */
     public function __construct(UserRepository $userRepository)
     {
         $this->userRepository = $userRepository;
     }
 
-    /**
-     * Redirect the user to the Twitter authentication page.
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
     public function create()
     {
         return Socialite::driver('twitter')->redirect();
     }
 
-    /**
-     * Obtain the user information from Twitter and log the user in.
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
     public function callback()
     {
         $twitterUser = Socialite::driver('twitter')->user();
@@ -54,11 +33,6 @@ class LoginController extends Controller
         return redirect('/');
     }
 
-    /**
-     * Log the user out.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function destroy()
     {
         auth()->logout();

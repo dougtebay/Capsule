@@ -10,26 +10,9 @@ use GuzzleHttp\Subscriber\Oauth\Oauth1;
 
 class TwitterAdapter
 {
-    /**
-     * The tweet repository instance.
-     *
-     * @var \App\Repositories\TweetRepository
-     */
     protected $tweetRepository;
-
-    /**
-     * The client instance.
-     *
-     * @var \GuzzleHttp\Client
-     */
     protected $client;
 
-    /**
-     * Create a new twitter adapter.
-     *
-     * @param  \App\Repositories\TweetRepository  $tweetRepository
-     * @return void
-     */
     public function __construct(TweetRepository $tweetRepository)
     {
         $this->tweetRepository = $tweetRepository;
@@ -39,11 +22,6 @@ class TwitterAdapter
         $this->client = $this->getClient($stack);
     }
 
-    /**
-     * Create a middleware instance.
-     *
-     * @return \GuzzleHttp\Subscriber\Oauth\Oauth1
-     */
     public function getMiddleware()
     {
         return new Oauth1([
@@ -54,12 +32,6 @@ class TwitterAdapter
         ]);
     }
 
-    /**
-     * Create a client instance.
-     *
-     * @param  \GuzzleHttp\HandlerStack  $stack
-     * @return \GuzzleHttp\Client
-     */
     public function getClient(HandlerStack $stack)
     {
         return new Client([
@@ -69,13 +41,6 @@ class TwitterAdapter
         ]);
     }
 
-    /**
-     * Submit the search request and return the response.
-     *
-     * @param  string  $query
-     * @param  string  $maxId
-     * @return \Illuminate\Support\Collection
-     */
     public function search(string $query, string $maxId = null)
     {
         $response = $this->client->get('search/tweets.json', [
