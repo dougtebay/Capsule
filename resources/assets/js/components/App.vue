@@ -1,17 +1,13 @@
 <template>
 	<div>
-		<navbar :appName="app_name"
-				:user="user"
-			    @search="doSearch"
-			    @get-collections="getCollections"
-			    @logout="logout">
+		<navbar :appName="app_name" :user="user"
+				@search="doSearch" @get-collections="getCollections" @logout="logout">
 		</navbar>
 		<main>
-			<search-results :query="search.query"
-							:searchResults="search.results">
+			<search-results v-show="visible.searchResults"
+							:query="search.query" :searchResults="search.results">
 			</search-results>
-			<collections :collections="collections">
-			</collections>
+			<collections v-show="visible.collections" :collections="collections"></collections>
 		</main>
 	</div>
 </template>
@@ -37,7 +33,11 @@
 					query: '',
 					results: []
 				},
-				collections: []
+				collections: [],
+				visible: {
+					searchResults: false,
+					collections: false
+				}
 			}
 		},
 
@@ -49,12 +49,15 @@
                 }
                 }).then(function (response) {
                 	this.search.results = response.data
+                	scrollTo(0, 0)
+                	this.setVisible('searchResults')
                 }.bind(this))
             },
 
 			getCollections () {
                 axios.get('/collections').then(function (response) {
                     this.collections = response.data
+                    this.setVisible('collections')
                 }.bind(this))
             },
 
@@ -64,6 +67,12 @@
                 }).then(function (response) {
                 	location.replace('/')
                 })
+            },
+
+            setVisible(component) {
+            	for (let key in this.visible) {
+            		key === component ? this.visible[key] = true : this.visible[key] = false
+            	}
             }
 		},
 
