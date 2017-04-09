@@ -8,10 +8,26 @@
 	import Collection from './Collection.vue'
 
 	export default {
-		props: ['collections'],
-
 		components: {
 			Collection
+		},
+
+		data() {
+			return {
+				collections: []
+			}
+		},
+
+		methods: {
+			getCollections () {
+                axios.get('/collections').then(function (response) {
+                	this.collections = response.data
+                }.bind(this))
+			}
+		},
+
+		created() {
+			this.getCollections()
 		}
 	}
 </script>

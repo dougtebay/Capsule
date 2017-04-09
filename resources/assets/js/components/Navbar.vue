@@ -8,9 +8,9 @@
             	<a class="navbar-text" href="/login">Login</a>
         	</section>
         	<section v-if="user">
-        		<search-form @search="search"></search-form>
+        		<search-form></search-form>
     	        <span class="navbar-text">{{ user.name }}</span>
-    	        <a class="navbar-text" href="" @click.prevent="$emit('get-collections')">Collections</a>
+    	        <router-link to="/collections">Collections</router-link>
                 <a class="navbar-text" href="" @click.prevent="$emit('logout')">Logout</a>
         	</section>
     	</nav>
@@ -31,12 +31,6 @@
 			guest: function () {
 				return !this.user
 			}
-		},
-
-        methods: {
-            search (query) {
-                this.$emit('search', query)
-            }
-        }
+		}
 	}
 </script>

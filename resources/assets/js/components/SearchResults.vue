@@ -6,7 +6,6 @@
 </template>
 
 <script>
-    import eventHub from './../app.js'
     import SearchResult from './SearchResult.vue'
     import Helpers from './../mixins/Helpers.vue'
 
@@ -17,10 +16,9 @@
 
         mixins: [Helpers],
 
-        props: ['query', 'searchResults'],
-
-        data() {
+        data () {
             return {
+                query: '',
                 results: []
             }
         },
@@ -40,12 +38,23 @@
         },
 
         watch: {
-            searchResults: function () {
-                this.results = this.searchResults
-            }
+            $route: function () {
+                this.getSearchResults()
+            },
         },
 
         methods: {
+            getSearchResults () {
+                this.query = this.$route.query.query
+                axios.get('/search', { params: {
+                    query: this.query
+                }
+                }).then(function (response) {
+                    scrollTo(0, 0)
+                    this.results = response.data
+                }.bind(this))
+            },
+
             getMoreResults () {
                 axios.get('/search', { params: {
                         query: this.query,
@@ -60,6 +69,10 @@
                 var newResults = results.splice(1);
                 this.results = this.results.concat(newResults)
             }
+        },
+
+        created () {
+            this.getSearchResults()
         }
     }
 </script>

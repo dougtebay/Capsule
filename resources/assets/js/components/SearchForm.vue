@@ -1,7 +1,9 @@
 <template>
     <form class="navbar-search-form">
         <input type="text" name="query" v-model="query">
-        <button @click.prevent="$emit('search', query)">Search</button>
+        <router-link :to="{ path: '/search', query: { query: query }}">
+            <button>Search</button>
+        </router-link>
     </form>
 </template>
 
