@@ -25,9 +25,7 @@
 
 		methods: {
             logout () {
-                axios.post('/logout', {
-                	_token: this.csrfToken
-                }).then(function (response) {
+                axios.post('/logout').then(function (response) {
                 	location.replace('/')
                 })
             }

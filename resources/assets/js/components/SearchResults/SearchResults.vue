@@ -1,6 +1,6 @@
 <template>
     <section>
-        <search-result v-for="result in results" :result="result"></search-result>
+        <search-result v-for="result in results" :result="result" :collections="collections"></search-result>
         <button v-if="hasResults" @click="getMoreResults">More</button>
     </section>
 </template>
@@ -19,7 +19,8 @@
         data () {
             return {
                 query: '',
-                results: []
+                results: [],
+                collections: []
             }
         },
 
@@ -55,6 +56,12 @@
                 }.bind(this))
             },
 
+            getCollections () {
+                axios.get('/collections').then(function (response) {
+                    this.collections = response.data
+                }.bind(this))
+            },
+
             getMoreResults () {
                 axios.get('/search', { params: {
                         query: this.query,
@@ -73,6 +80,7 @@
 
         created () {
             this.getSearchResults()
+            this.getCollections()
         }
     }
 </script>

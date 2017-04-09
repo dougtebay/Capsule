@@ -18,4 +18,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Collection::class);
     }
+
+    public function tweets()
+    {
+        return $this->hasManyThrough(Tweet::class, Collection::class);
+    }
 }

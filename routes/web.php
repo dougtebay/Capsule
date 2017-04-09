@@ -28,4 +28,6 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/collections/{collection}/edit', 'CollectionController@edit');
     Route::patch('/collections/{collection}', 'CollectionController@update');
     Route::delete('/collections/{collection}', 'CollectionController@destroy');
+
+    Route::post('/tweets', 'TweetController@store');
 });
