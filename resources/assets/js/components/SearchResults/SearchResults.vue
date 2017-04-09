@@ -1,5 +1,5 @@
 <template>
-    <section class="search-results">
+    <section>
         <search-result v-for="result in results" :result="result"></search-result>
         <button v-if="hasResults" @click="getMoreResults">More</button>
     </section>
@@ -7,7 +7,7 @@
 
 <script>
     import SearchResult from './SearchResult.vue'
-    import Helpers from './../mixins/Helpers.vue'
+    import Helpers from './../../mixins/Helpers.vue'
 
     export default {
         components: {

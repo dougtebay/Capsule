@@ -10,7 +10,7 @@
         	<section v-if="user">
         		<search-form></search-form>
     	        <span class="navbar-text">{{ user.name }}</span>
-    	        <router-link to="/collections">Collections</router-link>
+    	        <router-link class="navbar-text" to="/collections">Collections</router-link>
                 <a class="navbar-text" href="" @click.prevent="$emit('logout')">Logout</a>
         	</section>
     	</nav>

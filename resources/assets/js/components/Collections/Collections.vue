@@ -1,5 +1,5 @@
 <template>
-	<section class="collections">
+	<section>
 		<collection v-for="collection in collections" :collection="collection"></collection>
 	</section>
 </template>

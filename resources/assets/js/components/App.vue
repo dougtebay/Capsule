@@ -8,7 +8,7 @@
 </template>
 
 <script>
-	import Navbar from './Navbar.vue'
+	import Navbar from './Navbar/Navbar.vue'
 
 	export default {
 		props: ['app_name', 'csrf_token', 'user_json'],
