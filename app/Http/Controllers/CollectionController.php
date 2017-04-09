@@ -39,7 +39,7 @@ class CollectionController extends Controller
 
     public function show(Collection $collection)
     {
-        return view('collection.show', compact('collection'));
+        return response()->json($collection);
     }
 
     public function edit(Collection $collection)

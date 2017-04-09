@@ -14,14 +14,16 @@ require('./bootstrap')
  */
 
 import VueRouter from 'vue-router'
-import SearchResults from './components/SearchResults.vue'
-import Collections from './components/Collections.vue'
+import SearchResults from './components/SearchResults/SearchResults.vue'
+import Collections from './components/Collections/Collections.vue'
+import Collection from './components/Collection/Collection.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
-	{ path: '/search', component: SearchResults },
-	{ path: '/collections', component: Collections }
+	{ path: '/search', name: 'search', component: SearchResults },
+	{ path: '/collections', name: 'collections', component: Collections },
+	{ path: '/collections/:id', name: 'collection', component: Collection, props: true }
 ]
 
 const router = new VueRouter({
