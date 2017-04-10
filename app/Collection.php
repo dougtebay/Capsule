@@ -13,4 +13,9 @@ class Collection extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function tweets()
+    {
+        return $this->belongsToMany(Tweet::class, 'collection_tweet');
+    }
 }

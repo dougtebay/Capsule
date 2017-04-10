@@ -39,6 +39,8 @@ class CollectionController extends Controller
 
     public function show(Collection $collection)
     {
+        $collection->load('tweets');
+
         return response()->json($collection);
     }
 

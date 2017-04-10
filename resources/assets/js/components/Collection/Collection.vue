@@ -1,13 +1,24 @@
 <template>
-	<section class="collection">
-		<div>{{ collection.title }}</div>
-		<div>{{ collection.description }}</div>
+	<section>
+		<section class="card">
+			<div>{{ collection.title }}</div>
+			<div>{{ collection.description }}</div>
+		</section>
+		<section v-for="tweet in collection.tweets">
+			<tweet :tweet="tweet"></tweet>
+		</section>
 	</section>
 </template>
 
 <script>
+	import Tweet from './Tweet.vue'
+
 	export default {
 		props: ['id'],
+
+		components: {
+			Tweet
+		},
 
 		data() {
 			return {

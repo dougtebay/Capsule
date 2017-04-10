@@ -1,5 +1,5 @@
 <template>
-	<section class="search-result">
+	<section class="card">
 		<div>@{{ result.user_nickname }}</div>
 		<div>{{ result.text }}</div>
 		<form>
