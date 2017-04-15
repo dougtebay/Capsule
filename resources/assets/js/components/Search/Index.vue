@@ -1,17 +1,17 @@
 <template>
     <section>
-        <search-result v-for="result in results" :result="result" :collections="collections"></search-result>
+        <result v-for="result in results" :result="result" :collections="collections"></result>
         <button v-if="hasResults" @click="getMoreResults">More</button>
     </section>
 </template>
 
 <script>
-    import SearchResult from './SearchResult.vue'
+    import Result from './Result.vue'
     import Helpers from './../../mixins/Helpers.vue'
 
     export default {
         components: {
-            SearchResult
+            Result
         },
 
         mixins: [Helpers],
@@ -40,12 +40,12 @@
 
         watch: {
             $route: function () {
-                this.getSearchResults()
+                this.getResults()
             },
         },
 
         methods: {
-            getSearchResults () {
+            getResults () {
                 this.query = this.$route.query.query
                 axios.get('/search', { params: {
                     query: this.query
@@ -79,7 +79,7 @@
         },
 
         created () {
-            this.getSearchResults()
+            this.getResults()
             this.getCollections()
         }
     }

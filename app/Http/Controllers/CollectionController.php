@@ -30,11 +30,9 @@ class CollectionController extends Controller
 
     public function store(Request $request)
     {
-        $formData = $request->all();
+        $collection = $this->collectionRepository->create($request->collection);
 
-        $collection = $this->collectionRepository->create($formData);
-
-        return redirect()->action('CollectionController@show', compact('collection'));
+        return response()->json(['success' => true]);
     }
 
     public function show(Collection $collection)
