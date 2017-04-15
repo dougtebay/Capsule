@@ -14,13 +14,13 @@
     <script>
         window.Laravel = <?php echo json_encode([
             'csrfToken' => csrf_token(),
+            'apiToken' => auth()->user() ? auth()->user()->api_token : null,
         ]); ?>
     </script>
 </head>
 <body>
     <div id="app">
         <app app_name="{{ config('app.name') }}"
-             csrf_token="{{ csrf_token() }}"
              user_json="{{ auth()->user() }}">
         </app>
     </div>

@@ -11,7 +11,7 @@
 	import Navbar from './Navbar/Navbar.vue'
 
 	export default {
-		props: ['app_name', 'csrf_token', 'user_json'],
+		props: ['app_name', 'user_json'],
 
 		components: {
 			Navbar

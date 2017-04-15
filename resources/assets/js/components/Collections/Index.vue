@@ -8,6 +8,8 @@
 	import Collection from './Collection.vue'
 
 	export default {
+		props: ['user'],
+
 		components: {
 			Collection
 		},
@@ -20,7 +22,11 @@
 
 		methods: {
 			getCollections () {
-                axios.get('/collections').then(function (response) {
+                axios.get('api/collections', {
+                	params: {
+                		api_token: Laravel.apiToken
+                	}
+                }).then(function (response) {
                 	this.collections = response.data
                 }.bind(this))
 			}

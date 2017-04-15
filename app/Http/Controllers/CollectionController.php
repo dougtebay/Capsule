@@ -17,6 +17,10 @@ class CollectionController extends Controller
 
     public function index()
     {
+        if (!request()->ajax()) {
+            return redirect('/');
+        }
+
         $userId = auth()->user() ? auth()->user()->id : null;
         $collections = Collection::where('user_id', $userId)->get();
 
