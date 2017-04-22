@@ -21,7 +21,7 @@
 
 		methods: {
 			submit(collection) {
-				axios.post('/collections', {
+				axios.post('/api/collections', {
                 	collection: collection
                 }).then(function (response) {
                 	//

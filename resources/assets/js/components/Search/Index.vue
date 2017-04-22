@@ -47,9 +47,10 @@
         methods: {
             getResults () {
                 this.query = this.$route.query.query
-                axios.get('/search', { params: {
-                    query: this.query
-                }
+                axios.get('/api/search', {
+                    params: {
+                        query: this.query
+                    }
                 }).then(function (response) {
                     scrollTo(0, 0)
                     this.results = response.data
@@ -57,13 +58,14 @@
             },
 
             getCollections () {
-                axios.get('/collections').then(function (response) {
+                axios.get('/api/collections').then(function (response) {
                     this.collections = response.data
                 }.bind(this))
             },
 
             getMoreResults () {
-                axios.get('/search', { params: {
+                axios.get('/api/search', {
+                    params: {
                         query: this.query,
                         max_id: this.maxId
                     }

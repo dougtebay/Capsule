@@ -28,7 +28,7 @@
 
 		methods: {
 			getCollection () {
-                axios.get(`/collections/${this.id}`).then(function (response) {
+                axios.get(`/api/collections/${this.id}`).then(function (response) {
                 	this.collection = response.data
                 }.bind(this))
 			}

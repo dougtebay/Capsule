@@ -22,11 +22,7 @@
 
 		methods: {
 			getCollections () {
-                axios.get('api/collections', {
-                	params: {
-                		api_token: Laravel.apiToken
-                	}
-                }).then(function (response) {
+                axios.get('/api/collections').then(function (response) {
                 	this.collections = response.data
                 }.bind(this))
 			}
