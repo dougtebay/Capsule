@@ -11,7 +11,7 @@
 	import Navbar from './Navbar/Navbar.vue'
 
 	export default {
-		props: ['app_name', 'user_json'],
+		props: ['app_name', 'user_json', 'request_uri'],
 
 		components: {
 			Navbar
@@ -34,6 +34,10 @@
 		mounted () {
 			if (this.user_json) {
 				this.user = JSON.parse(this.user_json)
+			}
+
+			if (this.request_uri) {
+				this.$router.push({ path: this.request_uri })
 			}
 		}
 	}

@@ -18,7 +18,9 @@ class CollectionController extends Controller
     public function index()
     {
         if (!request()->ajax()) {
-            return redirect('/');
+            $requestUri = str_replace(config('app.url'), '', request()->fullUrl());
+
+            return redirect('/')->with('requestUri', $requestUri);
         }
 
         $userId = auth()->user() ? auth()->user()->id : null;

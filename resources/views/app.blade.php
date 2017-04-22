@@ -21,7 +21,8 @@
 <body>
     <div id="app">
         <app app_name="{{ config('app.name') }}"
-             user_json="{{ auth()->user() }}">
+             user_json="{{ auth()->user() }}"
+             request_uri="{{ session('requestUri') }}">
         </app>
     </div>
 
