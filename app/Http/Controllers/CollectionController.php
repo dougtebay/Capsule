@@ -17,21 +17,10 @@ class CollectionController extends Controller
 
     public function index()
     {
-        if (!request()->ajax()) {
-            $requestUri = str_replace(config('app.url'), '', request()->fullUrl());
-
-            return redirect('/')->with('requestUri', $requestUri);
-        }
-
         $userId = auth()->user() ? auth()->user()->id : null;
         $collections = Collection::where('user_id', $userId)->get();
 
         return response()->json($collections);
-    }
-
-    public function create()
-    {
-        return view('collection.create');
     }
 
     public function store(Request $request)
@@ -43,25 +32,18 @@ class CollectionController extends Controller
 
     public function show(Collection $collection)
     {
-        $collection->load('tweets');
-
-        return response()->json($collection);
-    }
-
-    public function edit(Collection $collection)
-    {
-        return view('collection.edit', compact('collection'));
+        if ($collection->load('tweets')->user_id === auth()->user()->id) {
+            return response()->json($collection);
+        }
     }
 
     public function update(Request $request, Collection $collection)
     {
         $collection->update([
-            'title' => $request->title,
-            'description' => $request->description,
-            'public' => isset($request->public)
+            'title' => $request->collection['title'],
+            'description' => $request->collection['description'],
+            'public' => isset($request->collection['public'])
         ]);
-
-        return redirect()->action('CollectionController@show', compact('collection'));
     }
 
     public function destroy($id)

@@ -1,17 +1,13 @@
-<template>
-	<form>
-		<input type="text" v-model="formData.title"></input>
-		<input type="textarea" v-model="formData.description"></input>
-		<input type="checkbox" v-model="formData.public"></input>
-		<button @click.prevent="submit(formData)">Submit</button>
-	</form>
-</template>
 
 <script>
+	import Form from './Form.vue'
+
 	export default {
-		data() {
+		extends: Form,
+
+		data () {
 			return {
-				formData: {
+				collection: {
 					title: '',
 					description: '',
 					public: true
@@ -20,7 +16,7 @@
 		},
 
 		methods: {
-			submit(collection) {
+			submit (collection) {
 				axios.post('/api/collections', {
                 	collection: collection
                 }).then(function (response) {

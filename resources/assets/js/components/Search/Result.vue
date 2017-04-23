@@ -23,12 +23,14 @@
 
 		methods: {
 			saveTweet(tweet, collectionId) {
-				axios.post('/tweets', {
+				axios.post('/api/tweets', {
                 	tweet: tweet,
                 	collectionId: collectionId
                 }).then(function (response) {
                 	//
-                })
+                }).catch(function (error) {
+   					//
+  				});
 			}
 		}
 	}

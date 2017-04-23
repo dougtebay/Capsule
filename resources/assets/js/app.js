@@ -18,6 +18,7 @@ import SearchIndex from './components/Search/Index.vue'
 import CollectionsIndex from './components/Collections/Index.vue'
 import CollectionsCreate from './components/Collections/Create.vue'
 import CollectionsShow from './components/Collections/Show.vue'
+import CollectionsEdit from './components/Collections/Edit.vue'
 
 Vue.use(VueRouter)
 
@@ -25,7 +26,8 @@ const routes = [
 	{ path: '/search', name: 'search', component: SearchIndex },
 	{ path: '/collections', component: CollectionsIndex },
 	{ path: '/collections/create', component: CollectionsCreate },
-	{ path: '/collections/:id', component: CollectionsShow, props: true }
+	{ path: '/collections/:id', component: CollectionsShow, props: true },
+	{ path: '/collections/:id/edit', component: CollectionsEdit, props: true }
 ]
 
 const router = new VueRouter({

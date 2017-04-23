@@ -18,4 +18,7 @@ Route::group(['middleware' => 'auth:api'], function() {
 	Route::get('/collections', 'CollectionController@index');
 	Route::post('/collections', 'CollectionController@store');
 	Route::get('/collections/{collection}', 'CollectionController@show');
+	Route::patch('/collections/{collection}', 'CollectionController@update');
+    Route::delete('/collections/{collection}', 'CollectionController@destroy');
+	Route::post('/tweets', 'TweetController@store');
 });

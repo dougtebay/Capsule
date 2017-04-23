@@ -24,10 +24,5 @@ Route::group(['middleware' => ['auth', 'redirect']], function() {
 	Route::get('/collections');
     Route::get('/collections/create');
     Route::get('/collections/{collection}');
-
-    Route::get('/collections/{collection}/edit', 'CollectionController@edit');
-    Route::patch('/collections/{collection}', 'CollectionController@update');
-    Route::delete('/collections/{collection}', 'CollectionController@destroy');
-
-    Route::post('/tweets', 'TweetController@store');
+    Route::get('/collections/{collection}/edit');
 });

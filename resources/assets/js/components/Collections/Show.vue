@@ -1,6 +1,6 @@
 <template>
 	<section>
-		<section class="card">
+		<section class="card" v-if="hasCollection">
 			<div>{{ collection.title }}</div>
 			<div>{{ collection.description }}</div>
 		</section>
@@ -23,6 +23,12 @@
 		data() {
 			return {
 				collection: {}
+			}
+		},
+
+		computed: {
+			hasCollection: function() {
+				return !!Object.keys(this.collection).length
 			}
 		},
 
