@@ -1,6 +1,6 @@
 <template>
 	<section class="card">
-		<div>@{{ result.user_nickname }}</div>
+		<div>@{{ result.user.screen_name }}</div>
 		<div>{{ result.text }}</div>
 		<form>
 			<select v-model="selected">

@@ -4,18 +4,15 @@ namespace App\Adapters;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\HandlerStack;
-use App\Repositories\TweetRepository;
 use Illuminate\Session\SessionManager;
 use GuzzleHttp\Subscriber\Oauth\Oauth1;
 
 class TwitterAdapter
 {
-    protected $tweetRepository;
     protected $client;
 
-    public function __construct(TweetRepository $tweetRepository)
+    public function __construct()
     {
-        $this->tweetRepository = $tweetRepository;
         $stack = HandlerStack::create();
         $middleware = $this->getMiddleware();
         $stack->push($middleware);
@@ -47,8 +44,6 @@ class TwitterAdapter
             'query' => ['q' => $query, 'max_id' => $maxId]
         ]);
 
-        $tweets = collect(json_decode($response->getBody())->statuses);
-
-        return $this->tweetRepository->make($tweets);
+        return json_decode($response->getBody())->statuses;
     }
 }
