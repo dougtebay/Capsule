@@ -6,8 +6,6 @@
 
 		props: ['id'],
 
-		mixins: [''],
-
 		data () {
 			return {
 				collection: {}

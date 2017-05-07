@@ -18,4 +18,9 @@ class Collection extends Model
     {
         return $this->belongsToMany(Tweet::class, 'collection_tweet');
     }
+
+    public function addTweet(array $tweet)
+    {
+        $this->tweets()->save(Tweet::tweet($tweet));
+    }
 }
