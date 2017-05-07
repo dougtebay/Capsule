@@ -2,7 +2,6 @@
 
 namespace App;
 
-use stdClass;
 use Illuminate\Database\Eloquent\Model;
 
 class Collection extends Model
@@ -17,6 +16,15 @@ class Collection extends Model
     public function tweets()
     {
         return $this->belongsToMany(Tweet::class, 'collection_tweet');
+    }
+
+    public static function collect(array $collection)
+    {
+    	return new static([
+    		'title' => $collection['title'],
+            'description' => $collection['description'],
+            'public' => isset($collection['public'])
+    	]);
     }
 
     public function addTweet(array $tweet)

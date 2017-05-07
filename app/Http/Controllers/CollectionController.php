@@ -4,17 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Collection;
 use Illuminate\Http\Request;
-use App\Repositories\CollectionRepository;
 
 class CollectionController extends Controller
 {
-    protected $collectionRepository;
-
-    public function __construct(CollectionRepository $collectionRepository)
-    {
-        $this->collectionRepository = $collectionRepository;
-    }
-
     public function index()
     {
         $userId = auth()->user() ? auth()->user()->id : null;
@@ -25,7 +17,7 @@ class CollectionController extends Controller
 
     public function store(Request $request)
     {
-        $collection = $this->collectionRepository->create($request->collection);
+        auth()->user()->addCollection($request->collection);
 
         return response()->json(['success' => true]);
     }

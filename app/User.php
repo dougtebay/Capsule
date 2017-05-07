@@ -23,4 +23,9 @@ class User extends Authenticatable
     {
         return $this->hasManyThrough(Tweet::class, Collection::class);
     }
+
+    public function addCollection(array $collection)
+    {
+        $this->collections()->save(Collection::collect($collection));
+    }
 }
