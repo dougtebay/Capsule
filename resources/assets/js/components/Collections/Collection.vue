@@ -6,11 +6,20 @@
 		</router-link>
 		<router-link :to="{ path: `/collections/${collection.id}/edit`, params: { id: collection.id }}">Edit
 		</router-link>
+		<a href="" @click.prevent="destroy">Delete</a>
 	</section>
 </template>
 
 <script>
 	export default {
-		props: ['collection']
+		props: ['collection'],
+
+		methods: {
+			destroy() {
+				axios.delete(`/api/collections/${this.collection.id}`).then(function () {
+					this.$emit('destroy', this.collection.id)
+				}.bind(this))
+			}
+		}
 	}
 </script>

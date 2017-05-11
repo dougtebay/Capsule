@@ -1,6 +1,6 @@
 <template>
 	<section>
-		<collection v-for="collection in collections" :collection="collection"></collection>
+		<collection v-for="collection in collections" :collection="collection" @destroy="destroy"></collection>
 	</section>
 </template>
 
@@ -25,6 +25,14 @@
                 axios.get('/api/collections').then(function (response) {
                 	this.collections = response.data
                 }.bind(this))
+			},
+
+			destroy(collectionId) {
+				this.collections.forEach((collection, index) => {
+					if (collection.id === collectionId) {
+						this.collections.splice(index, 1)
+					}
+				}, this)
 			}
 		},
 

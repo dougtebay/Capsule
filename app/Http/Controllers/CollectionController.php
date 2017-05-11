@@ -42,6 +42,6 @@ class CollectionController extends Controller
     {
         Collection::destroy($id);
 
-        return redirect()->action('CollectionController@index');
+        return response()->json(['success' => true]);
     }
 }
