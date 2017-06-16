@@ -17,7 +17,11 @@ class CollectionController extends Controller
 
     public function store(Request $request)
     {
-        auth()->user()->addCollection($request->collection);
+        $this->validate($request, [
+            'title' => 'required'
+        ]);
+
+        auth()->user()->addCollection($request->all());
 
         return response()->json(['success' => true]);
     }

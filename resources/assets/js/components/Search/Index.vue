@@ -7,7 +7,7 @@
 
 <script>
     import Result from './Result.vue'
-    import Helpers from './../../mixins/Helpers.vue'
+    import Helpers from '../../mixins/Helpers.vue'
 
     export default {
         components: {
