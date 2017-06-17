@@ -18,7 +18,7 @@
 		},
 
 		methods: {
-			submit (collection) {
+			submit () {
 				axios.post('/api/collections', this.collection).then(function (response) {
                 	this.$router.push({ path: '/collections' })
                 }.bind(this)).catch(error => this.errors.record(error.response.data))

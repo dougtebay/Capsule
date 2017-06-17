@@ -42,11 +42,17 @@ class CollectionsController extends Controller
 
     public function update(Request $request, Collection $collection)
     {
-        $collection->update([
-            'title' => $request->collection['title'],
-            'description' => $request->collection['description'],
-            'public' => isset($request->collection['public'])
+        $this->validate($request, [
+            'title' => 'required'
         ]);
+
+        $collection->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'public' => isset($request->public)
+        ]);
+
+        return response()->json(['success' => true]);
     }
 
     public function destroy($id)

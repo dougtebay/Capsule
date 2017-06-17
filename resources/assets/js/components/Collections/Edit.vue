@@ -1,5 +1,6 @@
 <script>
 	import Form from './Form.vue'
+	import { Errors } from '../../classes/Errors.js'
 
 	export default {
 		extends: Form,
@@ -8,7 +9,8 @@
 
 		data () {
 			return {
-				collection: {}
+				collection: {},
+				errors: new Errors()
 			}
 		},
 
@@ -19,12 +21,10 @@
                 }.bind(this))
 			},
 
-			submit (collection) {
-				axios.patch(`/api/collections/${this.id}`, {
-                	collection: collection
-                }).then(function (response) {
+			submit () {
+				axios.patch(`/api/collections/${this.id}`, this.collection).then(function (response) {
                 	this.$router.push({ path: `/collections/${this.id}` })
-                }.bind(this))
+                }.bind(this)).catch(error => this.errors.record(error.response.data))
 			}
 		},
 
