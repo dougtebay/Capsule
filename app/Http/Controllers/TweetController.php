@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Tweet;
 use App\Collection;
 
 class TweetController extends Controller
@@ -13,4 +14,11 @@ class TweetController extends Controller
 
 		$collection->addTweet($tweet);
 	}
+
+	public function destroy($id)
+    {
+        Tweet::destroy($id);
+
+        return response()->json(['success' => true]);
+    }
 }

@@ -5,7 +5,7 @@
 			<div>{{ collection.description }}</div>
 		</section>
 		<section v-for="tweet in collection.tweets">
-			<tweet :tweet="tweet"></tweet>
+			<tweet :tweet="tweet" @destroy="destroy"></tweet>
 		</section>
 	</section>
 </template>
@@ -37,6 +37,14 @@
                 axios.get(`/api/collections/${this.id}`).then(function (response) {
                 	this.collection = response.data
                 }.bind(this))
+			},
+
+			destroy(tweetId) {
+				this.collection.tweets.forEach((tweet, index) => {
+					if (tweet.id === tweetId) {
+						this.collection.tweets.splice(index, 1)
+					}
+				}, this)
 			}
 		},
 

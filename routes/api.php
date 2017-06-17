@@ -21,4 +21,5 @@ Route::group(['middleware' => 'auth:api'], function() {
 	Route::patch('/collections/{collection}', 'CollectionController@update');
     Route::delete('/collections/{collection}', 'CollectionController@destroy');
 	Route::post('/tweets', 'TweetController@store');
+	Route::delete('/tweets/{tweet}', 'TweetController@destroy');
 });
