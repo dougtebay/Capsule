@@ -28,4 +28,9 @@ class User extends Authenticatable
     {
         $this->collections()->save(Collection::collect($collection));
     }
+
+    public function removeCollection(int $collectionId)
+    {
+        $this->collections()->find($collectionId)->delete();
+    }
 }

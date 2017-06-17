@@ -24,10 +24,10 @@ Vue.use(VueRouter)
 
 const routes = [
 	{ path: '/search', name: 'search', component: SearchIndex },
-	{ path: '/collections', component: CollectionsIndex },
-	{ path: '/collections/create', component: CollectionsCreate },
-	{ path: '/collections/:id', component: CollectionsShow, props: true },
-	{ path: '/collections/:id/edit', component: CollectionsEdit, props: true }
+	{ path: '/users/:userId/collections', component: CollectionsIndex, props: true },
+	{ path: '/users/:userId/collections/create', component: CollectionsCreate, props: true },
+	{ path: '/users/:userId/collections/:collectionId', component: CollectionsShow, props: true },
+	{ path: '/users/:userId/collections/:collectionId/edit', component: CollectionsEdit, props: true }
 ]
 
 const router = new VueRouter({

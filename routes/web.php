@@ -21,8 +21,8 @@ Route::post('/logout', 'LoginController@destroy')->middleware('auth');
 
 Route::group(['middleware' => ['auth', 'redirect']], function() {
     Route::get('/search');
-	Route::get('/collections');
-    Route::get('/collections/create');
-    Route::get('/collections/{collection}');
-    Route::get('/collections/{collection}/edit');
+	Route::get('/users/{user}/collections');
+    Route::get('/users/{user}/collections/create');
+    Route::get('/users/{user}/collections/{collection}');
+    Route::get('/users/{user}/collections/{collection}/edit');
 });

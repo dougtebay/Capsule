@@ -6,6 +6,8 @@
 	export default {
 		extends: Form,
 
+		props: ['userId'],
+
 		data () {
 			return {
 				collection: {
@@ -19,8 +21,8 @@
 
 		methods: {
 			submit () {
-				axios.post('/api/collections', this.collection).then(function (response) {
-                	this.$router.push({ path: '/collections' })
+				axios.post(`/api/users/${this.userId}/collections`, this.collection).then(function (response) {
+                	this.$router.push({ path: `/users/${this.userId}/collections` })
                 }.bind(this)).catch(error => this.errors.record(error.response.data))
 			}
 		}

@@ -15,11 +15,11 @@ use Illuminate\Http\Request;
 
 Route::group(['middleware' => 'auth:api'], function() {
 	Route::get('/search', 'SearchController@index');
-	Route::get('/collections', 'CollectionsController@index');
-	Route::post('/collections', 'CollectionsController@store');
-	Route::get('/collections/{collection}', 'CollectionsController@show');
-	Route::patch('/collections/{collection}', 'CollectionsController@update');
-    Route::delete('/collections/{collection}', 'CollectionsController@destroy');
+	Route::get('/users/{user}/collections', 'UserCollectionsController@index');
+	Route::post('/users/{user}/collections', 'UserCollectionsController@store');
+	Route::get('/users/{user}/collections/{collection}', 'UserCollectionsController@show');
+	Route::patch('/users/{user}/collections/{collection}', 'UserCollectionsController@update');
+    Route::delete('/users/{user}/collections/{collection}', 'UserCollectionsController@destroy');
 	Route::post('/collections/{collection}/tweets', 'CollectionTweetsController@store');
 	Route::delete('/collections/{collection}/tweets/{tweet}', 'CollectionTweetsController@destroy');
 });

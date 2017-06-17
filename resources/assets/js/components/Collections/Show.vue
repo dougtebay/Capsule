@@ -14,7 +14,7 @@
 	import Tweet from './Tweet.vue'
 
 	export default {
-		props: ['id'],
+		props: ['userId', 'collectionId'],
 
 		components: {
 			Tweet
@@ -34,7 +34,7 @@
 
 		methods: {
 			getCollection () {
-                axios.get(`/api/collections/${this.id}`).then(function (response) {
+                axios.get(`/api/users/${this.userId}/collections/${this.collectionId}`).then(function (response) {
                 	this.collection = response.data
                 }.bind(this))
 			},

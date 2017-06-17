@@ -1,6 +1,10 @@
 <template>
 	<section>
-		<collection v-for="collection in collections" :collection="collection" @destroy="destroy"></collection>
+		<collection v-for="collection in collections"
+					:userId="userId"
+					:collection="collection"
+					@destroy="destroy">
+		</collection>
 	</section>
 </template>
 
@@ -8,9 +12,9 @@
 	import Collection from './Collection.vue'
 
 	export default {
-		components: {
-			Collection
-		},
+		components: { Collection },
+
+		props: ['userId'],
 
 		data() {
 			return {
@@ -20,7 +24,7 @@
 
 		methods: {
 			getCollections () {
-                axios.get('/api/collections', {
+                axios.get(`/api/users/${this.userId}/collections`, {
                     params: { scope: 'user' }
                 }).then(function (response) {
                 	this.collections = response.data

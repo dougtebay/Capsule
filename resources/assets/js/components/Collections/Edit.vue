@@ -5,7 +5,7 @@
 	export default {
 		extends: Form,
 
-		props: ['id'],
+		props: ['userId', 'collectionId'],
 
 		data () {
 			return {
@@ -16,14 +16,14 @@
 
 		methods: {
 			getCollection () {
-                axios.get(`/api/collections/${this.id}`).then(function (response) {
+                axios.get(`/api/users/${this.userId}/collections/${this.collectionId}`).then(function (response) {
                 	this.collection = response.data
                 }.bind(this))
 			},
 
 			submit () {
-				axios.patch(`/api/collections/${this.id}`, this.collection).then(function (response) {
-                	this.$router.push({ path: `/collections/${this.id}` })
+				axios.patch(`/api/users/${this.userId}/collections/${this.collectionId}`, this.collection).then(function (response) {
+                	this.$router.push({ path: `/users/${this.userId}/collections/${this.collectionId}` })
                 }.bind(this)).catch(error => this.errors.record(error.response.data))
 			}
 		},
