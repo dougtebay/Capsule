@@ -14,6 +14,7 @@ class CreateCollectionTweetTable extends Migration
     public function up()
     {
         Schema::create('collection_tweet', function (Blueprint $table) {
+            $table->primary(['collection_id', 'tweet_id']);
             $table->integer('collection_id');
             $table->integer('tweet_id');
         });

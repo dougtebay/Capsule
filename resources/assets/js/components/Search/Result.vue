@@ -6,7 +6,7 @@
 			<select v-model="selected">
 				<option v-for="collection in collections" :value="collection.id">{{ collection.title }}</option>
 			</select>
-			<button @click.prevent="saveTweet(result, selected)">Save</button>
+			<button @click.prevent="saveTweet(selected, result)">Save</button>
 		</form>
 	</section>
 </template>
@@ -22,11 +22,8 @@
 		},
 
 		methods: {
-			saveTweet(tweet, collectionId) {
-				axios.post('/api/tweets', {
-                	tweet: tweet,
-                	collectionId: collectionId
-                }).then(function (response) {
+			saveTweet(collectionId, tweet) {
+				axios.post(`/api/collections/${collectionId}/tweets`, tweet).then(function (response) {
                 	//
                 }).catch(function (error) {
    					//

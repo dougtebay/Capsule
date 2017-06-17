@@ -5,7 +5,7 @@
 			<div>{{ collection.description }}</div>
 		</section>
 		<section v-for="tweet in collection.tweets">
-			<tweet :tweet="tweet" @destroy="destroy"></tweet>
+			<tweet :collection="collection" :tweet="tweet" @destroy="destroy"></tweet>
 		</section>
 	</section>
 </template>

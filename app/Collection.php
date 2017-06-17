@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Repositories\Tweets;
 use Illuminate\Database\Eloquent\Model;
 
 class Collection extends Model
@@ -27,8 +28,24 @@ class Collection extends Model
     	]);
     }
 
-    public function addTweet(array $tweet)
+    public function addTweet(array $data)
     {
-        $this->tweets()->save(Tweet::tweet($tweet));
+        if ($tweet = app(Tweets::class)->findByTwitterTweetId($data['id_str'])) {
+            if (!$this->tweets->contains($tweet)) {
+                $this->tweets()->attach($tweet);
+                return;
+            }
+        }
+
+        if (!$this->tweets->contains($tweet)) {
+            $tweet = Tweet::tweet($data);
+
+            $this->tweets()->save($tweet);
+        }
+    }
+
+    public function removeTweet(Tweet $tweet)
+    {
+        $this->tweets()->detach($tweet);
     }
 }

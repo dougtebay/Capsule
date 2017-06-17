@@ -8,11 +8,11 @@
 
 <script>
 	export default {
-		props: ['tweet'],
+		props: ['collection', 'tweet'],
 
 		methods: {
 			destroy() {
-				axios.delete(`/api/tweets/${this.tweet.id}`).then(function () {
+				axios.delete(`/api/collections/${this.collection.id}/tweets/${this.tweet.id}`).then(function () {
 					this.$emit('destroy', this.tweet.id)
 				}.bind(this))
 			}
