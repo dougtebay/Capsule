@@ -3,15 +3,15 @@
 namespace App\Http\Controllers;
 
 use Socialite;
-use App\Repositories\UserRepository;
+use App\Repositories\Users;
 
 class LoginController extends Controller
 {
-    protected $UserRepository;
+    protected $users;
 
-    public function __construct(UserRepository $userRepository)
+    public function __construct(Users $users)
     {
-        $this->userRepository = $userRepository;
+        $this->users = $users;
     }
 
     public function create()
@@ -26,7 +26,7 @@ class LoginController extends Controller
         session()->put('token', $twitterUser->token);
         session()->put('tokenSecret', $twitterUser->tokenSecret);
 
-        $user = $this->userRepository->findOrCreate($twitterUser);
+        $user = $this->users->findOrCreate($twitterUser);
 
         auth()->login($user);
 

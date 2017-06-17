@@ -5,7 +5,7 @@ namespace App\Repositories;
 use App\User;
 use Laravel\Socialite\One\User as TwitterUser;
 
-class UserRepository
+class Users
 {
     public function findOrCreate(TwitterUser $twitterUser)
     {

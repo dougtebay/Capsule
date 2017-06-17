@@ -48,9 +48,7 @@
             getResults () {
                 this.query = this.$route.query.query
                 axios.get('/api/search', {
-                    params: {
-                        query: this.query
-                    }
+                    params: { query: this.query }
                 }).then(function (response) {
                     scrollTo(0, 0)
                     this.results = response.data

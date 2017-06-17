@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Collection;
 use Illuminate\Http\Request;
 
@@ -9,8 +10,14 @@ class CollectionsController extends Controller
 {
     public function index()
     {
-        $userId = auth()->user() ? auth()->user()->id : null;
-        $collections = Collection::where('user_id', $userId)->get();
+        if (request()->scope === 'user') {
+            $userId = auth()->user() ? auth()->user()->id : null;
+            $collections = User::find($userId)->collections;
+
+            return response()->json($collections);
+        }
+
+        $collections = Collection::all();
 
         return response()->json($collections);
     }

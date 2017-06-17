@@ -8,8 +8,6 @@
 	import Collection from './Collection.vue'
 
 	export default {
-		props: ['user'],
-
 		components: {
 			Collection
 		},
@@ -22,7 +20,9 @@
 
 		methods: {
 			getCollections () {
-                axios.get('/api/collections').then(function (response) {
+                axios.get('/api/collections', {
+                    params: { scope: 'user' }
+                }).then(function (response) {
                 	this.collections = response.data
                 }.bind(this))
 			},
