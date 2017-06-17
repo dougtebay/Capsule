@@ -10,14 +10,13 @@
     import Helpers from '../../mixins/Helpers.vue'
 
     export default {
-        components: {
-            Result
-        },
+        components: { Result },
 
         mixins: [Helpers],
 
         data () {
             return {
+                userId: '',
                 query: '',
                 results: [],
                 collections: []
@@ -46,7 +45,6 @@
 
         methods: {
             getResults () {
-                this.query = this.$route.query.query
                 axios.get('/api/search', {
                     params: { query: this.query }
                 }).then(function (response) {
@@ -56,7 +54,7 @@
             },
 
             getCollections () {
-                axios.get('/api/collections').then(function (response) {
+                axios.get(`/api/users/${this.userId}/collections`).then(function (response) {
                     this.collections = response.data
                 }.bind(this))
             },
@@ -79,6 +77,8 @@
         },
 
         created () {
+            this.userId = this.$route.query.userId
+            this.query = this.$route.query.query
             this.getResults()
             this.getCollections()
         }

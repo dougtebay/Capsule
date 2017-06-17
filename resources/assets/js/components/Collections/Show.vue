@@ -34,7 +34,9 @@
 
 		methods: {
 			getCollection () {
-                axios.get(`/api/users/${this.userId}/collections/${this.collectionId}`).then(function (response) {
+                axios.get(`/api/users/${this.userId}/collections/${this.collectionId}`, {
+                    params: { 'with-tweets': 'true' }
+                }).then(function (response) {
                 	this.collection = response.data
                 }.bind(this))
 			},

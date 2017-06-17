@@ -24,18 +24,26 @@ class UserCollectionsController extends Controller
         return response()->json(['success' => true]);
     }
 
-    public function show($userId, Collection $collection)
+    public function show(User $user, string $collectionId)
     {
+        if (request()->get('with-tweets') === 'true') {
+            $collection = $user->collections->find($collectionId)->load('tweets');
+
+            return response()->json($collection);
+        }
+
+        $collection = $user->collections->find($collectionId);
+
         return response()->json($collection);
     }
 
-    public function update($userId, Collection $collection)
+    public function update(User $user, string $collectionId)
     {
         $this->validate(request(), [
             'title' => 'required'
         ]);
 
-        $collection->update([
+        $user->collections->find($collectionId)->update([
             'title' => request()->title,
             'description' => request()->description,
             'public' => isset(request()->public)
@@ -44,7 +52,7 @@ class UserCollectionsController extends Controller
         return response()->json(['success' => true]);
     }
 
-    public function destroy(User $user, $collectionId)
+    public function destroy(User $user, string $collectionId)
     {
         $user->removeCollection($collectionId);
 

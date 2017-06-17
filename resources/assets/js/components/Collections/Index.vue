@@ -24,14 +24,12 @@
 
 		methods: {
 			getCollections () {
-                axios.get(`/api/users/${this.userId}/collections`, {
-                    params: { scope: 'user' }
-                }).then(function (response) {
+                axios.get(`/api/users/${this.userId}/collections`).then(function (response) {
                 	this.collections = response.data
                 }.bind(this))
 			},
 
-			destroy(collectionId) {
+			destroy (collectionId) {
 				this.collections.forEach((collection, index) => {
 					if (collection.id === collectionId) {
 						this.collections.splice(index, 1)

@@ -7,6 +7,7 @@
 				<option v-for="collection in collections" :value="collection.id">{{ collection.title }}</option>
 			</select>
 			<button @click.prevent="saveTweet(selected, result)">Save</button>
+			<div v-if="savedStatus" >{{ savedStatus }}</div>
 		</form>
 	</section>
 </template>
@@ -15,19 +16,26 @@
 	export default {
 		props: ['result', 'collections'],
 
-		data() {
+		data () {
 			return {
-				selected: ''
+				selected: '',
+				savedStatus: ''
 			}
 		},
 
 		methods: {
-			saveTweet(collectionId, tweet) {
+			saveTweet (collectionId, tweet) {
 				axios.post(`/api/collections/${collectionId}/tweets`, tweet).then(function (response) {
-                	//
-                }).catch(function (error) {
-   					//
-  				});
+					this.savedStatus = `Saved to ${this.collectionTitle(collectionId)}`
+                }.bind(this))
+			},
+
+			collectionTitle (collectionId) {
+				var collection = this.collections.filter(collection => {
+					return collection.id === collectionId
+				})[0]
+
+				return collection ? collection.title : null
 			}
 		}
 	}

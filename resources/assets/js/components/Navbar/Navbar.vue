@@ -8,7 +8,7 @@
             	<a class="navbar-text" href="/login">Login</a>
         	</section>
         	<section v-if="user">
-        		<search-form></search-form>
+        		<search-form :user="user"></search-form>
     	        <span class="navbar-text">{{ user.name }}</span>
     	        <router-link class="navbar-text"
                             :to="{ path: `/users/${user.id}/collections`, params: { userId: user.id }}">

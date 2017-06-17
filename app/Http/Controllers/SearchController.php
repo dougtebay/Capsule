@@ -7,9 +7,9 @@ use App\Adapters\TwitterAdapter;
 
 class SearchController extends Controller
 {
-    public function index(Request $request, TwitterAdapter $twitterAdapter)
+    public function index(TwitterAdapter $twitterAdapter)
     {
-    	$this->validate($request, [
+    	$this->validate(request(), [
     		'query' => 'required'
     	]);
 
