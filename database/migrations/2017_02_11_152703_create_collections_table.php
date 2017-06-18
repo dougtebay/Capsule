@@ -16,8 +16,8 @@ class CreateCollectionsTable extends Migration
         Schema::create('collections', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
-            $table->string('title');
-            $table->string('description')->nullable();
+            $table->string('title', 30);
+            $table->string('description', 100)->nullable();
             $table->boolean('public');
             $table->timestamps();
         });

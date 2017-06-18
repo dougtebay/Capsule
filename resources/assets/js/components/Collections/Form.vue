@@ -5,6 +5,7 @@
 		<span v-if="errors.has('title')">{{ errors.get('title') }}</span>
 		<label for="description">Description</label>
 		<input id="description" type="textarea" v-model="collection.description">
+		<span v-if="errors.has('description')">{{ errors.get('description') }}</span>
 		<label for="public">Public</label>
 		<input id="public" type="checkbox" v-model="collection.public">
 		<button @click.prevent="submit()">Submit</button>

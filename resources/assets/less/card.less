@@ -1,6 +1,35 @@
 .card {
+	margin: 5px;
     width: 600px;
-    margin: 1px;
     padding: 20px;
     background-color: @white;
+}
+
+.card-title {
+	font-size: 2em;
+	color: @gray-dark;
+}
+
+.card-description {
+	margin: 10px 0 30px;
+	color: @gray;
+}
+
+.card-link-container {
+	display: flex;
+	justify-content: space-between;
+	width: 260px;
+}
+
+.card-link {
+	display: inline-block;
+	transition: background 0.3s;
+	padding: 10px 20px;
+	border-radius: 6px;
+	background: @gray-dark;
+	color: @white;
+}
+
+.card-link:hover {
+	background: @gray;
 }
