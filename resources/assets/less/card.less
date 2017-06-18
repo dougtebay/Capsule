@@ -1,24 +1,29 @@
 .card {
-	margin: 5px;
-    width: 600px;
-    padding: 20px;
+	.layer-1;
+	margin: 10px;
+	width: 600px;
+    padding: 30px;
     background-color: @white;
+}
+
+.card:hover {
+	.layer-2;
 }
 
 .card-title {
 	font-size: 2em;
-	color: @gray-dark;
+	color: @gray-75-percent;
 }
 
 .card-description {
-	margin: 10px 0 30px;
-	color: @gray;
+	margin: 15px 0 35px;
+	color: @gray-50-percent;
 }
 
 .card-link-container {
 	display: flex;
 	justify-content: space-between;
-	width: 260px;
+	width: 255px;
 }
 
 .card-link {
@@ -26,10 +31,15 @@
 	transition: background 0.3s;
 	padding: 10px 20px;
 	border-radius: 6px;
-	background: @gray-dark;
+	background: @orange-dark;
 	color: @white;
 }
 
 .card-link:hover {
-	background: @gray;
+	background: @orange;
+}
+
+.card-input {
+	margin-bottom: 15px;
+	width: 100%;
 }
