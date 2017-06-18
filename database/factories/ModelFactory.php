@@ -18,7 +18,8 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'twitter_user_id' => (string) $faker->unique()->randomNumber,
         'name' => $faker->name,
         'nickname' => $faker->userName,
-        'remember_token' => str_random(10)
+        'remember_token' => str_random(60),
+        'api_token' => str_random(60)
     ];
 });
 
@@ -26,10 +27,10 @@ $factory->define(App\Collection::class, function (Faker\Generator $faker) {
 
     return [
         'user_id' => function () {
-            return factory(App\User::class)->create()->id;
+            return App\User::inRandomOrder()->first()->id;
         },
-        'title' => $faker->word,
-        'description' => $faker->sentence,
+        'title' => $faker->text(30),
+        'description' => $faker->text(100),
         'public' => 1
     ];
 });
