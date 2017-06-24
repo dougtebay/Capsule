@@ -2,12 +2,13 @@
 
 namespace Tests\Feature;
 
+use App\User;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class SearchTweetsText extends TestCase
 {
-    use withoutMiddleware;
+    use DatabaseTransactions;
 
     protected function setUp()
     {
@@ -19,6 +20,9 @@ class SearchTweetsText extends TestCase
 
     public function testItCanGetSearchResults()
     {
+        $user = factory(User::class)->create();
+        $this->be($user);
+
         $response = $this->call('GET', 'search', ['query' => 'test']);
 
         $response->assertStatus(200)

@@ -5,7 +5,7 @@ namespace Tests\Unit\App\Repositories;
 use Faker;
 use App\User;
 use Tests\TestCase;
-use App\Repositories\UserRepository;
+use App\Repositories\Users;
 use Laravel\Socialite\One\User as TwitterUser;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
@@ -16,7 +16,7 @@ class UserRepositoryTest extends TestCase
     protected $user;
     protected $twitterUser;
     protected $faker;
-    protected $userRepository;
+    protected $users;
 
     protected function setUp()
     {
@@ -29,14 +29,14 @@ class UserRepositoryTest extends TestCase
         $this->twitterUser->name = $this->faker->name;
         $this->twitterUser->nickname = $this->faker->userName;
 
-        $this->userRepository = new UserRepository();
+        $this->users = new Users();
     }
 
     public function testItCanFindExistingUser()
     {
         $this->twitterUser->user = ['id_str' => $this->user->twitter_user_id];
 
-        $user = $this->userRepository->findOrCreate($this->twitterUser);
+        $user = $this->users->findOrCreate($this->twitterUser);
 
         $this->assertEquals($this->user->id, User::all()->last()->id);
     }
@@ -45,7 +45,7 @@ class UserRepositoryTest extends TestCase
     {
         $this->twitterUser->user = ['id_str' => $this->faker->randomNumber];
 
-        $user = $this->userRepository->findOrCreate($this->twitterUser);
+        $user = $this->users->findOrCreate($this->twitterUser);
 
         $this->assertGreaterThan($this->user->id, User::all()->last()->id);
         $this->assertEquals($this->twitterUser->user['id_str'], $user->twitter_user_id);

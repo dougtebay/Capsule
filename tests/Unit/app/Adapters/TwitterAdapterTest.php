@@ -4,7 +4,6 @@ namespace Tests\Unit\App\Adapters;
 
 use Tests\TestCase;
 use App\Adapters\TwitterAdapter;
-use App\Repositories\TweetRepository;
 
 class TwitterAdapterTest extends TestCase
 {
@@ -17,7 +16,7 @@ class TwitterAdapterTest extends TestCase
         session()->put('token', config('services.twitter.token'));
         session()->put('tokenSecret', config('services.twitter.token_secret'));
 
-        $this->twitterAdapter = new TwitterAdapter(new TweetRepository, session());
+        $this->twitterAdapter = new TwitterAdapter();
     }
 
     public function testItCanReturnSearchResults()
