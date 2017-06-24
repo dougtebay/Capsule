@@ -4,12 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Tweet;
 use App\Collection;
+use App\Repositories\Tweets;
 
 class CollectionTweetsController extends Controller
 {
+	protected $tweets;
+
+	public function __construct(Tweets $tweets)
+	{
+		$this->tweets = $tweets;
+	}
+
 	public function store(Collection $collection)
 	{
-		$collection->addTweet(request()->all());
+		$tweet = $this->tweets->findOrCreate(request()->all());
+
+		$collection->addTweet($tweet);
 
 		return response()->json(['success' => true]);
 	}
