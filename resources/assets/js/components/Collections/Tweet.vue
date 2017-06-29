@@ -11,7 +11,7 @@
 		props: ['collection', 'tweet'],
 
 		methods: {
-			destroy() {
+			destroy () {
 				axios.delete(`/api/collections/${this.collection.id}/tweets/${this.tweet.id}`).then(function () {
 					this.$emit('destroy', this.tweet.id)
 				}.bind(this))

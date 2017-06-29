@@ -31,11 +31,7 @@
 			},
 
 			collectionTitle (collectionId) {
-				var collection = this.collections.filter(collection => {
-					return collection.id === collectionId
-				})[0]
-
-				return collection ? collection.title : null
+				return this.collections.filter(collection => collection.id === collectionId)[0].title
 			}
 		}
 	}

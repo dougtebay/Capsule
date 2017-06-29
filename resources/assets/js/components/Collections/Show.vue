@@ -20,14 +20,14 @@
 			Tweet
 		},
 
-		data() {
+		data () {
 			return {
 				collection: {}
 			}
 		},
 
 		computed: {
-			hasCollection: function() {
+			hasCollection () {
 				return !!Object.keys(this.collection).length
 			}
 		},
@@ -41,16 +41,16 @@
                 }.bind(this))
 			},
 
-			destroy(tweetId) {
+			destroy (tweetId) {
 				this.collection.tweets.forEach((tweet, index) => {
 					if (tweet.id === tweetId) {
 						this.collection.tweets.splice(index, 1)
 					}
-				}, this)
+				})
 			}
 		},
 
-		created() {
+		created () {
 			this.getCollection()
 		}
 	}

@@ -4,7 +4,7 @@
     		<section>
     	        <a class="navbar-text" href="/">{{ appName }}</a>
     	    </section>
-        	<section v-if="guest">
+        	<section v-if="isGuest">
             	<a class="navbar-text" href="/login">Login</a>
         	</section>
         	<section v-if="user">
@@ -35,7 +35,7 @@
         },
 
 		computed: {
-			guest: function () {
+			isGuest () {
 				return !this.user
 			}
 		}

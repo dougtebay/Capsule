@@ -16,7 +16,7 @@
 
 		props: ['userId'],
 
-		data() {
+		data () {
 			return {
 				collections: []
 			}
@@ -34,11 +34,11 @@
 					if (collection.id === collectionId) {
 						this.collections.splice(index, 1)
 					}
-				}, this)
+				})
 			}
 		},
 
-		created() {
+		created () {
 			this.getCollections()
 		}
 	}

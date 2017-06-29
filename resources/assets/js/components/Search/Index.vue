@@ -1,7 +1,6 @@
 <template>
     <section>
         <result v-for="result in results" :result="result" :collections="collections"></result>
-        <button v-if="hasResults" @click="getMoreResults">More</button>
     </section>
 </template>
 
@@ -24,7 +23,7 @@
         },
 
         computed: {
-            maxId: function () {
+            maxId () {
                 if (this.results.length) {
                     return this.lastItem(this.results).twitter_tweet_id
                 }
@@ -32,13 +31,13 @@
                 return ''
             },
 
-            hasResults: function () {
+            hasResults () {
                 return !!this.results.length
             }
         },
 
         watch: {
-            $route: function () {
+            $route () {
                 this.getResults()
             },
         },
@@ -59,6 +58,14 @@
                 }.bind(this))
             },
 
+            setOnScrollEvent() {
+                window.onscroll = event => {
+                    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+                        this.getMoreResults()
+                    }
+                }
+            },
+
             getMoreResults () {
                 axios.get('/api/search', {
                     params: {
@@ -77,10 +84,11 @@
         },
 
         created () {
-            this.userId = this.$route.query.userId
             this.query = this.$route.query.query
+            this.userId = this.$route.query.userId
             this.getResults()
             this.getCollections()
+            this.setOnScrollEvent()
         }
     }
 </script>
