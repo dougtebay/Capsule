@@ -36,6 +36,6 @@ class Collection extends Model
 
     public function removeTweet(Tweet $tweet)
     {
-        $this->tweets()->detach($tweet);
+        return $this->tweets()->detach($tweet);
     }
 }
