@@ -16,7 +16,7 @@ class UserCollectionsController extends Controller
     public function store(User $user)
     {
         $this->validate(request(), [
-            'title' => 'required|max:30',
+            'title' => 'required|max:50',
             'description' => 'sometimes|max:100'
         ]);
 
@@ -41,7 +41,7 @@ class UserCollectionsController extends Controller
     public function update(User $user, string $collectionId)
     {
         $this->validate(request(), [
-            'title' => 'required|max:30',
+            'title' => 'required|max:50',
             'description' => 'sometimes|max:100'
         ]);
 

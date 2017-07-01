@@ -10,6 +10,15 @@ class UserLoginTest extends DuskTestCase
 {
 	use DatabaseMigrations;
 
+	protected $user;
+
+	public function setUp()
+	{
+		parent::setUp();
+
+		$this->user = factory(User::class)->create();
+	}
+
 	public function test_user_can_see_login_page()
 	{
 		$this->browse(function ($browser) {
@@ -21,12 +30,21 @@ class UserLoginTest extends DuskTestCase
 
 	public function test_user_can_log_in()
 	{
-		$user = factory(User::class)->create();
-
-		$this->browse(function ($browser) use ($user) {
-			$browser->loginAs($user)
+		$this->browse(function ($browser) {
+			$browser->loginAs($this->user)
 			->visit('/')
-			->assertSee($user->name);
+			->assertSee($this->user->name);
+		});
+	}
+
+	public function test_user_can_log_out()
+	{
+		$this->browse(function ($browser) {
+			$browser->loginAs($this->user)
+			->visit('/')
+			->clickLink('Logout')
+			->waitForText(config('app.name'))
+			->assertSee('Login');
 		});
 	}
 }

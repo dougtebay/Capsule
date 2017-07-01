@@ -29,7 +29,7 @@ $factory->define(App\Collection::class, function (Faker\Generator $faker) {
         'user_id' => function () {
             return App\User::inRandomOrder()->first()->id;
         },
-        'title' => $faker->text(30),
+        'title' => $faker->text(50),
         'description' => $faker->text(100),
         'public' => 1
     ];
