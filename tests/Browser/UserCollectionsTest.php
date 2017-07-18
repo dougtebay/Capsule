@@ -6,6 +6,7 @@ use App\User;
 use App\Collection;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
+use Tests\Browser\Pages\HomePage;
 use Tests\Browser\Pages\UserCollections\EditPage;
 use Tests\Browser\Pages\UserCollections\ShowPage;
 use Tests\Browser\Pages\UserCollections\IndexPage;
@@ -30,16 +31,16 @@ class UserCollectionsTest extends DuskTestCase
 		});
 	}
 
-	protected function loginAndVisitHomepage(Browser $browser)
+	protected function loginAndVisitHomePage(Browser $browser)
 	{
 		return $browser->loginAs($this->user)
-			->visit('/');
+			->visit(new HomePage);
 	}
 
 	public function test_can_visit_index_page()
 	{
 		$this->browse(function ($browser) {
-			$this->loginAndVisitHomepage($browser)
+			$this->loginAndVisitHomePage($browser)
 				->clickLink('My Collections')
 				->on(new IndexPage($this->user));
 		});
@@ -48,7 +49,7 @@ class UserCollectionsTest extends DuskTestCase
 	public function test_can_visit_create_page()
 	{
 		$this->browse(function ($browser) {
-			$this->loginAndVisitHomepage($browser)
+			$this->loginAndVisitHomePage($browser)
 				->clickLink('Add Collection')
 				->on(new CreatePage($this->user));
 		});
