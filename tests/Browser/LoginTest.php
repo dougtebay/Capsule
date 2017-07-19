@@ -8,7 +8,7 @@ use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\HomePage;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
-class UserLoginTest extends DuskTestCase
+class LoginTest extends DuskTestCase
 {
 	use DatabaseMigrations;
 
@@ -27,7 +27,7 @@ class UserLoginTest extends DuskTestCase
 			->visit(new HomePage);
 	}
 
-	public function test_user_can_see_login_page()
+	public function test_can_visit_login_page()
 	{
 		$this->browse(function ($browser) {
 			$browser->visit(new HomePage)
@@ -36,7 +36,7 @@ class UserLoginTest extends DuskTestCase
 		});
 	}
 
-	public function test_user_can_log_in()
+	public function test_can_log_in()
 	{
 		$this->browse(function ($browser) {
 			$this->loginAndVisitHomePage($browser)
@@ -44,7 +44,7 @@ class UserLoginTest extends DuskTestCase
 		});
 	}
 
-	public function test_user_can_log_out()
+	public function test_can_log_out()
 	{
 		$this->browse(function ($browser) {
 			$this->loginAndVisitHomePage($browser)

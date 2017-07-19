@@ -86,7 +86,7 @@ class UserCollectionsTest extends DuskTestCase
 		});
 	}
 
-	public function test_user_cannot_create_collection_with_long_description()
+	public function test_cannot_create_collection_with_long_description()
 	{
 		$this->browse(function ($browser) {
 			$browser->loginAs($this->user)
@@ -111,7 +111,7 @@ class UserCollectionsTest extends DuskTestCase
 		});
 	}
 
-	public function test_user_can_visit_edit_page()
+	public function test_can_visit_edit_page()
 	{
 		$collection = $this->user->collections->first();
 
@@ -138,7 +138,7 @@ class UserCollectionsTest extends DuskTestCase
 		});
 	}
 
-	public function test_user_can_delete_collection()
+	public function test_can_delete_collection()
 	{
 		$collection = $this->user->collections->first();
 

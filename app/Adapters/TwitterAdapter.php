@@ -4,7 +4,6 @@ namespace App\Adapters;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\HandlerStack;
-use Illuminate\Session\SessionManager;
 use GuzzleHttp\Subscriber\Oauth\Oauth1;
 
 class TwitterAdapter

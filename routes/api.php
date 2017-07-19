@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::group(['middleware' => 'auth:api'], function() {
+Route::group(['middleware' => 'api'], function() {
 	Route::get('/search', 'SearchController@index');
 	Route::get('/users/{user}/collections', 'UserCollectionsController@index');
 	Route::post('/users/{user}/collections', 'UserCollectionsController@store');
