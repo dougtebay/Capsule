@@ -35,6 +35,6 @@ class EditPage extends BasePage
         $browser->type('title', $title)
             ->type('description', $description)
             ->press('Submit')
-            ->pause(500);
+            ->pause(1000);
     }
 }

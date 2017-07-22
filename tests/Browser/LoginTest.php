@@ -31,8 +31,8 @@ class LoginTest extends DuskTestCase
 	{
 		$this->browse(function ($browser) {
 			$browser->visit(new HomePage)
-			->clickLink('Login')
-			->assertSee('Twitter');
+				->clickLink('Login')
+				->assertSee('Twitter');
 		});
 	}
 
@@ -40,7 +40,7 @@ class LoginTest extends DuskTestCase
 	{
 		$this->browse(function ($browser) {
 			$this->loginAndVisitHomePage($browser)
-			->assertSee($this->user->name);
+				->assertSee($this->user->name);
 		});
 	}
 
@@ -48,9 +48,9 @@ class LoginTest extends DuskTestCase
 	{
 		$this->browse(function ($browser) {
 			$this->loginAndVisitHomePage($browser)
-			->clickLink('Logout')
-			->waitForText(config('app.name'))
-			->assertSee('Login');
+				->clickLink('Logout')
+				->waitForText(config('app.name'))
+				->assertSee('Login');
 		});
 	}
 }

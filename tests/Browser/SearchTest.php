@@ -2,7 +2,9 @@
 
 use App\User;
 use Tests\DuskTestCase;
+use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\HomePage;
+use Tests\Browser\Pages\SearchPage;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class SearchTest extends DuskTestCase
@@ -18,15 +20,33 @@ class SearchTest extends DuskTestCase
 		$this->user = factory(User::class)->create();
 	}
 
+	protected function loginAndVisitHomePage(Browser $browser)
+	{
+		return $browser->loginAs($this->user)
+			->visit(new HomePage);
+	}
+
 	public function test_can_search_for_tweets()
 	{
-		$this->browse(function ($browser) {
-			$browser->loginAs($this->user)
-			->visit(new HomePage)
-			->type('query', 'test')
-			->press('Search')
-			->pause(500)
-			->assertSee('test');
+		$query = 'test';
+
+		$this->browse(function ($browser) use ($query) {
+			$this->loginAndVisitHomePage($browser)
+				->search($query)
+				->on(new SearchPage($query, $this->user->id))
+				->assertSee('Save');
+		});
+	}
+
+	public function test_cannot_search_for_tweets_without_query()
+	{
+		$query = '';
+
+		$this->browse(function ($browser) use ($query) {
+			$this->loginAndVisitHomePage($browser)
+				->search($query)
+				->on(new SearchPage($query, $this->user->id))
+				->assertDontSee('Save');
 		});
 	}
 }

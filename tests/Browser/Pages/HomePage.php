@@ -16,4 +16,11 @@ class HomePage extends BasePage
     {
         $browser->assertPathIs($this->url());
     }
+
+    public function search(Browser $browser, string $query)
+	{
+		$browser->type('query', $query)
+			->press('Search')
+			->pause(1000);
+	}
 }
