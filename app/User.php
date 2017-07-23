@@ -7,7 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     protected $fillable = [
-        'twitter_user_id', 'name', 'nickname', 'api_token', 'twitter_token', 'twitter_token_secet'
+        'twitter_user_id', 'name', 'nickname', 'api_token', 'twitter_token', 'twitter_token_secret'
     ];
 
     protected $hidden = [
@@ -24,9 +24,11 @@ class User extends Authenticatable
         return $this->hasManyThrough(Tweet::class, Collection::class);
     }
 
-    public function addCollection(array $collection)
+    public function addCollection(array $collectionParams)
     {
-        $this->collections()->save(Collection::collect($collection));
+        $collection = Collection::collect($collectionParams);
+
+        $this->collections()->save($collection);
     }
 
     public function removeCollection(int $collectionId)

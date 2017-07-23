@@ -46,7 +46,6 @@
             getResults () {
                 axios.get('/api/search', {
                     params: {
-                        user_id: this.userId,
                         query: this.query
                     }
                 }).then(function (response) {
@@ -72,7 +71,6 @@
             getMoreResults () {
                 axios.get('/api/search', {
                     params: {
-                        user_id: this.userId,
                         query: this.query,
                         max_id: this.maxId
                     }

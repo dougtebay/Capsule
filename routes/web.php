@@ -19,7 +19,7 @@ Route::get('/login', 'LoginController@create');
 Route::get('/login/callback', 'LoginController@callback');
 Route::post('/logout', 'LoginController@destroy')->middleware('auth');
 
-Route::group(['middleware' => ['auth', 'redirect']], function() {
+Route::group(['middleware' => ['auth', 'redirect.api']], function() {
     Route::get('/search');
 	Route::get('/users/{user}/collections');
     Route::get('/users/{user}/collections/create');

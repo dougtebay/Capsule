@@ -8,20 +8,24 @@ use App\Adapters\TwitterAdapter;
 
 class SearchController extends Controller
 {
+    protected $twitterAdapter;
+
+    public function __construct(TwitterAdapter $twitterAdapter)
+    {
+        $this->twitterAdapter = $twitterAdapter;
+    }
+
     public function index()
     {
     	$this->validate(request(), [
-    		'user_id' => 'required',
-            'query' => 'required',
+    		'query' => 'required',
             'max_id' => 'sometimes'
     	]);
 
-        $user = User::find(request()->get('user_id'));
-    	$query = request()->get('query');
+        $query = request()->get('query');
         $maxId = request()->get('max_id');
 
-        $twitterAdapter = new TwitterAdapter($user);
-        $results = $twitterAdapter->search($query, $maxId);
+        $results = $this->twitterAdapter->search($query, $maxId);
 
         return response()->json($results);
     }

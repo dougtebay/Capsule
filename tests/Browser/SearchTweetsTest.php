@@ -33,7 +33,7 @@ class SearchTweetsTest extends DuskTestCase
 		$this->browse(function ($browser) use ($query) {
 			$this->loginAndVisitHomePage($browser)
 				->search($query)
-				->on(new SearchPage($this->user->id, $query))
+				->on(new SearchPage($query, $this->user->id))
 				->assertSee('Save');
 		});
 	}
@@ -45,7 +45,7 @@ class SearchTweetsTest extends DuskTestCase
 		$this->browse(function ($browser) use ($query) {
 			$this->loginAndVisitHomePage($browser)
 				->search($query)
-				->on(new SearchPage($this->user->id, $query))
+				->on(new SearchPage($query, $this->user->id))
 				->assertDontSee('Save');
 		});
 	}

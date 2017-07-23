@@ -7,10 +7,10 @@ use Laravel\Dusk\Page as BasePage;
 
 class SearchPage extends BasePage
 {
-	public function __construct(string $userId, string $query)
+	public function __construct(string $query, string $userId)
     {
-    	$this->userId = $userId;
         $this->query = $query;
+        $this->userId = $userId;
     }
 
 	public function url()
@@ -21,7 +21,7 @@ class SearchPage extends BasePage
 	public function assert(Browser $browser)
     {
         $browser->assertPathIs($this->url())
-        	->assertQueryStringHas('userId', $this->userId)
-	        ->assertQueryStringHas('query', $this->query);
+            ->assertQueryStringHas('query', $this->query)
+        	->assertQueryStringHas('userId', $this->userId);
     }
 }

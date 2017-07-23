@@ -15,11 +15,17 @@ use Illuminate\Http\Request;
 
 Route::group(['middleware' => 'api'], function() {
 	Route::get('/search', 'SearchController@index');
-	Route::get('/users/{user}/collections', 'UserCollectionsController@index');
-	Route::post('/users/{user}/collections', 'UserCollectionsController@store');
-	Route::get('/users/{user}/collections/{collection}', 'UserCollectionsController@show');
-	Route::patch('/users/{user}/collections/{collection}', 'UserCollectionsController@update');
-    Route::delete('/users/{user}/collections/{collection}', 'UserCollectionsController@destroy');
-	Route::post('/collections/{collection}/tweets', 'CollectionTweetsController@store');
-	Route::delete('/collections/{collection}/tweets/{tweet}', 'CollectionTweetsController@destroy');
+
+	Route::group(['middleware' => ['auth.user', 'auth.user.collection']], function() {
+		Route::get('/users/{user}/collections', 'UserCollectionsController@index');
+		Route::post('/users/{user}/collections', 'UserCollectionsController@store');
+		Route::get('/users/{user}/collections/{collectionId}', 'UserCollectionsController@show');
+		Route::patch('/users/{user}/collections/{collectionId}', 'UserCollectionsController@update');
+	    Route::delete('/users/{user}/collections/{collectionId}', 'UserCollectionsController@destroy');
+	});
+
+	Route::group(['middleware' => 'auth.user.collection'], function() {
+		Route::post('/collections/{collection}/tweets', 'CollectionTweetsController@store');
+		Route::delete('/collections/{collection}/tweets/{tweet}', 'CollectionTweetsController@destroy');
+	});
 });
