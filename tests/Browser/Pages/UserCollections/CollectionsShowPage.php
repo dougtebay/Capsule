@@ -7,7 +7,7 @@ use App\Collection;
 use Laravel\Dusk\Browser;
 use Laravel\Dusk\Page as BasePage;
 
-class ShowPage extends BasePage
+class CollectionsShowPage extends BasePage
 {
     protected $user;
     protected $collection;

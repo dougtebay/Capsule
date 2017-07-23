@@ -7,10 +7,10 @@ use App\Collection;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\HomePage;
-use Tests\Browser\Pages\UserCollections\EditPage;
-use Tests\Browser\Pages\UserCollections\ShowPage;
-use Tests\Browser\Pages\UserCollections\IndexPage;
-use Tests\Browser\Pages\UserCollections\CreatePage;
+use Tests\Browser\Pages\UserCollections\CollectionsEditPage;
+use Tests\Browser\Pages\UserCollections\CollectionsShowPage;
+use Tests\Browser\Pages\UserCollections\CollectionsIndexPage;
+use Tests\Browser\Pages\UserCollections\CollectionsCreatePage;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class UserCollectionsTest extends DuskTestCase
@@ -27,7 +27,7 @@ class UserCollectionsTest extends DuskTestCase
 		$collections = factory(Collection::class, 3)->create();
 
 		$collections->each(function ($collection) {
-			$this->user->collections()->save($collection);
+			$this->user->addCollection($collection->toArray());
 		});
 	}
 
@@ -42,7 +42,7 @@ class UserCollectionsTest extends DuskTestCase
 		$this->browse(function ($browser) {
 			$this->loginAndVisitHomePage($browser)
 				->clickLink('My Collections')
-				->on(new IndexPage($this->user));
+				->on(new CollectionsIndexPage($this->user));
 		});
 	}
 
@@ -51,7 +51,7 @@ class UserCollectionsTest extends DuskTestCase
 		$this->browse(function ($browser) {
 			$this->loginAndVisitHomePage($browser)
 				->clickLink('Add Collection')
-				->on(new CreatePage($this->user));
+				->on(new CollectionsCreatePage($this->user));
 		});
 	}
 
@@ -59,7 +59,7 @@ class UserCollectionsTest extends DuskTestCase
 	{
 		$this->browse(function ($browser) {
 			$browser->loginAs($this->user)
-				->visit(new CreatePage($this->user))
+				->visit(new CollectionsCreatePage($this->user))
 				->fillOutForm('Test Title', 'Test description')
 				->assertSee('Test Title')
 				->assertSee('Test description');
@@ -70,7 +70,7 @@ class UserCollectionsTest extends DuskTestCase
 	{
 		$this->browse(function ($browser) {
 			$browser->loginAs($this->user)
-				->visit(new CreatePage($this->user))
+				->visit(new CollectionsCreatePage($this->user))
 				->fillOutForm('', 'Test description')
 				->assertSee('title field is required');
 		});
@@ -80,7 +80,7 @@ class UserCollectionsTest extends DuskTestCase
 	{
 		$this->browse(function ($browser) {
 			$browser->loginAs($this->user)
-				->visit(new CreatePage($this->user))
+				->visit(new CollectionsCreatePage($this->user))
 				->fillOutForm(str_random(51), 'Test description')
 				->assertSee('title may not be greater than');
 		});
@@ -90,7 +90,7 @@ class UserCollectionsTest extends DuskTestCase
 	{
 		$this->browse(function ($browser) {
 			$browser->loginAs($this->user)
-				->visit(new CreatePage($this->user))
+				->visit(new CollectionsCreatePage($this->user))
 				->fillOutForm('Test Title', str_random(101))
 				->assertSee('description may not be greater than');
 		});
@@ -102,10 +102,10 @@ class UserCollectionsTest extends DuskTestCase
 
 		$this->browse(function ($browser) use ($collection) {
 			$browser->loginAs($this->user)
-				->visit(new IndexPage($this->user))
+				->visit(new CollectionsIndexPage($this->user))
 				->clickLink('View')
 				->waitForText(config('app.name'))
-				->on(new ShowPage($this->user, $collection))
+				->on(new CollectionsShowPage($this->user, $collection))
 				->assertSee($collection->title)
 				->assertSee($collection->description);
 		});
@@ -117,10 +117,10 @@ class UserCollectionsTest extends DuskTestCase
 
 		$this->browse(function ($browser) use ($collection) {
 			$browser->loginAs($this->user)
-				->visit(new IndexPage($this->user))
+				->visit(new CollectionsIndexPage($this->user))
 				->clickLink('Edit')
 				->waitForText(config('app.name'))
-				->on(new EditPage($this->user, $collection));
+				->on(new CollectionsEditPage($this->user, $collection));
 		});
 	}
 
@@ -130,9 +130,9 @@ class UserCollectionsTest extends DuskTestCase
 
 		$this->browse(function ($browser) use ($collection) {
 			$browser->loginAs($this->user)
-				->visit(new EditPage($this->user, $collection))
+				->visit(new CollectionsEditPage($this->user, $collection))
 				->fillOutForm('Test Title', 'Test description')
-				->on(new ShowPage($this->user, $collection))
+				->on(new CollectionsShowPage($this->user, $collection))
 				->assertSee('Test Title')
 				->assertSee('Test description');
 		});
@@ -144,7 +144,7 @@ class UserCollectionsTest extends DuskTestCase
 
 		$this->browse(function ($browser) use ($collection) {
 			$browser->loginAs($this->user)
-				->visit(new IndexPage($this->user))
+				->visit(new CollectionsIndexPage($this->user))
 				->clickLink('Delete')
 				->waitForText(config('app.name'))
 				->assertDontSee($collection->title)

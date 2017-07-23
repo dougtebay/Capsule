@@ -6,7 +6,7 @@ use App\User;
 use Laravel\Dusk\Browser;
 use Laravel\Dusk\Page as BasePage;
 
-class IndexPage extends BasePage
+class CollectionsIndexPage extends BasePage
 {
     protected $user;
 

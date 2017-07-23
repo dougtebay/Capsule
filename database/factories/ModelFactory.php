@@ -27,7 +27,7 @@ $factory->define(App\Collection::class, function (Faker\Generator $faker) {
 
     return [
         'user_id' => function () {
-            return App\User::inRandomOrder()->first()->id;
+            return factory(App\User::class)->create()->id;
         },
         'title' => $faker->text(50),
         'description' => $faker->text(100),
@@ -43,6 +43,6 @@ $factory->define(App\Tweet::class, function (Faker\Generator $faker) {
         'user_name' => $faker->name,
         'user_nickname' => $faker->userName,
         'text' => $faker->text(140),
-        'twitter_created_at' => date('D M d H:i:s O Y')
+        'twitter_created_at' => date('Y-m-d H:i:s')
     ];
 });
