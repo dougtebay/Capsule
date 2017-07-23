@@ -18,6 +18,8 @@ class CreateUsersTable extends Migration
             $table->string('twitter_user_id')->unique();
             $table->string('name');
             $table->string('nickname');
+            $table->string('twitter_token');
+            $table->string('twitter_token_secret');
             $table->rememberToken();
             $table->string('api_token', 60)->unique();
             $table->timestamps();

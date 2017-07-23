@@ -42,7 +42,7 @@ class CollectionTweetsTest extends DuskTestCase
 		$this->browse(function ($browser) use ($query) {
 			$this->loginAndVisitHomePage($browser)
 				->search($query)
-				->on(new SearchPage($query, $this->user->id))
+				->on(new SearchPage($this->user->id, $query))
 				->select('collections', $this->collection->id)
 				->press('Save')
 				->waitForText(config('app.name'))

@@ -7,7 +7,7 @@ use Tests\Browser\Pages\HomePage;
 use Tests\Browser\Pages\SearchPage;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
-class SearchTest extends DuskTestCase
+class SearchTweetsTest extends DuskTestCase
 {
 	use DatabaseMigrations;
 
@@ -33,7 +33,7 @@ class SearchTest extends DuskTestCase
 		$this->browse(function ($browser) use ($query) {
 			$this->loginAndVisitHomePage($browser)
 				->search($query)
-				->on(new SearchPage($query, $this->user->id))
+				->on(new SearchPage($this->user->id, $query))
 				->assertSee('Save');
 		});
 	}
@@ -45,7 +45,7 @@ class SearchTest extends DuskTestCase
 		$this->browse(function ($browser) use ($query) {
 			$this->loginAndVisitHomePage($browser)
 				->search($query)
-				->on(new SearchPage($query, $this->user->id))
+				->on(new SearchPage($this->user->id, $query))
 				->assertDontSee('Save');
 		});
 	}

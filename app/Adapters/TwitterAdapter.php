@@ -2,6 +2,7 @@
 
 namespace App\Adapters;
 
+use App\User;
 use GuzzleHttp\Client;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Subscriber\Oauth\Oauth1;
@@ -10,21 +11,21 @@ class TwitterAdapter
 {
     protected $client;
 
-    public function __construct()
+    public function __construct(User $user)
     {
         $stack = HandlerStack::create();
-        $middleware = $this->getMiddleware();
+        $middleware = $this->getMiddleware($user);
         $stack->push($middleware);
         $this->client = $this->getClient($stack);
     }
 
-    public function getMiddleware()
+    public function getMiddleware(User $user)
     {
         return new Oauth1([
             'consumer_key'    => config('services.twitter.client_id'),
             'consumer_secret' => config('services.twitter.client_secret'),
-            'token'           => session()->get('token'),
-            'token_secret'    => session()->get('tokenSecret')
+            'token'           => $user->twitter_token,
+            'token_secret'    => $user->twitter_token_secret
         ]);
     }
 

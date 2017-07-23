@@ -14,8 +14,18 @@ class Users
                 'twitter_user_id' => $twitterUser->user['id_str'],
                 'name' => $twitterUser->name,
                 'nickname' => $twitterUser->nickname,
+                'twitter_token' => $twitterUser->token,
+                'twitter_token_secret' => $twitterUser->tokenSecret,
                 'api_token' => str_random(60)
             ]);
+        }
+
+        if ($twitterUser->token !== $user->twitter_token) {
+            $user->update(['twitter_token', $twitterUser->token]);
+        }
+
+        if ($twitterUser->tokenSecret !== $user->twitter_token_secret) {
+            $user->update(['twitter_token_secret', $twitterUser->tokenSecret]);
         }
 
         return $user;

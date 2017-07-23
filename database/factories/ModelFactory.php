@@ -18,6 +18,8 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'twitter_user_id' => (string) $faker->unique()->randomNumber,
         'name' => $faker->name,
         'nickname' => $faker->userName,
+        'twitter_token' => config('services.twitter.token'),
+        'twitter_token_secret' => config('services.twitter.token_secret'),
         'remember_token' => str_random(60),
         'api_token' => str_random(60)
     ];

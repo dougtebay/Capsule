@@ -23,9 +23,6 @@ class LoginController extends Controller
     {
         $twitterUser = Socialite::driver('twitter')->user();
 
-        session()->put('token', $twitterUser->token);
-        session()->put('tokenSecret', $twitterUser->tokenSecret);
-
         $user = $this->users->findOrCreate($twitterUser);
 
         auth()->login($user);

@@ -25,7 +25,7 @@
         computed: {
             maxId () {
                 if (this.results.length) {
-                    return this.lastItem(this.results).twitter_tweet_id
+                    return this.lastItem(this.results).id_str
                 }
 
                 return ''
@@ -45,7 +45,10 @@
         methods: {
             getResults () {
                 axios.get('/api/search', {
-                    params: { query: this.query }
+                    params: {
+                        user_id: this.userId,
+                        query: this.query
+                    }
                 }).then(function (response) {
                     scrollTo(0, 0)
                     this.results = response.data
@@ -69,6 +72,7 @@
             getMoreResults () {
                 axios.get('/api/search', {
                     params: {
+                        user_id: this.userId,
                         query: this.query,
                         max_id: this.maxId
                     }

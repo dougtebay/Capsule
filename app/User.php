@@ -7,7 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     protected $fillable = [
-        'twitter_user_id', 'name', 'nickname', 'api_token'
+        'twitter_user_id', 'name', 'nickname', 'api_token', 'twitter_token', 'twitter_token_secet'
     ];
 
     protected $hidden = [
