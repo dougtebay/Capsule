@@ -31,7 +31,6 @@ class CollectionsCreatePage extends BasePage
     {
         $browser->type('title', $title)
             ->type('description', $description)
-            ->press('Submit')
-            ->pause(500);
+            ->press('Submit');
     }
 }

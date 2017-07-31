@@ -45,11 +45,11 @@ class CollectionTweetsTest extends DuskTestCase
 				->on(new SearchPage($query, $this->user->id))
 				->select('collections', $this->collection->id)
 				->press('Save')
-				->waitForText(config('app.name'))
-				->assertSee("Saved to {$this->collection->name}")
+				->waitForText("Saved to {$this->collection->title}")
+				->assertSee("Saved to {$this->collection->title}")
 				->visit(new CollectionsShowPage($this->user, $this->collection))
-				->waitForText(config('app.name'))
-				->assertSee($query);
+				->waitForText($this->collection->title)
+				->assertVisible('.tweet-text');
 		});
 	}
 
@@ -62,10 +62,10 @@ class CollectionTweetsTest extends DuskTestCase
 		$this->browse(function ($browser) use ($tweet) {
 			$this->loginAndVisitHomePage($browser)
 				->visit(new CollectionsShowPage($this->user, $this->collection))
-				->waitForText(config('app.name'))
+				->waitForText($this->collection->title)
 				->assertSee($tweet->text)
 				->clickLink('Delete')
-				->waitForText(config('app.name'))
+				->waitUntilMissing("#{$tweet->id}")
 				->assertDontSee($tweet->text);
 		});
 	}

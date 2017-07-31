@@ -1,7 +1,7 @@
 <template>
-	<section class="card">
+	<section class="card" :id="tweet.id">
 		<div>@{{ tweet.user_nickname }}</div>
-		<div>{{ tweet.text }}</div>
+		<div class="tweet-text">{{ tweet.text }}</div>
 		<a href="" @click.prevent="destroy">Delete</a>
 	</section>
 </template>

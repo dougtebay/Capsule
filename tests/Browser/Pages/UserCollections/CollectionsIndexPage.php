@@ -23,7 +23,7 @@ class CollectionsIndexPage extends BasePage
     public function assert(Browser $browser)
     {
         $browser->assertPathIs($this->url())
-            ->waitForText(config('app.name'))
+            ->waitForText($this->user->collections->first()->title)
             ->assertSee($this->user->collections->first()->title)
             ->assertSee($this->user->collections->first()->description)
             ->assertSee($this->user->collections->last()->title)

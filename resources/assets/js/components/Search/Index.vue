@@ -1,12 +1,18 @@
 <template>
     <section>
-        <result v-for="result in results" :result="result" :collections="collections"></result>
+        <span v-if="errors.has('query')">No results</span>
+        <result v-for="(result, index) in results"
+                :id="index + 1"
+                :result="result"
+                :collections="collections">
+        </result>
     </section>
 </template>
 
 <script>
     import Result from './Result.vue'
     import Helpers from '../../mixins/Helpers.vue'
+    import { Errors } from '../../classes/Errors.js'
 
     export default {
         components: { Result },
@@ -18,7 +24,8 @@
                 userId: '',
                 query: '',
                 results: [],
-                collections: []
+                collections: [],
+                errors: new Errors()
             }
         },
 
@@ -51,7 +58,7 @@
                 }).then(function (response) {
                     scrollTo(0, 0)
                     this.results = response.data
-                }.bind(this))
+                }.bind(this)).catch(error => this.errors.record(error.response.data))
             },
 
             getCollections () {
@@ -60,7 +67,7 @@
                 }.bind(this))
             },
 
-            setOnScrollEvent() {
+            setOnScrollEvent () {
                 window.onscroll = event => {
                     if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
                         this.getMoreResults()
@@ -75,13 +82,13 @@
                         max_id: this.maxId
                     }
                 }).then(function (response) {
-                    this.setNewResults(response.data)
+                    this.setMoreResults(response.data)
                 }.bind(this))
             },
 
-            setNewResults (results) {
-                var newResults = results.splice(1);
-                this.results = this.results.concat(newResults)
+            setMoreResults (results) {
+                var moreResults = results.splice(1);
+                this.results = this.results.concat(moreResults)
             }
         },
 

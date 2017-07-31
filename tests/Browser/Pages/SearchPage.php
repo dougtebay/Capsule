@@ -4,6 +4,7 @@ namespace Tests\Browser\Pages;
 
 use Laravel\Dusk\Browser;
 use Laravel\Dusk\Page as BasePage;
+use PHPUnit_Framework_Assert as PHPUnit;
 
 class SearchPage extends BasePage
 {
@@ -23,5 +24,23 @@ class SearchPage extends BasePage
         $browser->assertPathIs($this->url())
             ->assertQueryStringHas('query', $this->query)
         	->assertQueryStringHas('userId', $this->userId);
+
+        if ($this->query) {
+            $browser->waitForText('Save');
+        } else {
+            $browser->waitForText('No results');
+        }
+    }
+
+    public function elements()
+    {
+        return [
+            '@results' => '.card'
+        ];
+    }
+
+    public function assertGreaterThan(Browser $browser, int $expected, int $actual)
+    {
+        PHPUnit::assertGreaterThan($expected, $actual);
     }
 }

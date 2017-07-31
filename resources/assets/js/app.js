@@ -15,24 +15,22 @@ require('./bootstrap')
 
 import VueRouter from 'vue-router'
 import SearchIndex from './components/Search/Index.vue'
-import CollectionsIndex from './components/Collections/Index.vue'
-import CollectionsCreate from './components/Collections/Create.vue'
 import CollectionsShow from './components/Collections/Show.vue'
 import CollectionsEdit from './components/Collections/Edit.vue'
+import CollectionsIndex from './components/Collections/Index.vue'
+import CollectionsCreate from './components/Collections/Create.vue'
 
 Vue.use(VueRouter)
 
-const routes = [
-	{ path: '/search', name: 'search', component: SearchIndex },
-	{ path: '/users/:userId/collections', component: CollectionsIndex, props: true },
-	{ path: '/users/:userId/collections/create', component: CollectionsCreate, props: true },
-	{ path: '/users/:userId/collections/:collectionId', component: CollectionsShow, props: true },
-	{ path: '/users/:userId/collections/:collectionId/edit', component: CollectionsEdit, props: true }
-]
-
 const router = new VueRouter({
 	mode: 'history',
-	routes: routes
+	routes: [
+		{ path: '/search', name: 'search', component: SearchIndex },
+		{ path: '/users/:userId/collections', component: CollectionsIndex, props: true },
+		{ path: '/users/:userId/collections/create', component: CollectionsCreate, props: true },
+		{ path: '/users/:userId/collections/:collectionId', component: CollectionsShow, props: true },
+		{ path: '/users/:userId/collections/:collectionId/edit', component: CollectionsEdit, props: true }
+	]
 })
 
 const eventHub = new Vue()

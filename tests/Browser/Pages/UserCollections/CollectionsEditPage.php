@@ -34,7 +34,6 @@ class CollectionsEditPage extends BasePage
     {
         $browser->type('title', $title)
             ->type('description', $description)
-            ->press('Submit')
-            ->pause(1000);
+            ->press('Submit');
     }
 }

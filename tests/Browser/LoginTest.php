@@ -49,7 +49,7 @@ class LoginTest extends DuskTestCase
 		$this->browse(function ($browser) {
 			$this->loginAndVisitHomePage($browser)
 				->clickLink('Logout')
-				->waitForText(config('app.name'))
+				->waitForText('Login')
 				->assertSee('Login');
 		});
 	}

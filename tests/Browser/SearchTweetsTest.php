@@ -38,6 +38,27 @@ class SearchTweetsTest extends DuskTestCase
 		});
 	}
 
+	public function test_can_search_for_more_tweets()
+	{
+		$query = 'test';
+
+		$this->browse(function ($browser) use ($query) {
+			$this->loginAndVisitHomePage($browser)
+				->search($query)
+				->on(new SearchPage($query, $this->user->id));
+
+			$results = count($browser->elements('@results'));
+
+			$browser->assertGreaterThan(0, $results)
+				->driver->executeScript('window.scrollTo(0, document.body.scrollHeight);');
+
+			$browser->waitFor('#' . (string) ($results + 1));
+			$results = count($browser->elements('@results'));
+
+			$browser->assertGreaterThan(15, $results);
+		});
+	}
+
 	public function test_cannot_search_for_tweets_without_query()
 	{
 		$query = '';

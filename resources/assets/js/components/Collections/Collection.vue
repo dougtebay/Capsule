@@ -1,5 +1,6 @@
 <template>
-	<section class="card">
+	<section class="card" :id="collection.id">
+		<!-- <div>{{ collection.id }}</div> -->
 		<div class="card-title">{{ collection.title }}</div>
 		<div class="card-description">{{ collection.description }}</div>
 		<section class="card-link-container">

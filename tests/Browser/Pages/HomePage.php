@@ -20,7 +20,6 @@ class HomePage extends BasePage
     public function search(Browser $browser, string $query)
 	{
 		$browser->type('query', $query)
-			->press('Search')
-			->pause(1000);
+			->press('Search');
 	}
 }
