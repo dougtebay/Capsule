@@ -6,7 +6,7 @@ use App\Tweet;
 
 class Tweets
 {
-	public function findOrCreate($tweetParams)
+	public function findOrCreate(array $tweetParams)
 	{
 		if ($tweet = $this->findByTwitterTweetId($tweetParams['id_str'])) {
 			return $tweet;
@@ -17,12 +17,12 @@ class Tweets
         return $this->addTweet($tweet);
 	}
 
-	protected function findByTwitterTweetId($id)
+	protected function findByTwitterTweetId(int $id)
 	{
 		return Tweet::where('twitter_tweet_id', $id)->first();
 	}
 
-	protected function addTweet($tweet)
+	protected function addTweet(Tweet $tweet)
 	{
 		$tweet->save();
 

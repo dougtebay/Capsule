@@ -7,11 +7,11 @@ use App\Collection;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\HomePage;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\Browser\Pages\UserCollections\CollectionsEditPage;
 use Tests\Browser\Pages\UserCollections\CollectionsShowPage;
 use Tests\Browser\Pages\UserCollections\CollectionsIndexPage;
 use Tests\Browser\Pages\UserCollections\CollectionsCreatePage;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class UserCollectionsTest extends DuskTestCase
 {
