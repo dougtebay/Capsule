@@ -18,7 +18,7 @@ class Collection extends Model
         return $this->belongsToMany(Tweet::class, 'collection_tweet');
     }
 
-    public static function collect(array $collectionParams)
+    public static function make(array $collectionParams)
     {
     	return new static([
     		'title' => $collectionParams['title'],

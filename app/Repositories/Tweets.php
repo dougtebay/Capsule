@@ -12,7 +12,7 @@ class Tweets
 			return $tweet;
 		};
 
-		$tweet = Tweet::tweet($tweetParams);
+		$tweet = Tweet::make($tweetParams);
 
         return $this->addTweet($tweet);
 	}

@@ -26,7 +26,7 @@ class User extends Authenticatable
 
     public function addCollection(array $collectionParams)
     {
-        $collection = Collection::collect($collectionParams);
+        $collection = Collection::make($collectionParams);
 
         $this->collections()->save($collection);
     }

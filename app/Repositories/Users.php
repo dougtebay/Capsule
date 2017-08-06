@@ -7,27 +7,31 @@ use Laravel\Socialite\One\User as TwitterUser;
 
 class Users
 {
-    public function findOrCreate(TwitterUser $twitterUser)
+    public function updateOrCreate(TwitterUser $twitterUser)
     {
-        if (!$user = User::where('twitter_user_id', $twitterUser->user['id_str'])->first()) {
-            return User::create([
-                'twitter_user_id' => $twitterUser->user['id_str'],
+        if ($user = $this->findByTwitterUserId($twitterUser->user['id_str'])) {
+            $user->update([
                 'name' => $twitterUser->name,
                 'nickname' => $twitterUser->nickname,
                 'twitter_token' => $twitterUser->token,
-                'twitter_token_secret' => $twitterUser->tokenSecret,
-                'api_token' => str_random(60)
+                'twitter_token_secret' => $twitterUser->tokenSecret
             ]);
+
+            return $user;
         }
 
-        if ($twitterUser->token !== $user->twitter_token) {
-            $user->update(['twitter_token', $twitterUser->token]);
-        }
+        return User::create([
+            'twitter_user_id' => $twitterUser->user['id_str'],
+            'name' => $twitterUser->name,
+            'nickname' => $twitterUser->nickname,
+            'twitter_token' => $twitterUser->token,
+            'twitter_token_secret' => $twitterUser->tokenSecret,
+            'api_token' => str_random(60)
+        ]);
+    }
 
-        if ($twitterUser->tokenSecret !== $user->twitter_token_secret) {
-            $user->update(['twitter_token_secret', $twitterUser->tokenSecret]);
-        }
-
-        return $user;
+    protected function findByTwitterUserId(int $id)
+    {
+        return User::where('twitter_user_id', $id)->first();
     }
 }

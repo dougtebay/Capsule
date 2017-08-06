@@ -12,27 +12,25 @@ class TweetsTest extends TestCase
 {
     use DatabaseMigrations;
 
-    protected $faker;
     protected $tweets;
 
     protected function setUp()
     {
         parent::setUp();
 
-        $this->faker = Faker\Factory::create();
         $this->tweets = new Tweets();
     }
 
     protected function tweetParams()
     {
         return [
-            'id_str' => (string) $this->faker->unique()->randomNumber,
+            'id_str' => (string) Faker\Factory::create()->unique()->randomNumber,
             'user' => [
-                'id_str' => (string) $this->faker->unique()->randomNumber,
-                'name' => $this->faker->name,
-                'screen_name' => $this->faker->userName
+                'id_str' => (string) Faker\Factory::create()->unique()->randomNumber,
+                'name' => Faker\Factory::create()->name,
+                'screen_name' => Faker\Factory::create()->userName
             ],
-            'text' => $this->faker->text(140),
+            'text' => Faker\Factory::create()->text(140),
             'created_at' => date('D M d H:i:s O Y')
         ];
     }

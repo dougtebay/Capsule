@@ -23,7 +23,7 @@ class LoginController extends Controller
     {
         $twitterUser = Socialite::driver('twitter')->user();
 
-        $user = $this->users->findOrCreate($twitterUser);
+        $user = $this->users->updateOrCreate($twitterUser);
 
         auth()->login($user);
 

@@ -9,7 +9,7 @@ class Tweet extends Model
 {
     protected $guarded = [];
 
-    public static function tweet(array $tweetParams)
+    public static function make(array $tweetParams)
 	{
 		return new static([
 			'twitter_tweet_id' => $tweetParams['id_str'],
