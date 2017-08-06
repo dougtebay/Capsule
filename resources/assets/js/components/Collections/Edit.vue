@@ -1,6 +1,6 @@
 <script>
 	import Form from './Form.vue'
-	import { Errors } from '../../classes/Errors.js'
+	import Errors from '../../classes/Errors.js'
 
 	export default {
 		extends: Form,

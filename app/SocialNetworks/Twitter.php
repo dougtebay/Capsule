@@ -16,17 +16,35 @@ class Twitter
         $this->client = $this->getClient($stack);
     }
 
-    public function getMiddleware()
+    private function getMiddleware()
     {
         return new Oauth1([
             'consumer_key'    => config('services.twitter.client_id'),
             'consumer_secret' => config('services.twitter.client_secret'),
-            'token'           => config('services.twitter.token'),
-            'token_secret'    => config('services.twitter.token_secret')
+            'token'           => $this->token(),
+            'token_secret'    => $this->tokenSecret()
         ]);
     }
 
-    public function getClient(HandlerStack $stack)
+    private function token()
+    {
+        if (!auth()->guard('api')->user()) {
+            return config('services.twitter.token');
+        }
+
+        return auth()->guard('api')->user()->twitter_token;
+    }
+
+    private function tokenSecret()
+    {
+        if (!auth()->guard('api')->user()) {
+            return config('services.twitter.token_secret');
+        }
+
+        return auth()->guard('api')->user()->twitter_token_secret;
+    }
+
+    private function getClient(HandlerStack $stack)
     {
         return new Client([
             'base_uri' => config('services.twitter.base_uri'),

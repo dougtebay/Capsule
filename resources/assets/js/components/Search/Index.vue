@@ -12,7 +12,7 @@
 <script>
     import Result from './Result.vue'
     import Helpers from '../../mixins/Helpers.vue'
-    import { Errors } from '../../classes/Errors.js'
+    import Errors from '../../classes/Errors.js'
 
     export default {
         components: { Result },
