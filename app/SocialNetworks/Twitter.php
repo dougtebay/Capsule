@@ -1,15 +1,13 @@
 <?php
 
-namespace App\Adapters;
+namespace App\SocialNetworks;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Subscriber\Oauth\Oauth1;
 
-class TwitterAdapter
+class Twitter
 {
-    protected $client;
-
     public function __construct()
     {
         $stack = HandlerStack::create();
@@ -23,8 +21,8 @@ class TwitterAdapter
         return new Oauth1([
             'consumer_key'    => config('services.twitter.client_id'),
             'consumer_secret' => config('services.twitter.client_secret'),
-            'token'           => auth()->guard('api')->user()->twitter_token,
-            'token_secret'    => auth()->guard('api')->user()->twitter_token_secret
+            'token'           => config('services.twitter.token'),
+            'token_secret'    => config('services.twitter.token_secret')
         ]);
     }
 
@@ -35,14 +33,5 @@ class TwitterAdapter
             'handler'  => $stack,
             'auth' => 'oauth'
         ]);
-    }
-
-    public function search(string $query, string $maxId = null)
-    {
-        $response = $this->client->get('search/tweets.json', [
-            'query' => ['q' => $query, 'max_id' => $maxId]
-        ]);
-
-        return json_decode($response->getBody())->statuses;
     }
 }

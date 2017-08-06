@@ -28,5 +28,10 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->environment('local', 'testing')) {
            $this->app->register(DuskServiceProvider::class);
         }
+
+        $this->app->bind(
+            'App\Contracts\SocialNetworkAdapter',
+            'App\SocialNetworks\TwitterAdapter'
+        );
     }
 }

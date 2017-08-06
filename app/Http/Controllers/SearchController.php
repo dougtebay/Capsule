@@ -4,28 +4,28 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
-use App\Adapters\TwitterAdapter;
+use App\Contracts\SocialNetworkAdapter;
 
 class SearchController extends Controller
 {
-    protected $twitterAdapter;
+    protected $socialNetworkAdapter;
 
-    public function __construct(TwitterAdapter $twitterAdapter)
+    public function __construct(SocialNetworkAdapter $socialNetworkAdapter)
     {
-        $this->twitterAdapter = $twitterAdapter;
+        $this->socialNetworkAdapter = $socialNetworkAdapter;
     }
 
     public function index()
     {
     	$this->validate(request(), [
     		'query' => 'required',
-            'max_id' => 'sometimes'
+            'cursor' => 'required'
     	]);
 
         $query = request()->get('query');
-        $maxId = request()->get('max_id');
+        $cursor = request()->get('cursor');
 
-        $results = $this->twitterAdapter->search($query, $maxId);
+        $results = $this->socialNetworkAdapter->search($query, $cursor);
 
         return response()->json($results);
     }

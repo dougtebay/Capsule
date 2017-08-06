@@ -30,12 +30,12 @@
         },
 
         computed: {
-            maxId () {
+            cursor () {
                 if (this.results.length) {
                     return this.lastItem(this.results).id_str
                 }
 
-                return ''
+                return '-1';
             },
 
             hasResults () {
@@ -53,7 +53,8 @@
             getResults () {
                 axios.get('/api/search', {
                     params: {
-                        query: this.query
+                        query: this.query,
+                        cursor: this.cursor
                     }
                 }).then(function (response) {
                     scrollTo(0, 0)
@@ -79,7 +80,7 @@
                 axios.get('/api/search', {
                     params: {
                         query: this.query,
-                        max_id: this.maxId
+                        cursor: this.cursor
                     }
                 }).then(function (response) {
                     this.setMoreResults(response.data)
