@@ -15,7 +15,7 @@ class SearchTest extends TestCase
         app()->instance(SocialNetworkAdapter::class, new FakeSocialNetworkAdapter);
     }
 
-    public function test_user_can_search()
+    public function test_it_fetches_search_results()
     {
         $response = $this->json('GET', 'api/search', [
             'query' => 'test',
@@ -33,5 +33,27 @@ class SearchTest extends TestCase
                 'text' => 'Dolor eum doloribus culpa dignissimos. Voluptatum velit ducimus similique unde molestiae. Earum quam facilis enim ratione mollitia a eum.',
                 'created_at' => 'Sat Aug 12 01:28:06 +0000 2017'
             ]);
+    }
+
+    public function test_it_fails_validation_without_a_query()
+    {
+        $response = $this->json('GET', 'api/search', [
+            'query' => '',
+            'cursor' => '-1'
+        ]);
+
+        $response->assertStatus(422)
+            ->assertJsonFragment(['query']);
+    }
+
+    public function test_it_fails_validation_without_a_cursor()
+    {
+        $response = $this->json('GET', 'api/search', [
+            'query' => 'test',
+            'cursor' => ''
+        ]);
+
+        $response->assertStatus(422)
+            ->assertJsonFragment(['cursor']);
     }
 }

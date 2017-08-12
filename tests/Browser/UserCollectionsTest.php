@@ -24,11 +24,7 @@ class UserCollectionsTest extends DuskTestCase
 		parent::setUp();
 
 		$this->user = factory(User::class)->create();
-		$collections = factory(Collection::class, 3)->create();
-
-		$collections->each(function ($collection) {
-			$this->user->addCollection($collection->toArray());
-		});
+		factory(Collection::class, 3)->create(['user_id' => $this->user->id]);
 	}
 
 	protected function loginAndVisitHomePage(Browser $browser)
