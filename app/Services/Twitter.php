@@ -1,6 +1,6 @@
 <?php
 
-namespace App\SocialNetworks;
+namespace App\Services;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\HandlerStack;
@@ -16,17 +16,17 @@ class Twitter
         $this->client = $this->getClient($stack);
     }
 
-    private function getMiddleware()
+    protected function getMiddleware()
     {
         return new Oauth1([
             'consumer_key'    => config('services.twitter.client_id'),
             'consumer_secret' => config('services.twitter.client_secret'),
-            'token'           => $this->token(),
-            'token_secret'    => $this->tokenSecret()
+            'token'           => $this->getToken(),
+            'token_secret'    => $this->getTokenSecret()
         ]);
     }
 
-    private function token()
+    protected function getToken()
     {
         if (!auth()->guard('api')->user()) {
             return config('services.twitter.token');
@@ -35,7 +35,7 @@ class Twitter
         return auth()->guard('api')->user()->twitter_token;
     }
 
-    private function tokenSecret()
+    protected function getTokenSecret()
     {
         if (!auth()->guard('api')->user()) {
             return config('services.twitter.token_secret');
@@ -44,7 +44,7 @@ class Twitter
         return auth()->guard('api')->user()->twitter_token_secret;
     }
 
-    private function getClient(HandlerStack $stack)
+    protected function getClient(HandlerStack $stack)
     {
         return new Client([
             'base_uri' => config('services.twitter.base_uri'),

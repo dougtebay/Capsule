@@ -31,7 +31,7 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind(
             'App\Contracts\SocialNetworkAdapter',
-            'App\SocialNetworks\TwitterAdapter'
+            'App\Services\TwitterAdapter'
         );
     }
 }

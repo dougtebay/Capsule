@@ -1,25 +1,24 @@
 <?php
 
-namespace Tests\Unit\App\SocialNetworks;
+namespace Tests\Unit\App\Services;
 
 use Tests\TestCase;
-use App\SocialNetworks\Twitter;
-use App\SocialNetworks\TwitterAdapter;
+use App\Contracts\SocialNetworkAdapter;
 
-class TwitterAdapterTest extends TestCase
+class SocialNetworkAdapterTest extends TestCase
 {
-	protected $twitterAdapter;
+	protected $socialNetworkAdapter;
 
 	public function setUp()
 	{
 		parent::setUp();
 
-		$this->twitterAdapter = new TwitterAdapter(new Twitter);
+		$this->socialNetworkAdapter = app(SocialNetworkAdapter::class);
 	}
 
-	public function test_it_can_search_for_tweets()
+	public function test_it_can_search_for_results()
 	{
-		$results = $this->twitterAdapter->search('test', '-1');
+		$results = $this->socialNetworkAdapter->search('test', '-1');
 
 		$this->assertNotEmpty($results);
 		$this->assertObjectHasAttribute('id_str', $results[0]);
@@ -31,12 +30,12 @@ class TwitterAdapterTest extends TestCase
 		$this->assertObjectHasAttribute('created_at', $results[0]);
 	}
 
-	public function test_it_can_search_for_more_tweets_by_cursor()
+	public function test_it_can_search_for_more_results_by_cursor()
 	{
-		$results = $this->twitterAdapter->search('test', '-1');
+		$results = $this->socialNetworkAdapter->search('test', '-1');
 		$resultsLast = $results[count($results) - 1];
 
-		$moreResults = $this->twitterAdapter->search('test', $resultsLast->id_str);
+		$moreResults = $this->socialNetworkAdapter->search('test', $resultsLast->id_str);
 		$moreResultsFirst = $moreResults[0];
 
 		$this->assertEquals($resultsLast->id_str, $moreResultsFirst->id_str);

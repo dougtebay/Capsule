@@ -1,8 +1,8 @@
 <?php
 
-namespace App\SocialNetworks;
+namespace App\Services;
 
-use App\SocialNetworks\Twitter;
+use App\Services\Twitter;
 use App\Contracts\SocialNetworkAdapter;
 
 class TwitterAdapter implements SocialNetworkAdapter
