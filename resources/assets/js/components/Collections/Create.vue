@@ -13,7 +13,7 @@
 				collection: {
 					title: '',
 					description: '',
-					public: true
+					public: 1
 				},
 				errors: new Errors()
 			}

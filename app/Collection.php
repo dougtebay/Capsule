@@ -23,7 +23,7 @@ class Collection extends Model
     	return new static([
     		'title' => $collectionParams['title'],
             'description' => $collectionParams['description'],
-            'public' => isset($collectionParams['public'])
+            'public' => !!$collectionParams['public']
     	]);
     }
 

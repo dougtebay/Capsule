@@ -12,7 +12,7 @@
 		</div>
 		<div class="card-input">
 			<label for="public">Public</label>
-			<input id="public" type="checkbox" v-model="collection.public">
+			<input id="public" type="checkbox" v-model="collection.public" v-bind:true-value="1" v-bind:false-value="0">
 		</div>
 		<button @click.prevent="submit()">Submit</button>
 	</form>

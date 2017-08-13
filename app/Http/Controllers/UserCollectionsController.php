@@ -17,7 +17,8 @@ class UserCollectionsController extends Controller
     {
         $this->validate(request(), [
             'title' => 'required|max:50',
-            'description' => 'sometimes|max:100'
+            'description' => 'sometimes|max:100',
+            'public' => 'required|boolean'
         ]);
 
         $user->addCollection(request()->all());

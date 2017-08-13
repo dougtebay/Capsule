@@ -25,7 +25,7 @@ class UserCollectionsTest extends TestCase
 		$this->actingAs($this->user, 'api');
 	}
 
-	public function test_it_fetches_user_collections()
+	public function test_can_fetch_user_collections()
 	{
 		$response = $this->json('GET', "api/users/{$this->user->id}/collections");
 
@@ -51,7 +51,43 @@ class UserCollectionsTest extends TestCase
 		]);
 	}
 
-	public function test_it_fetches_user_collection()
+	public function test_can_save_user_collection()
+	{
+		$response = $this->json('POST', "api/users/{$this->user->id}/collections", [
+			'title' => $title = Faker\Factory::create()->unique()->text(50),
+        	'description' => $description = Faker\Factory::create()->unique()->text(100),
+        	'public' => '1'
+		]);
+
+		$response->assertStatus(200);
+		$this->assertEquals($title, $this->user->fresh()->collections->last()->title);
+		$this->assertEquals($description, $this->user->fresh()->collections->last()->description);
+		$this->assertEquals(1, $this->user->fresh()->collections->last()->public);
+	}
+
+	public function test_cannot_save_user_collection_without_title()
+	{
+		$response = $this->json('POST', "api/users/{$this->user->id}/collections", [
+			'title' => '',
+        	'description' => $description = Faker\Factory::create()->unique()->text(100),
+        	'public' => 'true'
+		]);
+
+		$response->assertStatus(422)->assertJsonFragment(['title']);
+	}
+
+	public function test_cannot_save_user_collection_without_public()
+	{
+		$response = $this->json('POST', "api/users/{$this->user->id}/collections", [
+			'title' => $title = Faker\Factory::create()->unique()->text(50),
+        	'description' => $description = Faker\Factory::create()->unique()->text(100),
+        	'public' => ''
+		]);
+
+		$response->assertStatus(422)->assertJsonFragment(['public']);
+	}
+
+	public function test_can_fetch_user_collection()
 	{
 		$response = $this->json('GET', "api/users/{$this->user->id}/collections/{$this->user->collections->first()->id}");
 
@@ -66,7 +102,7 @@ class UserCollectionsTest extends TestCase
 		]);
 	}
 
-	public function test_it_fetches_user_collection_with_tweets()
+	public function test_can_fetch_user_collection_with_tweets()
 	{
 		$collection = $this->user->collections->first()->fresh();
 		$tweets = $collection->tweets;
