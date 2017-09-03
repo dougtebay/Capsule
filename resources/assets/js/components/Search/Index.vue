@@ -12,7 +12,7 @@
 <script>
     import Result from './Result.vue'
     import Helpers from '../../mixins/Helpers.vue'
-    import Errors from '../../classes/Errors.js'
+    import Errors from '../../classes/Errors'
 
     export default {
         components: { Result },
@@ -69,7 +69,7 @@
             },
 
             setOnScrollEvent () {
-                window.onscroll = event => {
+                window.onscroll = () => {
                     if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
                         this.getMoreResults()
                     }

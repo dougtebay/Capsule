@@ -11,3 +11,4 @@ Homestead.yaml
 .env
 .env.dusk.local
 .env.testing
+capsule.sublime-workspace
