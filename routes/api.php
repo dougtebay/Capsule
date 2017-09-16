@@ -20,7 +20,7 @@ Route::group(['middleware' => 'api'], function() {
 		Route::get('/users/{user}/collections', 'UserCollectionsController@index');
 		Route::post('/users/{user}/collections', 'UserCollectionsController@store');
 		Route::get('/users/{user}/collections/{collectionId}', 'UserCollectionsController@show');
-		Route::patch('/users/{user}/collections/{collectionId}', 'UserCollectionsController@update');
+		Route::put('/users/{user}/collections/{collectionId}', 'UserCollectionsController@update');
 	    Route::delete('/users/{user}/collections/{collectionId}', 'UserCollectionsController@destroy');
 	});
 

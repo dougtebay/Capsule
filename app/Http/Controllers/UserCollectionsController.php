@@ -43,13 +43,14 @@ class UserCollectionsController extends Controller
     {
         $this->validate(request(), [
             'title' => 'required|max:50',
-            'description' => 'sometimes|max:100'
+            'description' => 'sometimes|max:100',
+            'public' => 'required|boolean'
         ]);
 
         $user->collections->find($collectionId)->update([
             'title' => request()->title,
             'description' => request()->description,
-            'public' => isset(request()->public)
+            'public' => !!request()->public
         ]);
 
         return response()->json(['success' => true]);

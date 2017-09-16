@@ -22,7 +22,7 @@
 			},
 
 			submit () {
-				axios.patch(`/api/users/${this.userId}/collections/${this.collectionId}`, this.collection).then(function (response) {
+				axios.put(`/api/users/${this.userId}/collections/${this.collectionId}`, this.collection).then(function (response) {
                 	this.$router.push({ path: `/users/${this.userId}/collections/${this.collectionId}` })
                 }.bind(this)).catch(error => this.errors.record(error.response.data))
 			}

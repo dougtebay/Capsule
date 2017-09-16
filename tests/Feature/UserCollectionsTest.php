@@ -11,131 +11,259 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class UserCollectionsTest extends TestCase
 {
-	use DatabaseMigrations;
+    use DatabaseMigrations;
 
-	public function setUp()
-	{
-		parent::setUp();
+    public function setUp()
+    {
+        parent::setUp();
 
-		$this->user = factory(User::class)->create();
-		factory(Collection::class, 2)->create(['user_id' => $this->user->id]);
-		$tweet = factory(Tweet::class)->create();
-		$this->user->collections->first()->addTweet($tweet);
+        $this->user = factory(User::class)->create();
 
-		$this->actingAs($this->user, 'api');
-	}
+        factory(Collection::class, 2)->create(['user_id' => $this->user->id]);
+        $this->collection1 = $this->user->collections->first();
+        $this->collection2 = $this->user->collections->last();
 
-	public function test_can_fetch_user_collections()
-	{
-		$response = $this->json('GET', "api/users/{$this->user->id}/collections");
+        $tweet = factory(Tweet::class)->create();
+        $this->user->collections->first()->addTweet($tweet);
 
-		$response->assertStatus(200)->assertJson([
-			[
-				'id' => $this->user->collections->first()->id,
-				'user_id' => $this->user->collections->first()->user_id,
-				'title' => $this->user->collections->first()->title,
-				'description' => $this->user->collections->first()->description,
-				'public' => $this->user->collections->first()->public,
-				'created_at' => $this->user->collections->first()->created_at->format('Y-m-d H:i:s'),
-				'updated_at' => $this->user->collections->first()->updated_at->format('Y-m-d H:i:s')
-			],
-			[
-				'id' => $this->user->collections->last()->id,
-				'user_id' => $this->user->collections->last()->user_id,
-				'title' => $this->user->collections->last()->title,
-				'description' => $this->user->collections->last()->description,
-				'public' => $this->user->collections->last()->public,
-				'created_at' => $this->user->collections->last()->created_at->format('Y-m-d H:i:s'),
-				'updated_at' => $this->user->collections->last()->updated_at->format('Y-m-d H:i:s')
-			],
-		]);
-	}
+        $this->actingAs($this->user, 'api');
+    }
 
-	public function test_can_save_user_collection()
-	{
-		$response = $this->json('POST', "api/users/{$this->user->id}/collections", [
-			'title' => $title = Faker\Factory::create()->unique()->text(50),
-        	'description' => $description = Faker\Factory::create()->unique()->text(100),
-        	'public' => '1'
-		]);
+    public function test_can_get_user_collections()
+    {
+        $response = $this->json('GET', "api/users/{$this->user->id}/collections");
 
-		$response->assertStatus(200);
-		$this->assertEquals($title, $this->user->fresh()->collections->last()->title);
-		$this->assertEquals($description, $this->user->fresh()->collections->last()->description);
-		$this->assertEquals(1, $this->user->fresh()->collections->last()->public);
-	}
+        $response->assertStatus(200)->assertJson([
+            [
+                'id' => $this->collection1->id,
+                'user_id' => $this->collection1->user_id,
+                'title' => $this->collection1->title,
+                'description' => $this->collection1->description,
+                'public' => $this->collection1->public,
+                'created_at' => $this->collection1->created_at->format('Y-m-d H:i:s'),
+                'updated_at' => $this->collection1->updated_at->format('Y-m-d H:i:s')
+            ],
+            [
+                'id' => $this->collection2->id,
+                'user_id' => $this->collection2->user_id,
+                'title' => $this->collection2->title,
+                'description' => $this->collection2->description,
+                'public' => $this->collection2->public,
+                'created_at' => $this->collection2->created_at->format('Y-m-d H:i:s'),
+                'updated_at' => $this->collection2->updated_at->format('Y-m-d H:i:s')
+            ]
+        ]);
+    }
 
-	public function test_cannot_save_user_collection_without_title()
-	{
-		$response = $this->json('POST', "api/users/{$this->user->id}/collections", [
-			'title' => '',
-        	'description' => $description = Faker\Factory::create()->unique()->text(100),
-        	'public' => 'true'
-		]);
+    public function test_can_create_user_collection()
+    {
+        $title = Faker\Factory::create()->unique()->text(50);
+        $description = Faker\Factory::create()->unique()->text(100);
 
-		$response->assertStatus(422)->assertJsonFragment(['title']);
-	}
+        $response = $this->json('POST', "api/users/{$this->user->id}/collections", [
+            'title' => $title,
+            'description' => $description,
+            'public' => '1'
+        ]);
 
-	public function test_cannot_save_user_collection_without_public()
-	{
-		$response = $this->json('POST', "api/users/{$this->user->id}/collections", [
-			'title' => $title = Faker\Factory::create()->unique()->text(50),
-        	'description' => $description = Faker\Factory::create()->unique()->text(100),
-        	'public' => ''
-		]);
+        $collection = $this->user->fresh()->collections->last();
 
-		$response->assertStatus(422)->assertJsonFragment(['public']);
-	}
+        $response->assertStatus(200);
+        $this->assertEquals($title, $collection->title);
+        $this->assertEquals($description, $collection->description);
+        $this->assertEquals(1, $collection->public);
+    }
 
-	public function test_can_fetch_user_collection()
-	{
-		$response = $this->json('GET', "api/users/{$this->user->id}/collections/{$this->user->collections->first()->id}");
+    public function test_cannot_create_user_collection_without_title()
+    {
+        $response = $this->json('POST', "api/users/{$this->user->id}/collections", [
+            'title' => '',
+            'description' => Faker\Factory::create()->text(100),
+            'public' => '1'
+        ]);
 
-		$response->assertStatus(200)->assertJson([
-			'id' => $this->user->collections->first()->id,
-			'user_id' => $this->user->collections->first()->user_id,
-			'title' => $this->user->collections->first()->title,
-			'description' => $this->user->collections->first()->description,
-			'public' => $this->user->collections->first()->public,
-			'created_at' => $this->user->collections->first()->created_at->format('Y-m-d H:i:s'),
-			'updated_at' => $this->user->collections->first()->updated_at->format('Y-m-d H:i:s')
-		]);
-	}
+        $response->assertStatus(422)->assertJsonFragment(['title']);
+    }
 
-	public function test_can_fetch_user_collection_with_tweets()
-	{
-		$collection = $this->user->collections->first()->fresh();
-		$tweets = $collection->tweets;
+    public function test_cannot_create_user_collection_with_long_title()
+    {
+        $response = $this->json('POST', "api/users/{$this->user->id}/collections", [
+            'title' => str_random(51),
+            'description' => Faker\Factory::create()->text(100),
+            'public' => '1'
+        ]);
 
-		$response = $this->json('GET', "api/users/{$this->user->id}/collections/{$collection->id}", [
-			'with-tweets' => 'true'
-		]);
+        $response->assertStatus(422)->assertJsonFragment(['title']);
+    }
 
-		$response->assertStatus(200)->assertJson([
-			'id' => $collection->id,
-			'user_id' => $collection->user_id,
-			'title' => $collection->title,
-			'description' => $collection->description,
-			'public' => $collection->public,
-			'created_at' => $collection->created_at->format('Y-m-d H:i:s'),
-			'updated_at' => $collection->updated_at->format('Y-m-d H:i:s'),
-			'tweets' => [
-				[
-					'id' => $tweets->first()->id,
-					'twitter_tweet_id' => $tweets->first()->twitter_tweet_id,
-					'twitter_user_id' => $tweets->first()->twitter_user_id,
-	            	'user_name' => $tweets->first()->user_name,
-	            	'user_nickname' => $tweets->first()->user_nickname,
-	            	'text' => $tweets->first()->text,
-	            	'twitter_created_at' => $tweets->first()->twitter_created_at,
-	            	'created_at' => $tweets->first()->created_at->format('Y-m-d H:i:s'),
-	            	'updated_at' => $tweets->first()->updated_at->format('Y-m-d H:i:s'),
-	            	'pivot' => [
-	            		'collection_id' => $collection->id,
-	            		'tweet_id' => $tweets->first()->id
-	            	]
-				]
-			]
-		]);
-	}
+    public function test_cannot_create_user_collection_with_long_description()
+    {
+        $response = $this->json('POST', "api/users/{$this->user->id}/collections", [
+            'title' => Faker\Factory::create()->text(50),
+            'description' => str_random(101),
+            'public' => '1'
+        ]);
+
+        $response->assertStatus(422)->assertJsonFragment(['description']);
+    }
+
+    public function test_cannot_create_user_collection_without_public()
+    {
+        $response = $this->json('POST', "api/users/{$this->user->id}/collections", [
+            'title' => Faker\Factory::create()->text(50),
+            'description' => Faker\Factory::create()->text(100),
+            'public' => ''
+        ]);
+
+        $response->assertStatus(422)->assertJsonFragment(['public']);
+    }
+
+    public function test_can_get_user_collection()
+    {
+        $response = $this->json(
+            'GET',
+            "api/users/{$this->user->id}/collections/{$this->collection1->id}"
+        );
+
+        $response->assertStatus(200)->assertJson([
+            'id' => $this->collection1->id,
+            'user_id' => $this->collection1->user_id,
+            'title' => $this->collection1->title,
+            'description' => $this->collection1->description,
+            'public' => $this->collection1->public,
+            'created_at' => $this->collection1->created_at->format('Y-m-d H:i:s'),
+            'updated_at' => $this->collection1->updated_at->format('Y-m-d H:i:s')
+        ]);
+    }
+
+    public function test_can_get_user_collection_with_tweets()
+    {
+        $response = $this->json(
+            'GET',
+            "api/users/{$this->user->id}/collections/{$this->collection1->id}", [
+                'with-tweets' => 'true'
+            ]
+        );
+
+        $tweet = $this->collection1->fresh()->tweets->first();
+
+        $response->assertStatus(200)->assertJson([
+            'id' => $this->collection1->id,
+            'user_id' => $this->collection1->user_id,
+            'title' => $this->collection1->title,
+            'description' => $this->collection1->description,
+            'public' => $this->collection1->public,
+            'created_at' => $this->collection1->created_at->format('Y-m-d H:i:s'),
+            'updated_at' => $this->collection1->updated_at->format('Y-m-d H:i:s'),
+            'tweets' => [
+                [
+                    'id' => $tweet->id,
+                    'twitter_tweet_id' => $tweet->twitter_tweet_id,
+                    'twitter_user_id' => $tweet->twitter_user_id,
+                    'user_name' => $tweet->user_name,
+                    'user_nickname' => $tweet->user_nickname,
+                    'text' => $tweet->text,
+                    'twitter_created_at' => $tweet->twitter_created_at,
+                    'created_at' => $tweet->created_at->format('Y-m-d H:i:s'),
+                    'updated_at' => $tweet->updated_at->format('Y-m-d H:i:s'),
+                    'pivot' => [
+                        'collection_id' => $this->collection1->id,
+                        'tweet_id' => $tweet->id
+                    ]
+                ]
+            ]
+        ]);
+    }
+
+    public function test_can_update_user_collection()
+    {
+        $title = Faker\Factory::create()->unique()->text(50);
+        $description = Faker\Factory::create()->unique()->text(100);
+
+        $response = $this->json(
+            'PUT',
+            "api/users/{$this->user->id}/collections/{$this->collection1->id}", [
+                'title' => $title,
+                'description' => $description,
+                'public' => '1'
+            ]
+        );
+
+        $collection = $this->collection1->fresh();
+
+        $response->assertStatus(200);
+        $this->assertEquals($title, $collection->title);
+        $this->assertEquals($description, $collection->description);
+        $this->assertEquals(1, $collection->public);
+    }
+
+    public function test_cannot_update_user_collection_without_title()
+    {
+        $response = $this->json(
+            'PUT',
+            "api/users/{$this->user->id}/collections/{$this->user->collections->first()->id}", [
+                'title' => '',
+                'description' => Faker\Factory::create()->text(100),
+                'public' => '1'
+            ]
+        );
+
+        $response->assertStatus(422)->assertJsonFragment(['title']);
+    }
+
+    public function test_cannot_update_user_collection_with_long_title()
+    {
+        $response = $this->json(
+            'PUT',
+            "api/users/{$this->user->id}/collections/{$this->user->collections->first()->id}", [
+                'title' => str_random(51),
+                'description' => Faker\Factory::create()->text(100),
+                'public' => '1'
+            ]
+        );
+
+        $response->assertStatus(422)->assertJsonFragment(['title']);
+    }
+
+    public function test_cannot_update_user_collection_with_long_description()
+    {
+        $response = $this->json(
+            'PUT',
+            "api/users/{$this->user->id}/collections/{$this->user->collections->first()->id}", [
+                'title' => Faker\Factory::create()->text(50),
+                'description' => str_random(101),
+                'public' => '1'
+            ]
+        );
+
+        $response->assertStatus(422)->assertJsonFragment(['description']);
+    }
+
+    public function test_cannot_update_user_collection_without_public()
+    {
+        $response = $this->json(
+            'PUT',
+            "api/users/{$this->user->id}/collections/{$this->user->collections->first()->id}", [
+                'title' => Faker\Factory::create()->text(50),
+                'description' => Faker\Factory::create()->text(100),
+                'public' => ''
+            ]
+        );
+
+        $response->assertStatus(422)->assertJsonFragment(['public']);
+    }
+
+    public function test_can_destroy_user_collection()
+    {
+        $response = $this->json(
+            'DELETE',
+            "api/users/{$this->user->id}/collections/{$this->collection1->id}"
+        );
+
+        $collections = $this->user->fresh()->collections;
+
+        $response->assertStatus(200);
+        $this->assertEquals(1, $collections->count());
+        $this->assertEquals($this->collection2->title, $collections->first()->title);
+    }
 }
