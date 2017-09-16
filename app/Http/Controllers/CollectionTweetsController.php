@@ -17,6 +17,15 @@ class CollectionTweetsController extends Controller
 
 	public function store(Collection $collection)
 	{
+        $this->validate(request(), [
+            'id_str' => 'required',
+            'user.id_str' => 'required',
+            'user.name' => 'required',
+            'user.screen_name' => 'required',
+            'text' => 'required',
+            'created_at' => 'required'
+        ]);
+
 		$tweet = $this->tweets->findOrCreate(request()->all());
 
 		$collection->addTweet($tweet);

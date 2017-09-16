@@ -19,7 +19,10 @@ class UserCollectionsTest extends TestCase
 
         $this->user = factory(User::class)->create();
 
-        factory(Collection::class, 2)->create(['user_id' => $this->user->id]);
+        factory(Collection::class, 2)->create()->each(function ($collection) {
+            $this->user->collections()->save($collection);
+        });
+        
         $this->collection1 = $this->user->collections->first();
         $this->collection2 = $this->user->collections->last();
 

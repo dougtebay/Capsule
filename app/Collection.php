@@ -20,11 +20,11 @@ class Collection extends Model
 
     public static function make(array $collectionParams)
     {
-    	return new static([
-    		'title' => $collectionParams['title'],
+        return new static([
+            'title' => $collectionParams['title'],
             'description' => $collectionParams['description'],
             'public' => !!$collectionParams['public']
-    	]);
+        ]);
     }
 
     public function addTweet(Tweet $tweet)

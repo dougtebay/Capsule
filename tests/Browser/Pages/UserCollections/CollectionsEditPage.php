@@ -32,7 +32,9 @@ class CollectionsEditPage extends BasePage
 
     public function fillOutForm(Browser $browser, string $title, string $description)
     {
-        $browser->type('title', $title)
+        $browser->clear('title')
+            ->type('title', $title)
+            ->clear('description')
             ->type('description', $description)
             ->press('Submit');
     }
