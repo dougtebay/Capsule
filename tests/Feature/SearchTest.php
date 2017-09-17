@@ -15,7 +15,7 @@ class SearchTest extends TestCase
         app()->instance(SocialNetworkAdapter::class, new FakeSocialNetworkAdapter);
     }
 
-    public function test_can_fetch_search_results()
+    public function test_can_get_search_results()
     {
         $response = $this->json('GET', 'api/search', [
             'query' => 'test',
@@ -23,19 +23,15 @@ class SearchTest extends TestCase
         ]);
 
         $response->assertStatus(200)
-            ->assertJson([
-                'id_str' => '6649',
-                'user' => [
-                    'id_str' => '108316',
-                    'name' => 'Tabitha Borer',
-                    'screen_name' => 'gmarvin',
-                ],
-                'text' => 'Dolor eum doloribus culpa dignissimos. Voluptatum velit ducimus similique unde molestiae. Earum quam facilis enim ratione mollitia a eum.',
-                'created_at' => 'Sat Aug 12 01:28:06 +0000 2017'
+            ->assertJsonStructure([
+                'id_str',
+                'user',
+                'text',
+                'created_at'
             ]);
     }
 
-    public function test_cannot_fetch_search_results_without_query()
+    public function test_cannot_get_search_results_without_query()
     {
         $response = $this->json('GET', 'api/search', [
             'query' => '',
@@ -45,7 +41,7 @@ class SearchTest extends TestCase
         $response->assertStatus(422)->assertJsonFragment(['query']);
     }
 
-    public function test_cannot_fetch_search_results_without_cursor()
+    public function test_cannot_get_search_results_without_cursor()
     {
         $response = $this->json('GET', 'api/search', [
             'query' => 'test',

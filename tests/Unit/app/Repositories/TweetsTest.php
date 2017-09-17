@@ -49,9 +49,9 @@ class TweetsTest extends TestCase
     {
         $tweetParams = $this->tweetParams();
 
-        $tweetA = $this->tweets->findOrCreate($tweetParams);
-        $tweetB = $this->tweets->findOrCreate($tweetParams);
+        $tweet1 = $this->tweets->findOrCreate($tweetParams);
+        $tweet2 = $this->tweets->findOrCreate($tweetParams);
 
-        $this->assertEquals($tweetA->id, $tweetB->id);
+        $this->assertEquals($tweet1->id, $tweet2->id);
     }
 }
