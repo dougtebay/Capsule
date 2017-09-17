@@ -266,7 +266,7 @@ class UserCollectionsTest extends TestCase
         $collections = $this->user->fresh()->collections;
 
         $response->assertStatus(200);
-        $this->assertEquals(1, $collections->count());
+        $this->assertCount(1, $collections);
         $this->assertEquals($this->collection2->title, $collections->first()->title);
     }
 }

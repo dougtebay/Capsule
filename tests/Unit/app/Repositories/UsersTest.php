@@ -53,7 +53,7 @@ class UsersTest extends TestCase
         $twitterUser->name = Faker\Factory::create()->name;
         $user = $this->users->updateOrCreate($twitterUser);
 
-        $this->assertEquals(1, User::all()->count());
+        $this->assertCount(1, User::all());
         $this->assertEquals($twitterUser->name, $user->name);
     }
 }

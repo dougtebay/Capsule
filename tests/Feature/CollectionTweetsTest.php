@@ -169,7 +169,7 @@ class CollectionTweetsTest extends TestCase
         $tweets = $this->collection->fresh()->tweets;
 
         $response->assertStatus(200);
-        $this->assertEquals(1, $tweets->count());
+        $this->assertCount(1, $tweets);
         $this->assertEquals($this->tweet2->text, $tweets->first()->text);
     }
 }
