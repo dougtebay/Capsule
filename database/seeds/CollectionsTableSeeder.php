@@ -1,5 +1,6 @@
 <?php
 
+use App\User;
 use App\Collection;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,12 @@ class CollectionsTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(Collection::class, 10)->create();
+        $users = User::all();
+
+        if ($users->isNotEmpty()) {
+            factory(Collection::class, 10)->create(['user_id' => $users->random()->id]);
+        } else {
+            factory(Collection::class, 10)->create();
+        }
     }
 }

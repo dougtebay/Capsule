@@ -13,32 +13,28 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(App\User::class, function (Faker\Generator $faker) {
-
     return [
         'twitter_user_id' => (string) $faker->unique()->randomNumber,
         'name' => $faker->name,
         'nickname' => $faker->userName,
         'twitter_token' => config('services.twitter.token'),
         'twitter_token_secret' => config('services.twitter.token_secret'),
-        'remember_token' => str_random(60),
         'api_token' => str_random(60)
     ];
 });
 
 $factory->define(App\Collection::class, function (Faker\Generator $faker) {
-
     return [
         'user_id' => function () {
             return factory(App\User::class)->create()->id;
         },
         'title' => $faker->text(50),
         'description' => $faker->text(100),
-        'public' => 1
+        'public' => $faker->numberBetween(0, 1)
     ];
 });
 
 $factory->define(App\Tweet::class, function (Faker\Generator $faker) {
-
     return [
         'twitter_tweet_id' => (string) $faker->unique()->randomNumber,
         'twitter_user_id' => (string) $faker->unique()->randomNumber,

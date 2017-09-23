@@ -12,11 +12,10 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        User::create([
-			'twitter_user_id' => "823008709135704064",
-			'name' => "CapsuleWebApp",
-			'nickname' => "CapsuleWebApp",
-			'api_token' => str_random(60)
+        factory(User::class)->create([
+            'twitter_user_id' => '823008709135704064',
+            'name' => 'CapsuleWebApp',
+            'nickname' => 'CapsuleWebApp'
         ]);
     }
 }
