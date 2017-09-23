@@ -1,44 +1,44 @@
 <template>
-	<div>
-		<navbar :appName="app_name" :user="user" @logout="logout"></navbar>
-		<main>
-			<router-view></router-view>
-		</main>
-	</div>
+    <div>
+        <navbar :appName="app_name" :user="user" @logout="logout"></navbar>
+        <main>
+            <router-view></router-view>
+        </main>
+    </div>
 </template>
 
 <script>
-	import Navbar from './Navbar/Navbar.vue'
+    import Navbar from './Navbar/Navbar.vue'
 
-	export default {
-		props: ['app_name', 'user_json', 'request_uri'],
+    export default {
+        props: ['app_name', 'user_json', 'request_uri'],
 
-		components: {
-			Navbar
-		},
+        components: {
+            Navbar
+        },
 
-		data () {
-			return {
-				user: ''
-			}
-		},
+        data () {
+            return {
+                user: ''
+            }
+        },
 
-		methods: {
+        methods: {
             logout () {
-                axios.post('/logout').then(function (response) {
-                	location.replace('/')
+                axios.post('/logout').then(function () {
+                    location.replace('/')
                 })
             }
-		},
+        },
 
-		mounted () {
-			if (this.user_json) {
-				this.user = JSON.parse(this.user_json)
-			}
+        mounted () {
+            if (this.user_json) {
+                this.user = JSON.parse(this.user_json)
+            }
 
-			if (this.request_uri) {
-				this.$router.push({ path: this.request_uri })
-			}
-		}
-	}
+            if (this.request_uri) {
+                this.$router.push({ path: this.request_uri })
+            }
+        }
+    }
 </script>

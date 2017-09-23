@@ -45,6 +45,7 @@
 
         watch: {
             $route () {
+                this.query = this.$route.query.query
                 this.getResults()
             },
         },
@@ -59,6 +60,7 @@
                 }).then(function (response) {
                     scrollTo(0, 0)
                     this.results = response.data
+                    this.getCollections();
                 }.bind(this)).catch(error => this.errors.record(error.response.data))
             },
 
@@ -97,7 +99,6 @@
             this.query = this.$route.query.query
             this.userId = this.$route.query.userId
             this.getResults()
-            this.getCollections()
             this.setOnScrollEvent()
         }
     }

@@ -3,5 +3,8 @@
         "airbnb-base",
         "eslint:recommended",
         "plugin:vue/recommended"
-    ]
+    ],
+    "rules": {
+        "import/no-extraneous-dependencies": ["error", { "devDependencies": true }]
+    }
 }
