@@ -6,26 +6,26 @@ use App\Tweet;
 
 class Tweets
 {
-	public function findOrCreate(array $tweetParams)
-	{
-		if ($tweet = $this->findByTwitterTweetId($tweetParams['id_str'])) {
-			return $tweet;
-		};
+    public function findOrCreate(array $tweetParams)
+    {
+        if ($tweet = $this->findByTwitterTweetId($tweetParams['id_str'])) {
+            return $tweet;
+        };
 
-		$tweet = Tweet::make($tweetParams);
+        $tweet = Tweet::make($tweetParams);
 
         return $this->addTweet($tweet);
-	}
+    }
 
-	protected function findByTwitterTweetId(int $id)
-	{
-		return Tweet::where('twitter_tweet_id', $id)->first();
-	}
+    protected function findByTwitterTweetId(int $id)
+    {
+        return Tweet::where('twitter_tweet_id', $id)->first();
+    }
 
-	protected function addTweet(Tweet $tweet)
-	{
-		$tweet->save();
+    protected function addTweet(Tweet $tweet)
+    {
+        $tweet->save();
 
-		return $tweet;
-	}
+        return $tweet;
+    }
 }

@@ -32,7 +32,7 @@ class UserCollectionsTest extends TestCase
         $this->actingAs($this->user, 'api');
     }
 
-    public function test_can_get_user_collections()
+    public function test_it_can_get_user_collections()
     {
         $response = $this->json('GET', "api/users/{$this->user->id}/collections");
 
@@ -58,7 +58,7 @@ class UserCollectionsTest extends TestCase
         ]);
     }
 
-    public function test_can_create_user_collection()
+    public function test_it_can_create_user_collection()
     {
         $title = Faker\Factory::create()->unique()->text(50);
         $description = Faker\Factory::create()->unique()->text(100);
@@ -77,7 +77,7 @@ class UserCollectionsTest extends TestCase
         $this->assertEquals(1, $collection->public);
     }
 
-    public function test_cannot_create_user_collection_without_title()
+    public function test_it_cannot_create_user_collection_without_title()
     {
         $response = $this->json('POST', "api/users/{$this->user->id}/collections", [
             'title' => '',
@@ -88,7 +88,7 @@ class UserCollectionsTest extends TestCase
         $response->assertStatus(422)->assertJsonFragment(['title']);
     }
 
-    public function test_cannot_create_user_collection_with_long_title()
+    public function test_it_cannot_create_user_collection_with_long_title()
     {
         $response = $this->json('POST', "api/users/{$this->user->id}/collections", [
             'title' => str_random(51),
@@ -99,7 +99,7 @@ class UserCollectionsTest extends TestCase
         $response->assertStatus(422)->assertJsonFragment(['title']);
     }
 
-    public function test_cannot_create_user_collection_with_long_description()
+    public function test_it_cannot_create_user_collection_with_long_description()
     {
         $response = $this->json('POST', "api/users/{$this->user->id}/collections", [
             'title' => Faker\Factory::create()->text(50),
@@ -110,7 +110,7 @@ class UserCollectionsTest extends TestCase
         $response->assertStatus(422)->assertJsonFragment(['description']);
     }
 
-    public function test_cannot_create_user_collection_without_public()
+    public function test_it_cannot_create_user_collection_without_public()
     {
         $response = $this->json('POST', "api/users/{$this->user->id}/collections", [
             'title' => Faker\Factory::create()->text(50),
@@ -121,7 +121,7 @@ class UserCollectionsTest extends TestCase
         $response->assertStatus(422)->assertJsonFragment(['public']);
     }
 
-    public function test_can_get_user_collection()
+    public function test_it_can_get_user_collection()
     {
         $response = $this->json(
             'GET',
@@ -139,7 +139,7 @@ class UserCollectionsTest extends TestCase
         ]);
     }
 
-    public function test_can_get_user_collection_with_tweets()
+    public function test_it_can_get_user_collection_with_tweets()
     {
         $response = $this->json(
             'GET',
@@ -178,7 +178,7 @@ class UserCollectionsTest extends TestCase
         ]);
     }
 
-    public function test_can_update_user_collection()
+    public function test_it_can_update_user_collection()
     {
         $title = Faker\Factory::create()->unique()->text(50);
         $description = Faker\Factory::create()->unique()->text(100);
@@ -200,7 +200,7 @@ class UserCollectionsTest extends TestCase
         $this->assertEquals(1, $collection->public);
     }
 
-    public function test_cannot_update_user_collection_without_title()
+    public function test_it_cannot_update_user_collection_without_title()
     {
         $response = $this->json(
             'PUT',
@@ -214,7 +214,7 @@ class UserCollectionsTest extends TestCase
         $response->assertStatus(422)->assertJsonFragment(['title']);
     }
 
-    public function test_cannot_update_user_collection_with_long_title()
+    public function test_it_cannot_update_user_collection_with_long_title()
     {
         $response = $this->json(
             'PUT',
@@ -228,7 +228,7 @@ class UserCollectionsTest extends TestCase
         $response->assertStatus(422)->assertJsonFragment(['title']);
     }
 
-    public function test_cannot_update_user_collection_with_long_description()
+    public function test_it_cannot_update_user_collection_with_long_description()
     {
         $response = $this->json(
             'PUT',
@@ -242,7 +242,7 @@ class UserCollectionsTest extends TestCase
         $response->assertStatus(422)->assertJsonFragment(['description']);
     }
 
-    public function test_cannot_update_user_collection_without_public()
+    public function test_it_cannot_update_user_collection_without_public()
     {
         $response = $this->json(
             'PUT',
@@ -256,7 +256,7 @@ class UserCollectionsTest extends TestCase
         $response->assertStatus(422)->assertJsonFragment(['public']);
     }
 
-    public function test_can_destroy_user_collection()
+    public function test_it_can_destroy_user_collection()
     {
         $response = $this->json(
             'DELETE',

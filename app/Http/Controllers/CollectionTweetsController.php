@@ -26,7 +26,9 @@ class CollectionTweetsController extends Controller
             'created_at' => 'required'
         ]);
 
-		$tweet = $this->tweets->findOrCreate(request()->all());
+		$tweet = $this->tweets->findOrCreate(request()->only([
+            'id_str', 'user.id_str', 'user.name', 'user.screen_name', 'text', 'created_at'
+        ]));
 
 		$collection->addTweet($tweet);
 

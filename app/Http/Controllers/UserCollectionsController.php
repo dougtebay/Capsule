@@ -10,7 +10,7 @@ class UserCollectionsController extends Controller
 {
     public function index(User $user)
     {
-        return response()->json($user->collections);
+        return $user->collections;
     }
 
     public function store(User $user)
@@ -21,22 +21,18 @@ class UserCollectionsController extends Controller
             'public' => 'required|boolean'
         ]);
 
-        $user->addCollection(request()->all());
+        $user->addCollection(request()->only(['title', 'description', 'public']));
 
         return response()->json(['success' => true]);
     }
 
     public function show(User $user, string $collectionId)
     {
-        if (request()->get('with-tweets') === 'true') {
-            $collection = $user->collections->find($collectionId)->load('tweets');
-
-            return response()->json($collection);
+        if (request('with-tweets') === 'true') {
+            return $user->collections->find($collectionId)->load('tweets');
         }
 
-        $collection = $user->collections->find($collectionId);
-
-        return response()->json($collection);
+        return $user->collections->find($collectionId);
     }
 
     public function update(User $user, string $collectionId)
