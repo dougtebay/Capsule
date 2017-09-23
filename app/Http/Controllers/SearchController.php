@@ -17,10 +17,10 @@ class SearchController extends Controller
 
     public function index()
     {
-    	$this->validate(request(), [
-    		'query' => 'required',
+        $this->validate(request(), [
+            'query' => 'required',
             'cursor' => 'required'
-    	]);
+        ]);
 
         $query = request()->get('query');
         $cursor = request()->get('cursor');

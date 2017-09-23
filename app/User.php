@@ -24,11 +24,20 @@ class User extends Authenticatable
         return $this->hasManyThrough(Tweet::class, Collection::class);
     }
 
-    public function addCollection(array $collectionParams)
+    public function addCollection(array $attributes)
     {
-        $collection = Collection::make($collectionParams);
+        $collection = Collection::make($attributes);
 
         $this->collections()->save($collection);
+    }
+
+    public function updateCollection(int $collectionId, array $attributes)
+    {
+        $this->collections->find($collectionId)->update([
+            'title' => $attributes['title'],
+            'description' => $attributes['description'],
+            'public' => !!$attributes['public']
+        ]);
     }
 
     public function removeCollection(int $collectionId)

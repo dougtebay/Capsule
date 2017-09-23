@@ -6,13 +6,13 @@ use App\Tweet;
 
 class Tweets
 {
-    public function findOrCreate(array $tweetParams)
+    public function findOrCreate(array $attributes)
     {
-        if ($tweet = $this->findByTwitterTweetId($tweetParams['id_str'])) {
+        if ($tweet = $this->findByTwitterTweetId($attributes['id_str'])) {
             return $tweet;
         };
 
-        $tweet = Tweet::make($tweetParams);
+        $tweet = Tweet::make($attributes);
 
         return $this->addTweet($tweet);
     }

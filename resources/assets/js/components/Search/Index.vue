@@ -61,7 +61,7 @@
                     scrollTo(0, 0)
                     this.results = response.data
                     this.getCollections();
-                }.bind(this)).catch(error => this.errors.record(error.response.data))
+                }.bind(this)).catch(error => this.errors.record(error.response.data.errors))
             },
 
             getCollections () {

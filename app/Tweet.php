@@ -9,15 +9,15 @@ class Tweet extends Model
 {
     protected $guarded = [];
 
-    public static function make(array $tweetParams)
+    public static function make(array $attributes)
 	{
 		return new static([
-			'twitter_tweet_id' => $tweetParams['id_str'],
-            'twitter_user_id' => $tweetParams['user']['id_str'],
-            'user_name' => $tweetParams['user']['name'],
-            'user_nickname' => $tweetParams['user']['screen_name'],
-            'text' => $tweetParams['text'],
-            'twitter_created_at' => Carbon::parse($tweetParams['created_at'])
+			'twitter_tweet_id' => $attributes['id_str'],
+            'twitter_user_id' => $attributes['user']['id_str'],
+            'user_name' => $attributes['user']['name'],
+            'user_nickname' => $attributes['user']['screen_name'],
+            'text' => $attributes['text'],
+            'twitter_created_at' => Carbon::parse($attributes['created_at'])
 	    ]);
 	}
 }

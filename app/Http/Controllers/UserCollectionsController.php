@@ -32,11 +32,7 @@ class UserCollectionsController extends Controller
 
     public function update(SaveCollection $request, User $user, string $collectionId)
     {
-        $user->collections->find($collectionId)->update([
-            'title' => request()->title,
-            'description' => request()->description,
-            'public' => !!request()->public
-        ]);
+        $user->updateCollection($collectionId, request()->only('title', 'description', 'public'));
 
         return response()->json(['success' => true]);
     }

@@ -8,15 +8,15 @@ use App\Repositories\Tweets;
 
 class CollectionTweetsController extends Controller
 {
-	protected $tweets;
+    protected $tweets;
 
-	public function __construct(Tweets $tweets)
-	{
-		$this->tweets = $tweets;
-	}
+    public function __construct(Tweets $tweets)
+    {
+        $this->tweets = $tweets;
+    }
 
-	public function store(Collection $collection)
-	{
+    public function store(Collection $collection)
+    {
         $this->validate(request(), [
             'id_str' => 'required',
             'user.id_str' => 'required',
@@ -26,16 +26,16 @@ class CollectionTweetsController extends Controller
             'created_at' => 'required'
         ]);
 
-		$tweet = $this->tweets->findOrCreate(request()->only([
+        $tweet = $this->tweets->findOrCreate(request()->only([
             'id_str', 'user.id_str', 'user.name', 'user.screen_name', 'text', 'created_at'
         ]));
 
-		$collection->addTweet($tweet);
+        $collection->addTweet($tweet);
 
-		return response()->json(['success' => true]);
-	}
+        return response()->json(['success' => true]);
+    }
 
-	public function destroy(Collection $collection, Tweet $tweet)
+    public function destroy(Collection $collection, Tweet $tweet)
     {
         $collection->removeTweet($tweet);
 
