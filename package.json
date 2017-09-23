@@ -4,7 +4,8 @@
     "dev": "node node_modules/cross-env/bin/cross-env.js NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
     "watch": "node node_modules/cross-env/bin/cross-env.js NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
     "hot": "node node_modules/cross-env/bin/cross-env.js NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "production": "node node_modules/cross-env/bin/cross-env.js NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+    "production": "node node_modules/cross-env/bin/cross-env.js NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "test": "node node_modules/cross-env/bin/cross-env.js NODE_ENV=test karma start resources/assets/js/tests/unit/karma.conf.js"
   },
   "devDependencies": {
     "axios": "^0.15.2",
@@ -13,8 +14,12 @@
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-vue": "^3.12.0",
     "jquery": "^3.1.0",
+    "karma": "^1.7.1",
+    "karma-mocha": "^1.3.0",
+    "karma-phantomjs-launcher": "^1.0.4",
     "laravel-mix": "^0.5.0",
     "lodash": "^4.16.2",
+    "mocha": "^3.5.3",
     "vue": "^2.0.1",
     "vue-router": "^2.4.0",
     "vuex": "^2.4.1"
