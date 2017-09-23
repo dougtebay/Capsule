@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Collection;
 use Illuminate\Http\Request;
+use App\Http\Requests\SaveCollection;
 
 class UserCollectionsController extends Controller
 {
@@ -13,14 +14,8 @@ class UserCollectionsController extends Controller
         return $user->collections;
     }
 
-    public function store(User $user)
+    public function store(SaveCollection $request, User $user)
     {
-        $this->validate(request(), [
-            'title' => 'required|max:50',
-            'description' => 'sometimes|max:100',
-            'public' => 'required|boolean'
-        ]);
-
         $user->addCollection(request()->only(['title', 'description', 'public']));
 
         return response()->json(['success' => true]);
@@ -35,14 +30,8 @@ class UserCollectionsController extends Controller
         return $user->collections->find($collectionId);
     }
 
-    public function update(User $user, string $collectionId)
+    public function update(SaveCollection $request, User $user, string $collectionId)
     {
-        $this->validate(request(), [
-            'title' => 'required|max:50',
-            'description' => 'sometimes|max:100',
-            'public' => 'required|boolean'
-        ]);
-
         $user->collections->find($collectionId)->update([
             'title' => request()->title,
             'description' => request()->description,
