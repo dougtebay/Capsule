@@ -6,15 +6,15 @@ use Faker;
 use App\Tweet;
 use Tests\TestCase;
 use App\Repositories\Tweets;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class TweetsTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     protected $tweets;
 
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
 

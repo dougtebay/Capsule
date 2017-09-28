@@ -18,7 +18,7 @@ class UserCollectionsController extends Controller
     {
         $user->addCollection(request()->only(['title', 'description', 'public']));
 
-        return response()->json(['success' => true]);
+        return ['success' => true];
     }
 
     public function show(User $user, string $collectionId)
@@ -34,13 +34,13 @@ class UserCollectionsController extends Controller
     {
         $user->updateCollection($collectionId, request()->only('title', 'description', 'public'));
 
-        return response()->json(['success' => true]);
+        return ['success' => true];
     }
 
     public function destroy(User $user, string $collectionId)
     {
         $user->removeCollection($collectionId);
 
-        return response()->json(['success' => true]);
+        return ['success' => true];
     }
 }

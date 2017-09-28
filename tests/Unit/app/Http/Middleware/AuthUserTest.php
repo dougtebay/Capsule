@@ -5,11 +5,14 @@ namespace Tests\App\Http\Middleware;
 use Faker;
 use App\User;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class AuthUserTest extends TestCase
  {
-    use DatabaseMigrations;
+    use RefreshDatabase;
+
+    protected $user1;
+    protected $user2;
 
     public function SetUp()
     {

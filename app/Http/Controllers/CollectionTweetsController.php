@@ -17,7 +17,7 @@ class CollectionTweetsController extends Controller
 
     public function store(Collection $collection)
     {
-        $this->validate(request(), [
+        $attributes = request()->validate([
             'id_str' => 'required',
             'user.id_str' => 'required',
             'user.name' => 'required',
@@ -26,19 +26,17 @@ class CollectionTweetsController extends Controller
             'created_at' => 'required'
         ]);
 
-        $tweet = $this->tweets->findOrCreate(request()->only([
-            'id_str', 'user.id_str', 'user.name', 'user.screen_name', 'text', 'created_at'
-        ]));
+        $tweet = $this->tweets->findOrCreate($attributes);
 
         $collection->addTweet($tweet);
 
-        return response()->json(['success' => true]);
+        return ['success' => true];
     }
 
     public function destroy(Collection $collection, Tweet $tweet)
     {
         $collection->removeTweet($tweet);
 
-        return response()->json(['success' => true]);
+        return ['success' => true];
     }
 }

@@ -7,11 +7,16 @@ use App\User;
 use App\Tweet;
 use App\Collection;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class CollectionTweetsTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
+
+    protected $user;
+    protected $collection;
+    protected $tweet1;
+    protected $tweet2;
 
     public function SetUp()
     {

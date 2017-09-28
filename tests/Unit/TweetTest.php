@@ -5,11 +5,11 @@ namespace Tests\Unit;
 use Faker;
 use App\Tweet;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class TweetTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     public function test_it_can_make_tweet()
     {

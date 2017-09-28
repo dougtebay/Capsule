@@ -8,36 +8,34 @@
 </template>
 
 <script>
-    import Navbar from './Navbar/Navbar.vue'
+    import axios from 'axios';
+    import Navbar from './Navbar/Navbar.vue';
 
     export default {
         props: ['app_name', 'user_json', 'request_uri'],
 
-        components: {
-            Navbar
-        },
+        components: { Navbar },
 
-        data () {
+        data() {
             return {
                 user: ''
             }
         },
 
         methods: {
-            logout () {
-                axios.post('/logout').then(function () {
-                    location.replace('/')
-                })
+            logout() {
+                axios.post('/logout')
+                    .then(() => location.replace('/'));
             }
         },
 
-        mounted () {
+        mounted() {
             if (this.user_json) {
-                this.user = JSON.parse(this.user_json)
+                this.user = JSON.parse(this.user_json);
             }
 
             if (this.request_uri) {
-                this.$router.push({ path: this.request_uri })
+                this.$router.push({ path: this.request_uri });
             }
         }
     }

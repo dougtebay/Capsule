@@ -30,13 +30,11 @@
     export default {
         props: ['appName', 'user'],
 
-        components: {
-            SearchForm
-        },
+        components: { SearchForm },
 
         computed: {
-            isGuest () {
-                return !this.user
+            isGuest() {
+                return !this.user;
             }
         }
     }

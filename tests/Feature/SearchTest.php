@@ -5,9 +5,12 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use App\Contracts\SocialNetworkAdapter;
 use App\Services\FakeSocialNetworkAdapter;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class SearchTest extends TestCase
 {
+    use RefreshDatabase;
+
     public function setUp()
     {
         parent::setUp();

@@ -1,14 +1,14 @@
-
 <script>
-    import Form from './Form.vue'
-    import Errors from '../../classes/Errors.js'
+    import axios from 'axios';
+    import Form from './Form.vue';
+    import Errors from '../../classes/Errors';
 
     export default {
         extends: Form,
 
         props: ['userId'],
 
-        data () {
+        data() {
             return {
                 collection: {
                     title: '',
@@ -20,10 +20,10 @@
         },
 
         methods: {
-            submit () {
-                axios.post(`/api/users/${this.userId}/collections`, this.collection).then(function (response) {
-                    this.$router.push({ path: `/users/${this.userId}/collections` })
-                }.bind(this)).catch(error => this.errors.record(error.response.data.errors))
+            submit() {
+                axios.post(`/api/users/${this.userId}/collections`, this.collection)
+                    .then(() => this.$router.push({ path: `/users/${this.userId}/collections` }))
+                    .catch(error => this.errors.record(error.response.data.errors));
             }
         }
     }

@@ -31,7 +31,7 @@ window.axios.defaults.headers.common = {
 };
 
 window.axios.defaults.params = {
-	'api_token': window.Laravel.apiToken
+    'api_token': window.Laravel.apiToken
 };
 
 /**

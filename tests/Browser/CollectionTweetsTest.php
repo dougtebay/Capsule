@@ -17,6 +17,7 @@ class CollectionTweetsTest extends DuskTestCase
     use DatabaseMigrations;
 
     protected $user;
+    protected $collection;
 
     public function setUp()
     {

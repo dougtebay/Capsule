@@ -4,9 +4,12 @@ namespace Tests\Unit\App\Services;
 
 use Tests\TestCase;
 use App\Contracts\SocialNetworkAdapter;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class SocialNetworkAdapterTest extends TestCase
 {
+    use RefreshDatabase;
+
     protected $socialNetworkAdapter;
 
     public function setUp()

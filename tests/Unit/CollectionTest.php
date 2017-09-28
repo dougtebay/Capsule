@@ -6,11 +6,14 @@ use Faker;
 use App\Tweet;
 use App\Collection;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class CollectionTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
+
+    protected $collection;
+    protected $tweet;
 
     public function SetUp()
     {

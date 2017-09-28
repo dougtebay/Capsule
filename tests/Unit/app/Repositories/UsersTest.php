@@ -7,15 +7,15 @@ use App\User;
 use Tests\TestCase;
 use App\Repositories\Users;
 use Laravel\Socialite\One\User as TwitterUser;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UsersTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     protected $users;
 
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
 
