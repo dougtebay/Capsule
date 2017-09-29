@@ -1,4 +1,6 @@
-import router from './routes';
+import Vue from 'vue';
+import router from './router';
+import store from './store/store';
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -16,7 +18,8 @@ require('./bootstrap');
 
 Vue.component('app', require('./components/App.vue'));
 
-const app = new Vue({
+new Vue({
     el: '#app',
-    router: router
+    router,
+    store
 });

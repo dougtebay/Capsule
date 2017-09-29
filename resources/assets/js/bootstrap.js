@@ -1,5 +1,3 @@
-import VueRouter from 'vue-router';
-
 window._ = require('lodash');
 
 /**
@@ -15,7 +13,6 @@ window.$ = window.jQuery = require('jquery');
  */
 
 window.Vue = require('vue');
-Vue.use(VueRouter);
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
