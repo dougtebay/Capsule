@@ -1,7 +1,6 @@
 <script>
-    import axios from 'axios';
     import Form from './Form.vue';
-    import Errors from '../../classes/Errors';
+    import Errors from 'js/classes/Errors';
 
     export default {
         extends: Form,

@@ -9,7 +9,6 @@
 </template>
 
 <script>
-    import axios from 'axios';
     import Collection from './Collection.vue';
 
     export default {

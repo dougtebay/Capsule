@@ -10,10 +10,9 @@
 </template>
 
 <script>
-    import axios from 'axios';
     import Result from './Result.vue';
-    import Errors from '../../classes/Errors';
-    import Helpers from '../../mixins/Helpers.vue';
+    import Errors from 'js/classes/Errors';
+    import Helpers from 'js/mixins/Helpers.vue';
 
     export default {
         components: { Result },

@@ -11,7 +11,6 @@
 </template>
 
 <script>
-    import axios from 'axios';
     import Tweet from './Tweet.vue';
 
     export default {

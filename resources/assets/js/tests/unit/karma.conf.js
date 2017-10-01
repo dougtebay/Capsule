@@ -1,4 +1,4 @@
-var webpackConfig = require('../../../../../node_modules/laravel-mix/setup/webpack.config.js')
+var webpackConfig = require('@/../../webpack.config.js')
 
 module.exports = function (config) {
     config.set({
