@@ -3,7 +3,9 @@ import VueRouter from 'vue-router';
 
 Vue.use(VueRouter);
 
-let routes = [
+export default new VueRouter({
+    mode: 'history',
+    routes: [
         {
             path: '/search',
             name: 'search',
@@ -29,9 +31,5 @@ let routes = [
             component: require('./components/Collections/Edit.vue'),
             props: true
         }
-];
-
-export default new VueRouter({
-    mode: 'history',
-    routes: routes
+    ]
 });

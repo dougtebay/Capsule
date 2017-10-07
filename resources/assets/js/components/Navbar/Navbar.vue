@@ -7,7 +7,7 @@
             <section v-if="isGuest">
                 <a class="navbar-text" href="/login">Login</a>
             </section>
-            <section v-if="user">
+            <section v-else>
                 <search-form :user="user"></search-form>
                 <span class="navbar-text">{{ user.name }}</span>
                 <router-link class="navbar-text"
@@ -34,7 +34,7 @@
 
         computed: {
             isGuest() {
-                return !this.user;
+                return !Object.keys(this.user).length;
             }
         }
     }

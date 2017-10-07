@@ -9,19 +9,22 @@
 
 <script>
     import Navbar from './Navbar/Navbar.vue';
+    import { mapState, mapMutations, mapActions } from 'vuex';
 
     export default {
         props: ['app_name', 'user_json', 'request_uri'],
 
         components: { Navbar },
 
-        data() {
-            return {
-                user: ''
-            }
+        computed: {
+            ...mapState(['user'])
         },
 
         methods: {
+            ...mapMutations(['setUser']),
+
+            ...mapActions(['getUserCollections']),
+
             logout() {
                 axios.post('/logout')
                     .then(() => location.replace('/'));
@@ -30,7 +33,8 @@
 
         mounted() {
             if (this.user_json) {
-                this.user = JSON.parse(this.user_json);
+                this.$store.commit('setUser', { user: JSON.parse(this.user_json) });
+                this.$store.dispatch('getUserCollections');
             }
 
             if (this.request_uri) {

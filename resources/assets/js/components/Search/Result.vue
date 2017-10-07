@@ -32,9 +32,9 @@
             },
 
             collectionTitle(collectionId) {
-                return this.collections
-                    .filter(collection => collection.id === collectionId)[0]
-                    .title;
+                return this.collections.filter(collection => {
+                    return collection.id === collectionId;
+                })[0].title;
             }
         }
     }

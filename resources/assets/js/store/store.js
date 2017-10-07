@@ -3,14 +3,32 @@ import Vuex from 'vuex';
 
 Vue.use(Vuex);
 
-new Vuex.Store({
+export default new Vuex.Store({
     state: {
-        count: 0
+        user: {},
+        userCollections: {}
     },
 
     mutations: {
-        increment(state) {
-            state.count++;
+        setUser(state, { user }) {
+            state.user = user;
+        },
+
+        setUserCollections(state, { userCollections }) {
+            state.userCollections = userCollections;
+        }
+    },
+
+    actions: {
+        getUserCollections({ state }) {
+            return new Promise((resolve, reject) => {
+                axios.get(`/api/users/${state.user.id}/collections`)
+                    .then(response => {
+                        this.commit('setUserCollections', { userCollections: response.data });
+                        resolve();
+                    })
+                    .catch(() => reject());
+            });
         }
     }
 });
