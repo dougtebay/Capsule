@@ -16,9 +16,7 @@ class UserCollectionsController extends Controller
 
     public function store(SaveCollection $request, User $user)
     {
-        $user->addCollection(request()->only(['title', 'description', 'public']));
-
-        return ['success' => true];
+        return $user->addCollection(request()->only(['title', 'description', 'public']));
     }
 
     public function show(User $user, string $collectionId)

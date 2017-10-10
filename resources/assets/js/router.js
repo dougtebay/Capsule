@@ -13,8 +13,7 @@ export default new VueRouter({
         },
         {
             path: '/users/:userId/collections',
-            component: require('./components/Collections/Index.vue'),
-            props: true
+            component: require('./components/Collections/Index.vue')
         },
         {
             path: '/users/:userId/collections/create',

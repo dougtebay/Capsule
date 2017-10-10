@@ -22,8 +22,10 @@
 
         methods: {
             destroy() {
-                axios(`/api/users/${this.userId}/collections/${this.collection.id}`)
-                    .then(() => this.$emit('destroy', this.collection.id));
+                this.$store.dispatch('deleteCollection', { collection: this.collection })
+                    .then(collection => {
+                        this.$store.commit('deleteCollection', { collection });
+                    });
             }
         }
     }

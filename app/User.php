@@ -28,7 +28,7 @@ class User extends Authenticatable
     {
         $collection = Collection::make($attributes);
 
-        $this->collections()->save($collection);
+        return $this->collections()->save($collection);
     }
 
     public function updateCollection(int $collectionId, array $attributes)

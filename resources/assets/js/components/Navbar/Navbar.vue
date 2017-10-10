@@ -25,14 +25,17 @@
 </template>
 
 <script>
+    import { mapState } from 'vuex';
     import SearchForm from './SearchForm.vue';
 
     export default {
-        props: ['appName', 'user'],
+        props: ['appName'],
 
         components: { SearchForm },
 
         computed: {
+            ...mapState(['user']),
+
             isGuest() {
                 return !Object.keys(this.user).length;
             }
