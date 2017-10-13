@@ -4,11 +4,11 @@
         <div class="card-description">{{ collection.description }}</div>
         <section class="card-link-container">
             <router-link class="card-link"
-                         :to="{ path: `/users/${userId}/collections/${collection.id}`,
+                         :to="{ path: `/users/${user.id}/collections/${collection.id}`,
                                 params: { collectionId: collection.id } }">View
             </router-link>
             <router-link class="card-link"
-                         :to="{ path: `/users/${userId}/collections/${collection.id}/edit`,
+                         :to="{ path: `/users/${user.id}/collections/${collection.id}/edit`,
                                 params: { collectionId: collection.id } }">Edit
             </router-link>
             <a class="card-link" href="" @click.prevent="destroy">Delete</a>
@@ -17,8 +17,14 @@
 </template>
 
 <script>
+    import { mapState } from 'vuex';
+
     export default {
-        props: ['userId', 'collection'],
+        props: ['collection'],
+
+        computed: {
+            ...mapState(['user'])
+        },
 
         methods: {
             destroy() {

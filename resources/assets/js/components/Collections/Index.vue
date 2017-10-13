@@ -1,9 +1,6 @@
 <template>
     <section>
-        <collection v-for="collection in collections"
-                    :userId="user.id"
-                    :collection="collection">
-        </collection>
+        <collection v-for="collection in collections" :collection="collection"></collection>
     </section>
 </template>
 

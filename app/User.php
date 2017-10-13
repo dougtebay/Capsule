@@ -33,11 +33,15 @@ class User extends Authenticatable
 
     public function updateCollection(int $collectionId, array $attributes)
     {
-        $this->collections->find($collectionId)->update([
+        $collection = $this->collections->find($collectionId);
+
+        $collection->update([
             'title' => $attributes['title'],
             'description' => $attributes['description'],
             'public' => !!$attributes['public']
         ]);
+
+        return $collection;
     }
 
     public function removeCollection(int $collectionId)

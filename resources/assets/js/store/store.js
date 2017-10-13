@@ -9,6 +9,12 @@ export default new Vuex.Store({
         collections: []
     },
 
+    getters: {
+        getCollection: (state) => (collectionId) => {
+            return state.collections.find(collection => collection.id == collectionId);
+        }
+    },
+
     mutations: {
         setUser(state, { user }) {
             state.user = user;
@@ -20,6 +26,15 @@ export default new Vuex.Store({
 
         addCollection(state, { collection }) {
             state.collections.push(collection);
+        },
+
+        updateCollection(state, payload) {
+            state.collections.forEach(collection => {
+                if (collection.id === payload.collection.id) {
+                    let index = state.collections.indexOf(collection)
+                    state.collections.splice(index, 1, payload.collection);
+                }
+            });
         },
 
         deleteCollection(state, { collection }) {
@@ -40,6 +55,17 @@ export default new Vuex.Store({
             return new Promise((resolve, reject) => {
                 axios.post(`/api/users/${state.user.id}/collections`, collection)
                     .then(response => resolve(response))
+                    .catch(error => reject(error));
+            });
+        },
+
+        updateCollection({ state, commit }, { collection }) {
+            return new Promise((resolve, reject) => {
+                axios.put(`/api/users/${state.user.id}/collections/${collection.id}`, collection)
+                    .then(response => {
+                        commit('updateCollection', { collection: response.data });
+                        resolve();
+                    })
                     .catch(error => reject(error));
             });
         },

@@ -17,8 +17,7 @@ export default new VueRouter({
         },
         {
             path: '/users/:userId/collections/create',
-            component: require('./components/Collections/Create.vue'),
-            props: true
+            component: require('./components/Collections/Create.vue')
         },
         {
             path: '/users/:userId/collections/:collectionId',

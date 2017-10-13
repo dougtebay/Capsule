@@ -1,11 +1,12 @@
 <script>
     import Form from './Form.vue';
     import Errors from 'js/classes/Errors';
+    import { mapState, mapGetters } from 'vuex';
 
     export default {
         extends: Form,
 
-        props: ['userId', 'collectionId'],
+        props: ['collectionId'],
 
         data() {
             return {
@@ -14,29 +15,26 @@
             }
         },
 
-        methods: {
-            getCollection() {
-                axios.get(`/api/users/${this.userId}/collections/${this.collectionId}`)
-                    .then(response => this.collection = response.data);
-            },
+        computed: {
+            ...mapState(['user']),
 
+            ...mapGetters(['getCollection'])
+        },
+
+        methods: {
             submit() {
-                axios({
-                    method: 'put',
-                    url: `/api/users/${this.userId}/collections/${this.collectionId}`,
-                    data: this.collection
-                })
+                this.$store.dispatch('updateCollection', { collection: this.collection })
                     .then(() => {
                         this.$router.push({
-                            path: `/users/${this.userId}/collections/${this.collectionId}`
-                        })
+                            path: `/users/${this.user.id}/collections/${this.collectionId}`
+                        });
                     })
                     .catch(error => this.errors.record(error.response.data.errors));
             }
         },
 
-        created() {
-            this.getCollection();
+        mounted() {
+            this.collection = this.getCollection(this.collectionId);
         }
     }
 </script>

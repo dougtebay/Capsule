@@ -11,12 +11,12 @@
                 <search-form :user="user"></search-form>
                 <span class="navbar-text">{{ user.name }}</span>
                 <router-link class="navbar-text"
-                            :to="{ path: `/users/${user.id}/collections`, params: { userId: user.id }}">
-                            My Collections
+                             :to="{ path: `/users/${user.id}/collections`, params: {
+                                userId: user.id
+                             }}">My Collections
                 </router-link>
                 <router-link class="navbar-text"
-                             :to="{ path: `/users/${user.id}/collections/create`, params: { userId: user.id }}">
-                             Add Collection
+                             :to="{ path: `/users/${user.id}/collections/create` }">Add Collection
                 </router-link>
                 <a class="navbar-text" href="" @click.prevent="$emit('logout')">Logout</a>
             </section>

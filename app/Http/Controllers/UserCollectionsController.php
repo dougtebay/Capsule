@@ -30,9 +30,10 @@ class UserCollectionsController extends Controller
 
     public function update(SaveCollection $request, User $user, string $collectionId)
     {
-        $user->updateCollection($collectionId, request()->only('title', 'description', 'public'));
-
-        return ['success' => true];
+        return $user->updateCollection(
+            $collectionId,
+            request()->only('title', 'description', 'public')
+        );
     }
 
     public function destroy(User $user, string $collectionId)
