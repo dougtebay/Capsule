@@ -12,8 +12,9 @@
 
         methods: {
             destroy() {
-                axios.delete(`/api/collections/${this.collection.id}/tweets/${this.tweet.id}`)
-                    .then(() => this.$emit('destroy', this.tweet.id));
+                this.$store.dispatch('deleteTweet', {
+                    collection: this.collection, tweet: this.tweet
+                });
             }
         }
     }

@@ -39,7 +39,24 @@ export default new Vuex.Store({
 
         deleteCollection(state, { collection }) {
             state.collections.splice(state.collections.indexOf(collection), 1);
-        }
+        },
+
+        setTweets(state, payload) {
+            state.collections.forEach(collection => {
+                if (collection.id === payload.collection.id) {
+                    Vue.set(collection, 'tweets', payload.tweets);
+                }
+            });
+        },
+
+        deleteTweet(state, payload) {
+            payload.collection.tweets.forEach(tweet => {
+                if (tweet.id === payload.tweet.id) {
+                    let index = payload.collection.tweets.indexOf(payload.tweet);
+                    payload.collection.tweets.splice(index, 1);
+                }
+            });
+        },
     },
 
     actions: {
@@ -74,6 +91,28 @@ export default new Vuex.Store({
             return new Promise((resolve, reject) => {
                 axios.delete(`/api/users/${state.user.id}/collections/${collection.id}`)
                     .then(() => resolve(collection))
+                    .catch(() => reject());
+            });
+        },
+
+        getTweets({ commit }, { collection }) {
+            return new Promise((resolve, reject) => {
+                axios.get(`/api/collections/${collection.id}/tweets`)
+                    .then(response => {
+                        commit('setTweets', { collection, tweets: response.data });
+                        resolve();
+                    })
+                    .catch(() => reject());
+            });
+        },
+
+        deleteTweet({ commit }, { collection, tweet }) {
+            return new Promise((resolve, reject) => {
+                axios.delete(`/api/collections/${collection.id}/tweets/${tweet.id}`)
+                    .then(() => {
+                        commit('deleteTweet', { collection, tweet });
+                        resolve();
+                    })
                     .catch(() => reject());
             });
         }

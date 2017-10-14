@@ -13,7 +13,7 @@ class TweetsTableSeeder extends Seeder
      */
     public function run()
     {
-        $tweets = factory(Tweet::class, 30)->create();
+        $tweets = factory(Tweet::class, 100)->create();
 
         $collections = Collection::all();
 

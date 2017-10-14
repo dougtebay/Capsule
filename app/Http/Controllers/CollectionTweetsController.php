@@ -15,6 +15,11 @@ class CollectionTweetsController extends Controller
         $this->tweets = $tweets;
     }
 
+    public function index(Collection $collection)
+    {
+        return $collection->tweets;
+    }
+
     public function store(Collection $collection)
     {
         $attributes = request()->validate([

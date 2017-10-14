@@ -33,8 +33,8 @@
             }
         },
 
-        mounted() {
-            this.collection = this.getCollection(this.collectionId);
+        created() {
+            Object.assign(this.collection, this.getCollection(this.collectionId));
         }
     }
 </script>

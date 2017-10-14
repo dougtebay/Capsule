@@ -16,16 +16,7 @@ class UserCollectionsController extends Controller
 
     public function store(SaveCollection $request, User $user)
     {
-        return $user->addCollection(request()->only(['title', 'description', 'public']));
-    }
-
-    public function show(User $user, string $collectionId)
-    {
-        if (request('with-tweets') === 'true') {
-            return $user->collections->find($collectionId)->load('tweets');
-        }
-
-        return $user->collections->find($collectionId);
+        return $user->addCollection(request()->only('title', 'description', 'public'));
     }
 
     public function update(SaveCollection $request, User $user, string $collectionId)

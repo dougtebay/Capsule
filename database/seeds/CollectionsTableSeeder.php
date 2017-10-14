@@ -16,9 +16,9 @@ class CollectionsTableSeeder extends Seeder
         $users = User::all();
 
         if ($users->isNotEmpty()) {
-            factory(Collection::class, 10)->create(['user_id' => $users->random()->id]);
+            factory(Collection::class, 25)->create(['user_id' => $users->random()->id]);
         } else {
-            factory(Collection::class, 10)->create();
+            factory(Collection::class, 25)->create();
         }
     }
 }

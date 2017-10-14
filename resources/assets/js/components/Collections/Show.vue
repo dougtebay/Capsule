@@ -1,56 +1,44 @@
 <template>
     <section>
-        <section class="card" v-if="hasCollection">
+        <section class="card">
             <div>{{ collection.title }}</div>
             <div>{{ collection.description }}</div>
         </section>
         <section v-for="tweet in collection.tweets">
-            <tweet :collection="collection" :tweet="tweet" @destroy="destroy"></tweet>
+            <tweet :collection="collection" :tweet="tweet"></tweet>
         </section>
     </section>
 </template>
 
 <script>
     import Tweet from './Tweet.vue';
+    import { mapState, mapGetters } from 'vuex';
 
     export default {
-        props: ['userId', 'collectionId'],
+        props: ['collectionId'],
 
         components: { Tweet },
 
-        data() {
-            return {
-                collection: {}
-            }
-        },
-
         computed: {
-            hasCollection() {
-                return !!Object.keys(this.collection).length;
+            ...mapState(['user']),
+
+            ...mapGetters(['getCollection']),
+
+            collection() {
+                return this.getCollection(this.collectionId);
             }
         },
 
         methods: {
-            getCollection() {
-                axios({
-                    method: 'get',
-                    url: `/api/users/${this.userId}/collections/${this.collectionId}`,
-                    params: { 'with-tweets': true }
-                })
-                    .then(response => this.collection = response.data);
-            },
-
-            destroy(tweetId) {
-                this.collection.tweets.forEach((tweet, index) => {
-                    if (tweet.id === tweetId) {
-                        this.collection.tweets.splice(index, 1);
-                    }
-                });
+            getTweets() {
+                this.$store.dispatch('getTweets', { collection: this.collection });
             }
         },
 
         created() {
-            this.getCollection();
+            if (!this.collection.tweets) {
+                this.getTweets();
+            }
         }
     }
 </script>
