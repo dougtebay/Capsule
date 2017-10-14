@@ -25,8 +25,6 @@ class SearchController extends Controller
         $query = request()->get('query');
         $cursor = request()->get('cursor');
 
-        $results = $this->socialNetworkAdapter->search($query, $cursor);
-
-        return response()->json($results);
+        return $this->socialNetworkAdapter->search($query, $cursor);
     }
 }

@@ -8,7 +8,6 @@ export default new VueRouter({
     routes: [
         {
             path: '/search',
-            name: 'search',
             component: require('./components/Search/Index.vue')
         },
         {

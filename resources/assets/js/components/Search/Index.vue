@@ -1,94 +1,80 @@
 <template>
     <section>
         <span v-if="errors.has('query')">No results</span>
-        <result v-for="(result, index) in results"
+        <search-result v-for="(searchResult, index) in searchResults"
                 :id="index + 1"
-                :result="result"
+                :searchResult="searchResult"
                 :collections="collections">
-        </result>
+        </search-result>
     </section>
 </template>
 
 <script>
-    import Result from './Result.vue';
     import Errors from 'js/classes/Errors';
     import Helpers from 'js/mixins/Helpers.vue';
+    import SearchResult from './SearchResult.vue';
+    import { mapState, mapGetters, mapMutations } from 'vuex';
 
     export default {
-        components: { Result },
+        components: { SearchResult },
 
         mixins: [Helpers],
 
-        data () {
+        data() {
             return {
-                userId: '',
                 query: '',
-                results: [],
-                collections: [],
                 errors: new Errors()
             }
         },
 
         computed: {
+            ...mapState(['user', 'collections', 'searchResults']),
+
+            ...mapGetters(['hasSearchResults']),
+
             cursor() {
-                if (!this.results.length) {
+                if (!this.hasSearchResults) {
                     return '-1';
                 }
 
-                return this.lastItem(this.results).id_str;
-            },
-
-            hasResults() {
-                return !!this.results.length;
+                return this.lastItem(this.searchResults).id_str;
             }
         },
 
         watch: {
             $route() {
                 this.query = this.$route.query.query;
-                this.getResults();
+                this.clearSearchResults();
+                this.getSearchResults();
             },
         },
 
         methods: {
-            getResults() {
-                axios.get('/api/search', { params: { query: this.query, cursor: this.cursor } })
-                    .then(response => {
-                        scrollTo(0, 0);
-                        this.results = response.data;
-                        this.getCollections();
-                    })
-                    .catch(error => this.errors.record(error.response.data.errors));
-            },
+            ...mapMutations(['clearSearchResults']),
 
-            getCollections() {
-                axios.get(`/api/users/${this.userId}/collections`)
-                    .then(response => this.collections = response.data);
+            getSearchResults() {
+                this.$store.dispatch('getSearchResults', { query: this.query, cursor: this.cursor })
+                    .then(() => scrollTo(0, 0))
+                    .catch(error => this.errors.record(error.response.data.errors));
             },
 
             setOnScrollEvent() {
                 window.onscroll = () => {
-                    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-                        this.getMoreResults();
+                    if (this.hasRequestedMoreSearchResults()) {
+                        this.getSearchResults();
                     }
                 }
             },
 
-            getMoreResults() {
-                axios.get('/api/search', { params: { query: this.query, cursor: this.cursor } })
-                    .then(response => this.setMoreResults(response.data));
-            },
-
-            setMoreResults(results) {
-                var moreResults = results.splice(1);
-                this.results = this.results.concat(moreResults);
+            hasRequestedMoreSearchResults() {
+                return this.hasSearchResults
+                    && window.innerHeight + window.scrollY >= document.body.offsetHeight;
             }
         },
 
         created() {
             this.query = this.$route.query.query;
-            this.userId = this.$route.query.userId;
-            this.getResults();
+            this.getSearchResults();
             this.setOnScrollEvent();
         }
     }

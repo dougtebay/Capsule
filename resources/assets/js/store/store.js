@@ -6,12 +6,17 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         user: {},
-        collections: []
+        collections: [],
+        searchResults: []
     },
 
     getters: {
         getCollection: (state) => (collectionId) => {
             return state.collections.find(collection => collection.id == collectionId);
+        },
+
+        hasSearchResults(state) {
+            return !!state.searchResults.length;
         }
     },
 
@@ -57,6 +62,18 @@ export default new Vuex.Store({
                 }
             });
         },
+
+        setSearchResults(state, { searchResults }) {
+            if (state.searchResults.length) {
+                searchResults = searchResults.splice(1);
+            }
+
+            state.searchResults  = state.searchResults.concat(searchResults);
+        },
+
+        clearSearchResults(state) {
+            state.searchResults = [];
+        }
     },
 
     actions: {
@@ -114,6 +131,14 @@ export default new Vuex.Store({
                         resolve();
                     })
                     .catch(() => reject());
+            });
+        },
+
+        getSearchResults({ state, commit }, { query, cursor }) {
+            return new Promise((resolve, reject) => {
+                axios.get('/api/search', { params: { query: query, cursor: cursor } })
+                    .then(response => commit('setSearchResults', { searchResults: response.data }))
+                    .catch(error => reject(error));
             });
         }
     }

@@ -8,12 +8,10 @@
                 <a class="navbar-text" href="/login">Login</a>
             </section>
             <section v-else>
-                <search-form :user="user"></search-form>
+                <search-form></search-form>
                 <span class="navbar-text">{{ user.name }}</span>
                 <router-link class="navbar-text"
-                             :to="{ path: `/users/${user.id}/collections`, params: {
-                                userId: user.id
-                             }}">My Collections
+                             :to="{ path: `/users/${user.id}/collections` }">My Collections
                 </router-link>
                 <router-link class="navbar-text"
                              :to="{ path: `/users/${user.id}/collections/create` }">Add Collection
