@@ -33,9 +33,7 @@ class CollectionTweetsController extends Controller
 
         $tweet = $this->tweets->findOrCreate($attributes);
 
-        $collection->addTweet($tweet);
-
-        return ['success' => true];
+        return $collection->addTweet($tweet);
     }
 
     public function destroy(Collection $collection, Tweet $tweet)

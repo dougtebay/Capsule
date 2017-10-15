@@ -3,8 +3,7 @@
         <span v-if="errors.has('query')">No results</span>
         <search-result v-for="(searchResult, index) in searchResults"
                 :id="index + 1"
-                :searchResult="searchResult"
-                :collections="collections">
+                :searchResult="searchResult">
         </search-result>
     </section>
 </template>
@@ -28,7 +27,7 @@
         },
 
         computed: {
-            ...mapState(['user', 'collections', 'searchResults']),
+            ...mapState(['user', 'searchResults']),
 
             ...mapGetters(['hasSearchResults']),
 

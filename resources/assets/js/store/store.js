@@ -46,10 +46,10 @@ export default new Vuex.Store({
             state.collections.splice(state.collections.indexOf(collection), 1);
         },
 
-        setTweets(state, payload) {
+        setTweets(state, { collectionId, tweets }) {
             state.collections.forEach(collection => {
-                if (collection.id === payload.collection.id) {
-                    Vue.set(collection, 'tweets', payload.tweets);
+                if (collection.id === collectionId) {
+                    Vue.set(collection, 'tweets', tweets);
                 }
             });
         },
@@ -112,13 +112,29 @@ export default new Vuex.Store({
             });
         },
 
+        getSearchResults({ commit }, { query, cursor }) {
+            return new Promise((resolve, reject) => {
+                axios.get('/api/search', { params: { query: query, cursor: cursor } })
+                    .then(response => commit('setSearchResults', { searchResults: response.data }))
+                    .catch(error => reject(error));
+            });
+        },
+
         getTweets({ commit }, { collection }) {
             return new Promise((resolve, reject) => {
                 axios.get(`/api/collections/${collection.id}/tweets`)
                     .then(response => {
-                        commit('setTweets', { collection, tweets: response.data });
+                        commit('setTweets', { collectionId: collection.id, tweets: response.data });
                         resolve();
                     })
+                    .catch(() => reject());
+            });
+        },
+
+        addTweet(context, { collectionId, tweet }) {
+            return new Promise((resolve, reject) => {
+                axios.post(`/api/collections/${collectionId}/tweets`, tweet)
+                    .then(() => resolve())
                     .catch(() => reject());
             });
         },
@@ -131,14 +147,6 @@ export default new Vuex.Store({
                         resolve();
                     })
                     .catch(() => reject());
-            });
-        },
-
-        getSearchResults({ state, commit }, { query, cursor }) {
-            return new Promise((resolve, reject) => {
-                axios.get('/api/search', { params: { query: query, cursor: cursor } })
-                    .then(response => commit('setSearchResults', { searchResults: response.data }))
-                    .catch(error => reject(error));
             });
         }
     }

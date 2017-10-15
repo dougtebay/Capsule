@@ -3,40 +3,48 @@
         <div>@{{ searchResult.user.screen_name }}</div>
         <div>{{ searchResult.text }}</div>
         <form>
-            <select name="collections" v-model="selected">
+            <select name="collections" v-model="collectionId">
                 <option v-for="collection in collections"
                         :value="collection.id">{{ collection.title }}
                 </option>
             </select>
-            <button @click.prevent="saveTweet(selected, searchResult)">Save</button>
+            <button @click.prevent="saveTweet(collectionId, searchResult)">Save</button>
             <div v-if="savedStatus" >{{ savedStatus }}</div>
         </form>
     </section>
 </template>
 
 <script>
+    import { mapState, mapGetters } from 'vuex';
+
     export default {
-        props: ['searchResult', 'collections'],
+        props: ['searchResult'],
 
         data () {
             return {
-                selected: '',
+                collectionId: '',
                 savedStatus: ''
             }
         },
 
+        computed: {
+            ...mapState(['collections']),
+
+            ...mapGetters(['getCollection'])
+        },
+
         methods: {
-            saveTweet(collectionId, tweet) {
-                axios.post(`/api/collections/${collectionId}/tweets`, tweet)
+            saveTweet() {
+                this.$store.dispatch('addTweet', {
+                    collectionId: this.collectionId, tweet: this.searchResult
+                })
                     .then(() => {
-                        this.savedStatus = `Saved to ${this.collectionTitle(collectionId)}`;
+                        this.savedStatus = `Saved to ${this.collectionTitle(this.collectionId)}`;
                     });
             },
 
             collectionTitle(collectionId) {
-                return this.collections.filter(collection => {
-                    return collection.id === collectionId;
-                })[0].title;
+                return this.getCollection(collectionId).title;
             }
         }
     }

@@ -30,8 +30,12 @@ class Collection extends Model
     public function addTweet(Tweet $tweet)
     {
         if (!$this->tweets->contains($tweet)) {
-            return $this->tweets()->attach($tweet);
+            $this->tweets()->attach($tweet);
+
+            return $this->fresh()->tweets->find($tweet);
         }
+
+        return $this->tweets->find($tweet);
     }
 
     public function removeTweet(Tweet $tweet)

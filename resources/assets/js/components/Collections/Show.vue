@@ -36,9 +36,7 @@
         },
 
         created() {
-            if (!this.collection.tweets) {
-                this.getTweets();
-            }
+            this.getTweets();
         }
     }
 </script>
