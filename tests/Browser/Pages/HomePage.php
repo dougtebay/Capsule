@@ -7,19 +7,19 @@ use Laravel\Dusk\Page as BasePage;
 
 class HomePage extends BasePage
 {
-	public function url()
-	{
-		return '/';
-	}
+    public function url()
+    {
+        return '/';
+    }
 
-	public function assert(Browser $browser)
+    public function assert(Browser $browser)
     {
         $browser->assertPathIs($this->url());
     }
 
     public function search(Browser $browser, string $query)
-	{
-		$browser->type('query', $query)
-			->press('Search');
-	}
+    {
+        $browser->type('query', $query)
+            ->press('Search');
+    }
 }

@@ -8,22 +8,20 @@ use PHPUnit\Framework\Assert as PHPUnit;
 
 class SearchPage extends BasePage
 {
-	public function __construct(string $query, string $userId)
+    public function __construct(string $query)
     {
         $this->query = $query;
-        $this->userId = $userId;
     }
 
-	public function url()
-	{
-		return '/search';
-	}
+    public function url()
+    {
+        return '/search';
+    }
 
-	public function assert(Browser $browser)
+    public function assert(Browser $browser)
     {
         $browser->assertPathIs($this->url())
-            ->assertQueryStringHas('query', $this->query)
-        	->assertQueryStringHas('userId', $this->userId);
+            ->assertQueryStringHas('query', $this->query);
 
         if ($this->query) {
             $browser->waitForText('Save');

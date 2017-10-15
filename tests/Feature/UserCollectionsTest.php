@@ -125,63 +125,6 @@ class UserCollectionsTest extends TestCase
         $response->assertStatus(422)->assertJsonFragment(['public']);
     }
 
-    public function test_it_can_get_user_collection()
-    {
-        $response = $this->json(
-            'GET',
-            "api/users/{$this->user->id}/collections/{$this->collection1->id}"
-        );
-
-        $response->assertStatus(200)->assertJson([
-            'id' => $this->collection1->id,
-            'user_id' => $this->collection1->user_id,
-            'title' => $this->collection1->title,
-            'description' => $this->collection1->description,
-            'public' => $this->collection1->public,
-            'created_at' => $this->collection1->created_at->format('Y-m-d H:i:s'),
-            'updated_at' => $this->collection1->updated_at->format('Y-m-d H:i:s')
-        ]);
-    }
-
-    public function test_it_can_get_user_collection_with_tweets()
-    {
-        $response = $this->json(
-            'GET',
-            "api/users/{$this->user->id}/collections/{$this->collection1->id}", [
-                'with-tweets' => 'true'
-            ]
-        );
-
-        $tweet = $this->collection1->fresh()->tweets->first();
-
-        $response->assertStatus(200)->assertJson([
-            'id' => $this->collection1->id,
-            'user_id' => $this->collection1->user_id,
-            'title' => $this->collection1->title,
-            'description' => $this->collection1->description,
-            'public' => $this->collection1->public,
-            'created_at' => $this->collection1->created_at->format('Y-m-d H:i:s'),
-            'updated_at' => $this->collection1->updated_at->format('Y-m-d H:i:s'),
-            'tweets' => [
-                [
-                    'id' => $tweet->id,
-                    'twitter_tweet_id' => $tweet->twitter_tweet_id,
-                    'twitter_user_id' => $tweet->twitter_user_id,
-                    'user_name' => $tweet->user_name,
-                    'user_nickname' => $tweet->user_nickname,
-                    'text' => $tweet->text,
-                    'twitter_created_at' => $tweet->twitter_created_at,
-                    'created_at' => $tweet->created_at->format('Y-m-d H:i:s'),
-                    'updated_at' => $tweet->updated_at->format('Y-m-d H:i:s'),
-                    'pivot' => [
-                        'collection_id' => $this->collection1->id,
-                        'tweet_id' => $tweet->id
-                    ]
-                ]
-            ]
-        ]);
-    }
-
     public function test_it_can_update_user_collection()
     {
         $title = Faker\Factory::create()->unique()->text(50);

@@ -133,7 +133,10 @@ class UserCollectionsTest extends DuskTestCase
             $newDescription = 'Test description';
 
             $browser->loginAs($this->user)
-                ->visit(new CollectionsEditPage($this->user, $collection))
+                ->visit(new CollectionsIndexPage($this->user))
+                ->clickLink('Edit')
+                ->waitForText('Title')
+                ->on(new CollectionsEditPage($this->user, $collection))
                 ->fillOutForm($newTitle, $newDescription)
                 ->waitForText($newTitle);
 
