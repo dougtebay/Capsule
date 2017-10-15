@@ -48,7 +48,7 @@ export default new Vuex.Store({
 
         setTweets(state, { collectionId, tweets }) {
             state.collections.forEach(collection => {
-                if (collection.id === collectionId) {
+                if (collection.id == collectionId) {
                     Vue.set(collection, 'tweets', tweets);
                 }
             });
@@ -120,11 +120,11 @@ export default new Vuex.Store({
             });
         },
 
-        getTweets({ commit }, { collection }) {
+        getTweets({ commit }, { collectionId }) {
             return new Promise((resolve, reject) => {
-                axios.get(`/api/collections/${collection.id}/tweets`)
+                axios.get(`/api/collections/${collectionId}/tweets`)
                     .then(response => {
-                        commit('setTweets', { collectionId: collection.id, tweets: response.data });
+                        commit('setTweets', { collectionId, tweets: response.data });
                         resolve();
                     })
                     .catch(() => reject());

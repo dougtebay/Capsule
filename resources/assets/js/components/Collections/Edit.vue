@@ -10,15 +10,18 @@
 
         data() {
             return {
-                collection: {},
                 errors: new Errors()
             }
         },
 
         computed: {
-            ...mapState(['user']),
+            ...mapState(['user', 'collections']),
 
-            ...mapGetters(['getCollection'])
+            ...mapGetters(['getCollection']),
+
+            collection() {
+                return Object.assign({}, this.getCollection(this.collectionId));
+            }
         },
 
         methods: {
@@ -31,10 +34,6 @@
                     })
                     .catch(error => this.errors.record(error.response.data.errors));
             }
-        },
-
-        created() {
-            Object.assign(this.collection, this.getCollection(this.collectionId));
         }
     }
 </script>

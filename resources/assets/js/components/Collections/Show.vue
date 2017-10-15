@@ -1,10 +1,10 @@
 <template>
-    <section>
+    <section v-if="collection">
         <section class="card">
             <div>{{ collection.title }}</div>
             <div>{{ collection.description }}</div>
         </section>
-        <section v-for="tweet in collection.tweets">
+        <section v-for="tweet in collection.tweets" v-if="collection.tweets">
             <tweet :collection="collection" :tweet="tweet"></tweet>
         </section>
     </section>
@@ -29,14 +29,8 @@
             }
         },
 
-        methods: {
-            getTweets() {
-                this.$store.dispatch('getTweets', { collection: this.collection });
-            }
-        },
-
         created() {
-            this.getTweets();
+            this.$store.dispatch('getTweets', { collectionId: this.collectionId });
         }
     }
 </script>
