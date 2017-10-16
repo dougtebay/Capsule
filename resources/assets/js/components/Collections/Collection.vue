@@ -11,13 +11,13 @@
                          :to="{ path: `/users/${user.id}/collections/${collection.id}/edit`,
                                 params: { collectionId: collection.id } }">Edit
             </router-link>
-            <a class="card-link" href="" @click.prevent="destroy">Delete</a>
+            <a class="card-link"href="" @click.prevent="deleteCollection({ collection })">Delete</a>
         </section>
     </section>
 </template>
 
 <script>
-    import { mapState } from 'vuex';
+    import { mapState, mapActions } from 'vuex';
 
     export default {
         props: ['collection'],
@@ -27,12 +27,7 @@
         },
 
         methods: {
-            destroy() {
-                this.$store.dispatch('deleteCollection', { collection: this.collection })
-                    .then(collection => {
-                        this.$store.commit('deleteCollection', { collection });
-                    });
-            }
+            ...mapActions(['deleteCollection'])
         }
     }
 </script>

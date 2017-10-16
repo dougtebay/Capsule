@@ -1,7 +1,7 @@
 <script>
     import Form from './Form.vue';
-    import { mapState } from 'vuex';
     import Errors from 'js/classes/Errors';
+    import { mapState, mapActions } from 'vuex';
 
     export default {
         extends: Form,
@@ -22,12 +22,11 @@
         },
 
         methods: {
+            ...mapActions(['createCollection']),
+
             submit() {
-                this.$store.dispatch('createCollection', { collection: this.collection })
-                    .then(response => {
-                        this.$store.commit('addCollection', { collection: response.data });
-                        this.$router.push({ path: `/users/${this.user.id}/collections` });
-                    })
+                this.createCollection({ collection: this.collection })
+                    .then(() => this.$router.push({ path: `/users/${this.user.id}/collections` }))
                     .catch(error => this.errors.record(error.response.data.errors));
             }
         }

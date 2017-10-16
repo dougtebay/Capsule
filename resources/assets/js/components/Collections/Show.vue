@@ -12,7 +12,7 @@
 
 <script>
     import Tweet from './Tweet.vue';
-    import { mapState, mapGetters } from 'vuex';
+    import { mapState, mapGetters, mapActions } from 'vuex';
 
     export default {
         props: ['collectionId'],
@@ -29,8 +29,12 @@
             }
         },
 
+        methods: {
+            ...mapActions(['getTweets'])
+        },
+
         created() {
-            this.$store.dispatch('getTweets', { collectionId: this.collectionId });
+            this.getTweets({ collectionId: this.collectionId });
         }
     }
 </script>

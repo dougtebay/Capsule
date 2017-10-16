@@ -4,6 +4,7 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 
 export default new Vuex.Store({
+    strict: true,
     state: {
         user: {},
         collections: [],
@@ -77,18 +78,24 @@ export default new Vuex.Store({
     },
 
     actions: {
-        getCollections({ state }) {
+        getCollections({ state, commit }) {
             return new Promise((resolve, reject) => {
                 axios.get(`/api/users/${state.user.id}/collections`)
-                    .then(response => resolve(response))
+                    .then(response => {
+                        commit('setCollections', { collections: response.data });
+                        resolve();
+                    })
                     .catch(() => reject());
             });
         },
 
-        createCollection({ state }, { collection }) {
+        createCollection({ state, commit }, { collection }) {
             return new Promise((resolve, reject) => {
                 axios.post(`/api/users/${state.user.id}/collections`, collection)
-                    .then(response => resolve(response))
+                    .then(response => {
+                        commit('addCollection', { collection: response.data });
+                        resolve();
+                    })
                     .catch(error => reject(error));
             });
         },
@@ -104,10 +111,13 @@ export default new Vuex.Store({
             });
         },
 
-        deleteCollection({ state }, { collection }) {
+        deleteCollection({ state, commit }, { collection }) {
             return new Promise((resolve, reject) => {
                 axios.delete(`/api/users/${state.user.id}/collections/${collection.id}`)
-                    .then(() => resolve(collection))
+                    .then(() => {
+                        commit('deleteCollection', { collection });
+                        resolve();
+                    })
                     .catch(() => reject());
             });
         },

@@ -8,8 +8,8 @@
 </template>
 
 <script>
-    import { mapState } from 'vuex';
     import Navbar from './Navbar/Navbar.vue';
+    import { mapState, mapActions } from 'vuex';
 
     export default {
         props: ['app_name', 'user_json', 'request_uri'],
@@ -21,6 +21,8 @@
         },
 
         methods: {
+            ...mapActions(['getCollections']),
+
             logout() {
                 axios.post('/logout').then(() => location.replace('/'));
             }
@@ -29,9 +31,7 @@
         mounted() {
             if (this.user_json) {
                 this.$store.commit('setUser', { user: JSON.parse(this.user_json) });
-                this.$store.dispatch('getCollections').then(response => {
-                    this.$store.commit('setCollections', { collections: response.data });
-                });
+                this.getCollections();
             }
 
             if (this.request_uri) {

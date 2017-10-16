@@ -12,7 +12,7 @@
         components: { Collection },
 
         computed: {
-            ...mapState(['user', 'collections'])
+            ...mapState(['collections'])
         }
     }
 </script>

@@ -38,7 +38,7 @@ class User extends Authenticatable
         $collection->update([
             'title' => $attributes['title'],
             'description' => $attributes['description'],
-            'public' => !!$attributes['public']
+            'public' => $attributes['public']
         ]);
 
         return $collection;
